@@ -368,3 +368,19 @@ Confirmed one real breakpoint difference from Landing's Hero: About's heading sc
 Build verified clean, `/about` route live.
 
 **Pages remaining:** Pricing, How It Works, Contact, Terms of Service, Privacy — 5 pages, none started.
+
+## Pricing page built — ⚠️ NEEDS OBA'S DECISION on real numbers (2026-09-05)
+
+Structure: Hero (badge + heading) → two pricing cards (Monthly, Yearly) side by side → Trust strip (reused) → FAQ (reused) → Testimonials (reused).
+
+**Two real pricing inconsistencies found, not resolved unilaterally — need Oba's decision:**
+
+1. **Figma shows ₦1,599/month.** This project's chat history has an earlier explicit calculation session that settled on ₦3,599/month as the real price, with a full discount table worked out for yearly options. The Figma file was never updated to match — it still shows the old/different number. **Which is correct: ₦1,599 or ₦3,599?**
+
+2. **The yearly price in Figma doesn't match its own label.** ₦19,188/year is mathematically exactly `1,599 × 12` — i.e., zero discount. But the card is explicitly labeled "2 months free" and "Best Value." If it were genuinely 2 months free, the yearly price should be `1,599 × 10 = 15,990`, not 19,188. **This is an internal contradiction in the Figma file itself, independent of question 1.**
+
+Built the page using the literal Figma numbers as-is (₦1,599 / ₦19,188), per the standing rule to follow the file exactly rather than silently "fixing" what might be intentional — but flagging both issues prominently since pricing is real business-critical content, not cosmetic. **Do not treat ₦1,599/₦19,188 as final** until Oba confirms which numbers are actually correct and, if a yearly discount is intended, what the real discounted price should be.
+
+Build verified clean, `/pricing` route live.
+
+**Pages remaining:** How It Works, Contact, Terms of Service, Privacy — 4 pages, none started.
