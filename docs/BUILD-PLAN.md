@@ -250,3 +250,24 @@ Oba caught a real, significant miss: this plan's Day 7 said "connect the *existi
 | Dashboard preview image in Hero | ❌ Placeholder box only — real asset needs exporting from Figma |
 
 Each of these will be built with the same rigor as the Hero (exact Figma values via the Figma tools, no approximation), one at a time, verified with a build after each.
+
+## New standing rule: every page ships desktop + tablet + mobile (2026-09-05)
+
+Oba's instruction: pages are built one at a time, but each one must include its Figma tablet and mobile designs, not just desktop. Added to Section 0 rules.
+
+**Nav + Hero rebuilt with real responsive values, extracted per breakpoint (not fluid-scaled guesses):**
+
+| Element | Mobile (393px frame) | Tablet (834px frame) | Desktop (1440px frame) |
+|---|---|---|---|
+| Logo | 32px | 48px SemiBold | 56px Bold |
+| Nav links | hidden behind hamburger | 18px | 32px |
+| Hero headline | 64px | 64px | 72px |
+| Hero subtext | 16px, **Inter Regular** | 18px, DM Sans SemiBold | 24px, DM Sans SemiBold |
+| Eyebrow badge | 14px Semi Bold | 18px Medium | 18px Medium |
+| CTA buttons | stacked full-width, 20px/18px | side by side, 24px | side by side, 24px |
+
+Note: font *family* itself changes for the hero subtext between mobile (Inter Regular) and tablet/desktop (DM Sans SemiBold) — not just size. Caught by checking each breakpoint independently rather than assuming only sizes would differ.
+
+**Flagged, not guessed:** no expanded mobile-menu state was found anywhere in the Figma file for the hamburger icon — only the collapsed nav bar with logo + hamburger exists. Built a functional toggle using the tablet nav's link sizing as a reasonable placeholder, but this is an assumption, not a confirmed Figma value. **Needs Oba's confirmation** — either point to the actual mobile menu design if one exists elsewhere in the file, or confirm this placeholder approach is fine.
+
+**Breakpoint mapping note:** Tailwind v4's default breakpoints (`md`=768px, `lg`=1024px) are being used to approximate Figma's exact frame widths (834px tablet, 1440px desktop) — not a pixel-exact match to the breakpoint value itself, just the closest standard Tailwind breakpoint. Flagging this as a deliberate simplification, not an oversight.
