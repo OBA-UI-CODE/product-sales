@@ -225,3 +225,28 @@ Per Oba's standing rule (Section 0, rule 3a), did a full audit of Sign In and Si
 Rebuilt both pages from scratch against these exact values, added the missing DM Sans 600 (SemiBold) font weight import (only 700/Bold was previously imported), verified with a clean production build, and pushed.
 
 **Still not yet audited this rigorously:** the Onboarding wizard and the Dashboard placeholder page — both were built from an earlier screenshot-based read, same as Sign In/Sign Up were. They need the same treatment before Day 3 work continues, per the new standing rule.
+
+## Critical gap found: the marketing website was never started (2026-09-05)
+
+Oba caught a real, significant miss: this plan's Day 7 said "connect the *existing* marketing site" — wrongly treating "designed in Figma" as if it meant "already built as code." **It was not.** Nothing for the actual website (Landing, About, Pricing, How It Works, Contact, Terms of Service, Privacy) had been coded at all — all effort so far went into auth/onboarding/dashboard, skipping the actual front door of the product entirely.
+
+**Fixed immediately:**
+1. **Architecture bug this exposed:** the app's `/` route was pointing at the dashboard. Restructured: `/` is now the public marketing site (route group `(marketing)`), the authenticated app moved to `/dashboard` (route group `(app)`). Updated all redirects (`login`, `signup`, `onboarding` actions, `proxy.ts` protected-path logic) accordingly. Verified with a clean build — all 10 routes compile, `/` and `/dashboard` split correctly.
+2. **Built the marketing Nav + Hero section** from exact Figma values (not approximated) — logo 56px, nav links 32px, buttons 24px, hero headline 72px with two-tone color (`Every Sale,` in `#b3e6d6`, `Accounted For.` in `#5dcaa5`), eyebrow badge, both CTA buttons (one filled, one ghost/outline — caught that "See How It Works" has an invisible fill, not a visible one, by actually checking the `visible` flag rather than assuming a hex meant a rendered color).
+3. **Caught and fixed my own repeat of the same mistake mid-task:** first draft of the nav used approximated smaller font sizes (32px logo, 20px links) instead of the actual extracted values (56px logo, 32px links) — corrected before committing.
+
+**Full, explicit remaining scope — tracked here so nothing is silently skipped again:**
+
+| Page | Status |
+|---|---|
+| Landing — Nav + Hero | ✅ Built from exact Figma values |
+| Landing — remaining sections (trust strip, features, testimonials, pricing teaser, FAQ, final CTA, footer) | ❌ Not started — page is 8,145px tall in Figma with 5 major sections; only the first ~1,200px (Nav+Hero) is done |
+| About page | ❌ Not started |
+| Pricing page | ❌ Not started |
+| How It Works page | ❌ Not started |
+| Contact page | ❌ Not started |
+| Terms of Service page | ❌ Not started |
+| Privacy Policy page | ❌ Not started |
+| Dashboard preview image in Hero | ❌ Placeholder box only — real asset needs exporting from Figma |
+
+Each of these will be built with the same rigor as the Hero (exact Figma values via the Figma tools, no approximation), one at a time, verified with a build after each.
