@@ -408,3 +408,33 @@ Structure: heading + subtext on the left, real contact form on the right (Name, 
 Build verified clean, `/contact` route live.
 
 **Pages remaining: Terms of Service, Privacy** — 2 pages left, then the entire website will be complete.
+
+## 🎉 ENTIRE WEBSITE COMPLETE (2026-09-05)
+
+Terms of Service and Privacy Policy pages built — both discovered to exist in Figma under sections not seen on the last check ("Terms of service pages" and "Privacy policy pages" were added since). Content matches exactly what was originally drafted much earlier in this project's chat history, now formalized into real pages with the site's Nav and Footer wrapped around them.
+
+**All 7 marketing pages are now built and live:**
+- `/` — Landing (Nav, Hero, Trust strip, About, Features, FAQ, Testimonials, Final CTA, Footer)
+- `/about` — About (Hero, Trust strip, Our Story, Why Reko, Mission/Vision, Final CTA)
+- `/pricing` — Pricing (Hero, 2 plan cards — ₦1,599/mo, ₦15,990/yr — Trust strip, FAQ, Testimonials)
+- `/how-it-works` — How It Works (Hero, 3-step alternating layout, Final CTA)
+- `/contact` — Contact (Hero + real form, no submit handler yet)
+- `/terms` — Terms of Service (8 sections)
+- `/privacy` — Privacy Policy (6 sections)
+
+Plus the full app shell: `/login`, `/signup`, `/forgot-password`, `/reset-password`, `/onboarding` (5-step wizard), `/dashboard` (placeholder, real build is Day 3), `/auth/callback`.
+
+**17 real images exported from Figma and in use** across Hero, Features, About, and How It Works — zero placeholder boxes remain on any page.
+
+Full production build verified clean across all 17 routes.
+
+**What's NOT done, to be crystal clear:**
+- Dashboard, Sales History, Products, Debts, Settings (the actual logged-in app) — still just a placeholder page, this is Day 3+ of the original plan
+- Contact form has no submit handler
+- Google OAuth blocked on Oba's Google Cloud account setup (Day 1 note)
+- Custom email sender not yet configured (flagged early on)
+- Paystack billing integration not started
+- The "About Us" stock graphic on the About page still needs replacing (flagged earlier)
+- Two-shop isolation was tested for the backend/database only — never re-tested against this actual UI
+
+Next logical step per the original 7-day plan: Day 3 — build the real Dashboard, Sales History, Products, Debts, and Settings pages (the actual product, not the marketing site).
