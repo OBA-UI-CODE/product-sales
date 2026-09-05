@@ -1,6 +1,7 @@
 import { getCurrentShopContext } from "@/lib/shop-context";
 import { initials, formatNaira } from "@/lib/format";
 import { DollarSign, BarChart3, ShoppingCart, TrendingDown } from "lucide-react";
+import { AddSaleButton } from "./AddSaleButton";
 
 function StatCard({
   label,
@@ -73,9 +74,7 @@ export default async function DashboardPage() {
             How Market Today.
           </h1>
         </div>
-        <button className="flex h-11 items-center rounded-[10px] bg-[var(--color-primary)] px-5 font-semibold text-white transition hover:bg-[var(--color-primary-hover)]">
-          + Add Sale
-        </button>
+        <AddSaleButton />
       </div>
 
       <div className="flex flex-col gap-4 md:flex-row">

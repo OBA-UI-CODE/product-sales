@@ -1,8 +1,8 @@
 "use client";
 
-import { useTransition } from "react";
-import { recordFullPayment } from "./actions";
+import { useState } from "react";
 import { formatNaira } from "@/lib/format";
+import { RecordPaymentModal } from "./RecordPaymentModal";
 
 interface Debt {
   id: string;
@@ -16,7 +16,7 @@ interface Debt {
 }
 
 export default function DebtsClient({ debts }: { debts: Debt[] }) {
-  const [pending, startTransition] = useTransition();
+  const [payTarget, setPayTarget] = useState<Debt | null>(null);
 
   return (
     <div className="flex flex-col gap-4">
@@ -54,15 +54,26 @@ export default function DebtsClient({ debts }: { debts: Debt[] }) {
               </span>
             </div>
             <button
-              disabled={pending}
-              onClick={() => startTransition(() => recordFullPayment(d.id))}
-              className="h-11 shrink-0 rounded-[10px] border border-[var(--color-border)] px-5 font-semibold transition hover:bg-[var(--color-bg-canvas)] disabled:opacity-50"
+              onClick={() => setPayTarget(d)}
+              className="h-11 shrink-0 rounded-[10px] border border-[var(--color-border)] px-5 font-semibold transition hover:bg-[var(--color-bg-canvas)]"
             >
               Record payment
             </button>
           </div>
         );
       })}
+
+      {payTarget && (
+        <RecordPaymentModal
+          debt={{
+            id: payTarget.id,
+            itemName: payTarget.custom_item_name ?? payTarget.productName ?? "Item",
+            debtorName: payTarget.debtor_name,
+            owed: payTarget.total_price - payTarget.amount_paid,
+          }}
+          onClose={() => setPayTarget(null)}
+        />
+      )}
     </div>
   );
 }

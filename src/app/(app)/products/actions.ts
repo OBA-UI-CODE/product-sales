@@ -24,11 +24,12 @@ export async function addProduct(formData: FormData) {
 
 export async function restockProduct(productId: string, quantity: number) {
   const supabase = await createClient();
-  await supabase.rpc("restock_product", {
+  const { error } = await supabase.rpc("restock_product", {
     p_product_id: productId,
     p_quantity: quantity,
     p_reason: "restock",
   });
+  if (error) throw new Error(error.message);
   revalidatePath("/products");
 }
 
