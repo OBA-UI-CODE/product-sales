@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
+import Footer from "./Footer";
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
@@ -123,6 +124,7 @@ export default function MarketingLayout({
       </div>
 
       <main>{children}</main>
+      <Footer />
     </div>
   );
 }

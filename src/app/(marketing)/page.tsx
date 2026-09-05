@@ -3,6 +3,7 @@ import AboutSection from "./AboutSection";
 import FeaturesSection from "./FeaturesSection";
 import FAQSection from "./FAQSection";
 import TestimonialsSection from "./TestimonialsSection";
+import FinalCTASection from "./FinalCTASection";
 
 export default function LandingPage() {
   return (
@@ -65,6 +66,7 @@ export default function LandingPage() {
       <FeaturesSection />
       <FAQSection />
       <TestimonialsSection />
+      <FinalCTASection />
     </>
   );
 }
