@@ -2,6 +2,7 @@ import TrustStrip from "./TrustStrip";
 import AboutSection from "./AboutSection";
 import FeaturesSection from "./FeaturesSection";
 import FAQSection from "./FAQSection";
+import TestimonialsSection from "./TestimonialsSection";
 
 export default function LandingPage() {
   return (
@@ -63,6 +64,7 @@ export default function LandingPage() {
       <AboutSection />
       <FeaturesSection />
       <FAQSection />
+      <TestimonialsSection />
     </>
   );
 }
