@@ -6,17 +6,18 @@
 
 :root {
   --color-bg-canvas: #0a0a0a;
-  --color-bg-surface: #0f1310;
+  --color-bg-surface: #1a1a1a;
+  --color-bg-surface-raised: #303030;
   --color-text-primary: #ffffff;
-  --color-text-secondary: #a3a8a5;
-  --color-text-muted: #71766f;
-  --color-primary: #1d9e75;
-  --color-primary-hover: #0f6e56;
-  --color-border: #232823;
-  --color-danger: #f24444;
-  --color-danger-bg: #351212;
-  --color-success: #35cc8c;
-  --color-success-bg: #0f2a1e;
+  --color-text-secondary: #cacaca;
+  --color-text-muted: #616161;
+  --color-primary: #158060;
+  --color-primary-hover: #1d9e75;
+  --color-border: #303030;
+  --color-danger: #eb6767;
+  --color-danger-bg: #240000;
+  --color-success: #85d7be;
+  --color-success-bg: #062e24;
 }
 
 body {
