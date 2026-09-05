@@ -180,3 +180,21 @@ Built and pushed:
 **Not yet tested:** a full real browser session through the actual signed-in flow (signup → click email link → land in onboarding → complete it → land on dashboard). Everything has been verified at the SQL/RPC level and via production build, but not yet clicked through in a live browser — flagging this rather than claiming full E2E coverage I haven't actually done.
 
 **Day 2 is functionally complete**, pending that live browser walkthrough and the still-outstanding Google OAuth dashboard setup from Day 1 (blocked on Oba's side, per prior update).
+
+## Correction — color tokens did not match Figma (2026-09-05)
+
+Oba asked directly whether the code matches the Figma file. It did not — the `globals.css` color tokens for Day 1/2 pages were approximated from memory of the Figma's general look, not pulled from the actual variable values. Checked properly this time by reading the real Semantic/Primitive variables from the Figma file:
+
+| Token | Was (wrong, from memory) | Now (correct, from Figma) |
+|---|---|---|
+| `--color-primary` | `#1d9e75` | `#158060` (Figma's actual `primary/default`; `#1d9e75` is actually `primary/hover`) |
+| `--color-primary-hover` | `#0f6e56` (invented — not in the design system) | `#1d9e75` (Figma's actual `primary/hover`) |
+| `--color-bg-surface` | `#0f1310` (green-tinted) | `#1a1a1a` (pure neutral, per Figma) |
+| `--color-text-secondary` | `#a3a8a5` | `#cacaca` |
+| `--color-text-muted` | `#71766f` (green-tinted) | `#616161` (pure neutral) |
+| `--color-border` | `#232823` (green-tinted) | `#303030` |
+| `--color-danger-bg` / `--color-success-bg` | guessed | `#240000` / `#062e24` (Figma's actual `danger/subtle` and `success/subtle`) |
+
+Most consequential mismatch: buttons were rendering Figma's *hover* shade as the default state, with an invented, non-system color used for hover. Fixed and rebuilt clean.
+
+**Lesson for the rest of the build:** going forward, any color/token used in code must be read directly from the Figma file's variables via the Figma tools before being hardcoded — not recalled from memory, even when the memory feels confident.
