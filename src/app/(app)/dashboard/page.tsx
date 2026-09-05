@@ -1,5 +1,6 @@
 import { getCurrentShopContext } from "@/lib/shop-context";
 import { initials, formatNaira } from "@/lib/format";
+import { getGreetingHeadline, getGreetingPrefix } from "@/lib/greeting";
 import { DollarSign, BarChart3, ShoppingCart, TrendingDown } from "lucide-react";
 import { AddSaleButton } from "./AddSaleButton";
 
@@ -68,10 +69,10 @@ export default async function DashboardPage() {
       <div className="flex items-center justify-between">
         <div>
           <p className="text-lg font-medium text-[var(--color-text-secondary)]">
-            Good Morning, {profile.name.split(" ")[0]}
+            {getGreetingPrefix()}, {profile.name.split(" ")[0]}
           </p>
           <h1 className="font-heading text-[32px] font-semibold">
-            How Market Today.
+            {getGreetingHeadline()}
           </h1>
         </div>
         <AddSaleButton />
