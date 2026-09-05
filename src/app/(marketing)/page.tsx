@@ -53,12 +53,13 @@ export default function LandingPage() {
         </div>
       </div>
 
-      {/* Dashboard preview mockup — placeholder until the real
-          screenshot/mock asset is exported from Figma */}
+      {/* Real dashboard preview, exported from Figma */}
       <div className="flex items-center justify-center">
-        <div className="flex h-[216px] w-full max-w-full items-center justify-center rounded-2xl border border-dashed border-[var(--color-border)] text-sm text-[var(--color-text-muted)] md:h-[400px] lg:h-[580px]">
-          Dashboard preview image — pending asset export
-        </div>
+        <img
+          src="/images/hero-dashboard-preview.png"
+          alt="Reko dashboard preview"
+          className="h-auto w-full max-w-full rounded-2xl border border-[var(--color-border)] md:max-w-[900px] lg:max-w-[1263px]"
+        />
       </div>
       </section>
       <TrustStrip />

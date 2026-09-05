@@ -1,16 +1,10 @@
-function ImagePlaceholder({
-  label,
-  className,
-}: {
-  label: string;
-  className?: string;
-}) {
+function FeatureImage({ src, alt, className }: { src: string; alt: string; className?: string }) {
   return (
-    <div
-      className={`flex items-center justify-center rounded-2xl border border-dashed border-[var(--color-border)] text-center text-xs text-[var(--color-text-muted)] ${className ?? ""}`}
-    >
-      {label}
-    </div>
+    <img
+      src={src}
+      alt={alt}
+      className={`w-full rounded-2xl border border-[var(--color-border)] object-cover ${className ?? ""}`}
+    />
   );
 }
 
@@ -35,7 +29,7 @@ function FeatureBlock({
       </p>
     </div>
   );
-  const img = <ImagePlaceholder label={image} className="h-[220px] w-full md:h-[344px]" />;
+  const img = <FeatureImage src={image} alt={title} className="h-[220px] md:h-[344px]" />;
 
   return (
     <div className="flex flex-1 flex-col gap-6">
@@ -100,9 +94,10 @@ export default function FeaturesSection() {
               </p>
             </div>
           </div>
-          <ImagePlaceholder
-            label="Dashboard preview — pending asset export"
-            className="h-[260px] w-full lg:h-[546px]"
+          <FeatureImage
+            src="/images/features-dashboard-row1.png"
+            alt="Reko dashboard"
+            className="h-[260px] lg:h-[546px]"
           />
         </div>
 
@@ -111,13 +106,13 @@ export default function FeaturesSection() {
           <FeatureBlock
             title="Multiple staff, one record"
             body="Everyone on your team logs sales under their own name, so you know who sold what."
-            image="Team illustration — pending asset export"
+            image="/images/features-chatgpt.png"
             imageFirst={true}
           />
           <FeatureBlock
             title="Fix mistakes easily"
             body="Entered the wrong price? Edit or delete a sale after the fact, your stock and totals adjust automatically."
-            image="Edit icon render — pending asset export"
+            image="/images/features-3d-edit-icon.png"
             imageFirst={false}
           />
         </div>
@@ -127,13 +122,13 @@ export default function FeaturesSection() {
           <FeatureBlock
             title="Works on any phone"
             body="Everyone on your team logs sales under their own name, so you know who sold what."
-            image="Phone mockup — pending asset export"
+            image="/images/features-phone-mockup.png"
             imageFirst={false}
           />
           <FeatureBlock
             title="Search your history"
             body="Find any sale by date in seconds. Your whole sales history, always at your finger tips."
-            image="Search icon render — pending asset export"
+            image="/images/features-search-globe.png"
             imageFirst={true}
           />
         </div>
