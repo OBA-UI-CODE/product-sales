@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { Menu, X } from "lucide-react";
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
@@ -17,13 +18,23 @@ export default function MarketingLayout({
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // Lock body scroll while the mobile menu is open, like any full-screen
+  // overlay menu should.
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
   return (
     <div className="min-h-screen bg-[var(--color-bg-canvas)]">
-      <header className="mx-auto flex max-w-[1312px] items-center justify-between gap-6 px-6 py-6 md:gap-6 lg:justify-start lg:gap-[167px]">
+      <header className="relative z-50 mx-auto flex max-w-[1312px] items-center justify-between gap-6 px-6 py-6 md:gap-6 lg:justify-start lg:gap-[167px]">
         <Link
           href="/"
           className="font-heading font-bold leading-none tracking-[-1.5px] text-[32px] md:font-semibold md:text-[48px] lg:font-bold lg:text-[56px]"
           style={{ color: "var(--color-accent-light)" }}
+          onClick={() => setMenuOpen(false)}
         >
           Reko
         </Link>
@@ -56,48 +67,60 @@ export default function MarketingLayout({
           </Link>
         </div>
 
-        {/* Mobile hamburger */}
+        {/* Mobile hamburger / close toggle */}
         <button
           type="button"
-          aria-label="Toggle menu"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
           onClick={() => setMenuOpen((v) => !v)}
-          className="flex h-6 w-6 flex-col items-center justify-center gap-1.5 md:hidden"
+          className="flex h-10 w-10 items-center justify-center rounded-[10px] text-white md:hidden"
         >
-          <span className="h-0.5 w-full bg-white" />
-          <span className="h-0.5 w-full bg-white" />
+          {menuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </header>
 
-      {/* Mobile menu — no expanded-state frame found in Figma for this;
-          sizes below are carried over from the tablet nav as a reasonable
-          default. Flagged for Oba to confirm/replace if a mobile menu
-          design exists elsewhere in the file. */}
-      {menuOpen && (
-        <div className="flex flex-col gap-4 border-t border-[var(--color-border)] px-6 py-6 md:hidden">
-          {NAV_LINKS.map((link) => (
+      {/* Mobile full-screen menu overlay */}
+      <div
+        className={`fixed inset-0 z-40 bg-[var(--color-bg-canvas)] transition-opacity duration-200 md:hidden ${
+          menuOpen
+            ? "pointer-events-auto opacity-100"
+            : "pointer-events-none opacity-0"
+        }`}
+      >
+        <div className="flex h-full flex-col px-6 pt-28 pb-10">
+          <nav className="flex flex-col gap-2">
+            {NAV_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMenuOpen(false)}
+                className="rounded-[10px] px-2 py-4 font-heading text-2xl font-semibold text-white active:bg-[var(--color-bg-surface)]"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="my-6 h-px bg-[var(--color-border)]" />
+
+          <div className="mt-auto flex flex-col gap-4">
             <Link
-              key={link.href}
-              href={link.href}
-              className="font-heading text-lg font-semibold text-white"
+              href="/login"
               onClick={() => setMenuOpen(false)}
+              className="flex h-12 items-center justify-center rounded-[10px] border border-[var(--color-border)] font-heading text-lg font-semibold text-white"
             >
-              {link.label}
+              Sign In
             </Link>
-          ))}
-          <Link
-            href="/login"
-            className="flex h-12 items-center justify-center rounded-[10px] border border-[var(--color-border)] font-heading text-lg font-semibold text-white"
-          >
-            Sign In
-          </Link>
-          <Link
-            href="/signup"
-            className="flex h-12 items-center justify-center rounded-[10px] bg-[var(--color-primary)] font-heading text-lg font-semibold text-white"
-          >
-            Get Started
-          </Link>
+            <Link
+              href="/signup"
+              onClick={() => setMenuOpen(false)}
+              className="flex h-12 items-center justify-center rounded-[10px] bg-[var(--color-primary)] font-heading text-lg font-semibold text-white transition hover:bg-[var(--color-primary-hover)]"
+            >
+              Get Started
+            </Link>
+          </div>
         </div>
-      )}
+      </div>
 
       <main>{children}</main>
     </div>
