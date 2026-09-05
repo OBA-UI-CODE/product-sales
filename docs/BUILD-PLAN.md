@@ -200,3 +200,28 @@ Oba asked directly whether the code matches the Figma file. It did not — the `
 Most consequential mismatch: buttons were rendering Figma's *hover* shade as the default state, with an invented, non-system color used for hover. Fixed and rebuilt clean.
 
 **Lesson for the rest of the build:** going forward, any color/token used in code must be read directly from the Figma file's variables via the Figma tools before being hardcoded — not recalled from memory, even when the memory feels confident.
+
+## Rigorous Figma audit — typography & spacing (2026-09-05)
+
+Per Oba's standing rule (Section 0, rule 3a), did a full audit of Sign In and Sign Up against the actual Figma file rather than the earlier screenshot-based approximation. Findings were significant — this was not a minor drift:
+
+**Structural miss:** the real Figma design is a **two-column layout** — a form on the left and a dark-green marketing panel on the right with a large headline and branding text. My original code was a single centered column with no marketing panel at all.
+
+**Typography was wrong across the board:**
+| Element | Was (code) | Actually (Figma) |
+|---|---|---|
+| Logo | ~24px | 56px, DM Sans Bold, tracking -1.5px |
+| Heading ("Welcome back") | 30px, font-bold | 40px, DM Sans **SemiBold**, line-height 48px, tracking -1px |
+| Subtext | 14px, Inter Regular | 18px, DM Sans **SemiBold** (not Inter!), tracking -1px |
+| Input label/value | 14px | 16px, line-height 24 |
+| Primary button label | 14px | 20px, DM Sans SemiBold, tracking -1px |
+| "Sign up" / "Sign In" links | 14px | 18px, DM Sans SemiBold, tracking -1px |
+| Link/accent color | reused primary green | actually a separate lighter mint `#5dcaa5` — not in my original token set at all |
+
+**Spacing/sizing corrections:** input fields are exactly 52px tall with 10px corner radius; primary button is 48px tall; Google button is 50px tall; card-internal gap is 24px; logo-to-card gap is 64px; the two columns are 546px (form) and 742px (marketing panel) with a 64px gap between them.
+
+**Also found:** the marketing headline uses mixed text color — most of the sentence is white with one key word highlighted in a lighter mint (`#b3e6d6`) — e.g. "leaving no space for **oversight**." on Sign In. Checked the Sign Up headline the same way rather than assuming it matched the pattern — it does not; that one is plain white throughout.
+
+Rebuilt both pages from scratch against these exact values, added the missing DM Sans 600 (SemiBold) font weight import (only 700/Bold was previously imported), verified with a clean production build, and pushed.
+
+**Still not yet audited this rigorously:** the Onboarding wizard and the Dashboard placeholder page — both were built from an earlier screenshot-based read, same as Sign In/Sign Up were. They need the same treatment before Day 3 work continues, per the new standing rule.
