@@ -9,6 +9,8 @@ const PUBLIC_PATHS = [
   "/auth/callback",
 ];
 
+const ONBOARDING_EXEMPT_PATHS = [...PUBLIC_PATHS, "/onboarding"];
+
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
 
@@ -47,6 +49,27 @@ export async function updateSession(request: NextRequest) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     return NextResponse.redirect(url);
+  }
+
+  // Authenticated but hasn't finished onboarding yet (no profile/shop) —
+  // force them into the wizard rather than letting them reach the
+  // dashboard with no shop_id to operate against.
+  const isOnboardingExemptPath = ONBOARDING_EXEMPT_PATHS.some((path) =>
+    request.nextUrl.pathname.startsWith(path)
+  );
+
+  if (user && !isOnboardingExemptPath) {
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("id")
+      .eq("id", user.id)
+      .maybeSingle();
+
+    if (!profile) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/onboarding";
+      return NextResponse.redirect(url);
+    }
   }
 
   return supabaseResponse;
