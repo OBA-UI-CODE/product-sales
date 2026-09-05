@@ -1,0 +1,30 @@
+@import "tailwindcss";
+@import "@fontsource/dm-sans/700.css";
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+
+:root {
+  --color-bg-canvas: #0a0a0a;
+  --color-bg-surface: #0f1310;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #a3a8a5;
+  --color-text-muted: #71766f;
+  --color-primary: #1d9e75;
+  --color-primary-hover: #0f6e56;
+  --color-border: #232823;
+  --color-danger: #f24444;
+  --color-danger-bg: #351212;
+  --color-success: #35cc8c;
+  --color-success-bg: #0f2a1e;
+}
+
+body {
+  background: var(--color-bg-canvas);
+  color: var(--color-text-primary);
+  font-family: "Inter", sans-serif;
+}
+
+h1, h2, h3, .font-heading {
+  font-family: "DM Sans", sans-serif;
+}
