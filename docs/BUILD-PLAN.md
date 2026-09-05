@@ -314,3 +314,13 @@ Built FAQ as an accordion (all 4 items start expanded per Figma, toggle collapse
 Type scale confirmed: badge 24/24/18px, question 32/24/20px, answer 24/20/16px across desktop/tablet/mobile. Card styling: `#1a1a1a` background, `#303030` border, 10px radius.
 
 Build verified clean.
+
+## Testimonials section built + a real bug found in the Figma file itself (2026-09-05)
+
+Built: featured large testimonial card (Mrs Sarah N., photo placeholder) beside a 2x2 grid of 4 more reviews (Chiamaka O., Tunde A., Ngozi E., Fatima B.), each with a 5-star rating (color pulled from the actual `color/warning/default` token → `#e6a900`, not guessed), quote, divider, and profile row. Stacks to a single column on mobile/tablet.
+
+**Found a real content bug in Oba's Figma file, not reproduced it:** the mobile version of this section's heading literally reads "Frequently asked questions" — a leftover from copy-pasting the FAQ component without updating the override. Used the correct heading ("Read live reviews from business owners.") in code instead of blindly copying the wrong text, and flagging this here so Oba can fix it at the source in Figma too.
+
+**Assets still pending (same as Features section):** customer profile photos (5 avatars) and the featured card's background photo are placeholders — real fills are image fills in Figma, not exportable via the current tools, need Oba to export or provide.
+
+**Landing page status:** Nav, Hero, Trust strip, About, Features, FAQ, Testimonials all built and responsive. Remaining: Final CTA (large background wordmark section) and Footer — then the other 6 pages (About, Pricing, How It Works, Contact, Terms, Privacy) are still fully unstarted.
