@@ -501,3 +501,18 @@ Every marketing page's nav, footer, and CTA buttons checked individually — all
 2. **Middleware only listed `/dashboard` and `/onboarding` as protected routes** — `/sales-history`, `/products`, `/debts`, `/settings` were missing from that list. Each page still redirected unauthenticated visitors via its own server-side check (so this was never an actual security hole), but it was inconsistent and meant the "hasn't finished onboarding" redirect didn't apply uniformly across all app routes. Fixed: all 6 app routes are now consistently protected and onboarding-gated at the middleware level.
 
 Build verified clean across all 21 routes after both fixes.
+
+## Time-of-day dashboard greeting (2026-09-05)
+
+Per Oba's request: the Dashboard headline now switches based on time of day, computed against Africa/Lagos time (consistent with the app's existing "today" boundary convention):
+- Morning (5am–11:59am): "How Market Today."
+- Afternoon (12pm–5:59pm): "Shey Sales Dey Alright?"
+- Evening/night (6pm–4:59am): "How Much We Make Today?"
+
+Also updated the "Good Morning, [name]" prefix line to match (Good Morning/Afternoon/Evening) — not explicitly requested, but leaving it static would have produced an obviously broken combination (e.g. "Good Morning" next to "How Much We Make Today?" at 9pm). Flagged as a related correctness fix, not scope creep.
+
+Recomputed fresh on each page visit (server component re-renders per navigation) — not a live-ticking clock while the page sits open, which matches "whenever a user comes on the dashboard" as stated.
+
+**Also confirmed per Oba's question:** the mobile hamburger menu was already fully wired — audited again and verified every link uses real Next.js routing to actual pages, not a decorative overlay. Nothing was missing there.
+
+Build verified clean across all 21 routes.
