@@ -486,3 +486,18 @@ Build verified clean across all 21 routes.
 Built a shared `SaleList` component so both Dashboard and Sales History use the same clickable, editable sale row — avoiding duplicated logic between the two pages.
 
 Build verified clean across all 21 routes.
+
+## Full navigation audit — end-to-end flow verified (2026-09-05)
+
+Per Oba's explicit request: audited every link across every one of the 21 routes to confirm the site is a real, wired prototype end-to-end, not static pages with dead buttons.
+
+**Confirmed the full real flow works, link by link:**
+`/` (Landing) → "Get Started"/"Start Free Trial" → `/signup` → email confirmation → `/auth/callback` → `/onboarding` (5 steps) → `complete_onboarding()` → `/dashboard` → sidebar to Sales History/Products/Debts/Settings, all real routes → Logout → `/login`. Alternate entry via "Sign In" in the nav → `/login` → `/dashboard` (or `/onboarding` if not yet set up, correctly middleware-enforced).
+
+Every marketing page's nav, footer, and CTA buttons checked individually — all point to real routes (`/pricing`, `/how-it-works`, `/about`, `/privacy`, `/terms`, `/contact`, `/signup`, `/login`).
+
+**Two real gaps found and fixed, not just confirmed clean:**
+1. **Footer social media links** (LinkedIn/Facebook/X/Instagram) pointed to `href="#"` — a dead link that also causes an unwanted jump-to-top on click. No real social accounts exist yet, so changed to inert, non-navigating labels rather than a broken link. **Needs Oba to supply real URLs once the accounts exist.**
+2. **Middleware only listed `/dashboard` and `/onboarding` as protected routes** — `/sales-history`, `/products`, `/debts`, `/settings` were missing from that list. Each page still redirected unauthenticated visitors via its own server-side check (so this was never an actual security hole), but it was inconsistent and meant the "hasn't finished onboarding" redirect didn't apply uniformly across all app routes. Fixed: all 6 app routes are now consistently protected and onboarding-gated at the middleware level.
+
+Build verified clean across all 21 routes after both fixes.
