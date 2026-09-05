@@ -438,3 +438,26 @@ Full production build verified clean across all 17 routes.
 - Two-shop isolation was tested for the backend/database only — never re-tested against this actual UI
 
 Next logical step per the original 7-day plan: Day 3 — build the real Dashboard, Sales History, Products, Debts, and Settings pages (the actual product, not the marketing site).
+
+## Day 3 complete: the real authenticated app (2026-09-05)
+
+Built the actual product behind the login — not mockups, real Supabase-backed pages:
+
+- **App shell**: sidebar (real signed-in user's name/role/initials, not hardcoded), 5 nav links, real sign-out action
+- **Dashboard (Home)**: live queries for today's sales, computed totals/collected/owed/average, low-stock count, real sale list — matches the exact Figma spec (greeting, "How Market Today.", 4 stat cards, sale rows)
+- **Sales History**: real date-filtered query (client-side date picker navigates via URL param, server component re-queries)
+- **Products**: real add-product form (owner-only per RLS), restock button wired to the `restock_product()` RPC from Day 1, archive/delete
+- **Debts**: real query for unpaid sales (amount_paid < total_price), "Record payment" wired to the `record_payment()` RPC from Day 1 (marks fully paid)
+- **Settings**: real staff list from `profiles`, remove-staff action (owner-only, can't remove self)
+
+**A real bug caught by the build, not assumed correct:** `shop-context.ts` originally mixed a server-only Supabase import with plain utility functions (`initials`, `formatNaira`). Importing the utilities into a client component (`DebtsClient.tsx`) pulled the entire file — including the `next/headers` server-only import — into client-side code, which Next.js correctly rejected. Fixed by splitting into `shop-context.ts` (server-only) and `format.ts` (pure, client-safe utilities), then fixing every import across the app. Rebuilt clean.
+
+**Honestly incomplete, flagged not hidden:**
+- **Add Staff Account is a stub, not functional.** Creating a new user without the normal signup/confirmation flow requires the Supabase service-role key, which isn't configured in this environment (`SUPABASE_SERVICE_ROLE_KEY` is blank in `.env.local.example`). The form exists and shows a clear error explaining why, rather than silently failing or pretending to work.
+- **Dashboard's "+ Add Sale" button has no modal/action wired yet** — the real sale-creation flow (calling `create_sale()` from Day 1) still needs a UI built for it.
+- No real end-to-end browser test has been done yet — everything is verified via successful builds and confirmed query logic, not a live click-through with a real signed-in user.
+- Two-shop isolation was tested at the database level (Day 1) but never re-tested against this actual UI with two real shops.
+
+Full production build verified clean across all 21 routes (7 marketing pages + 5 auth pages + 5 app pages + 4 utility routes).
+
+**Remaining from the original 7-day plan:** Day 5 (Paystack billing) and Day 6 (UI-level two-shop isolation test) — Day 4 (the four core app pages) is now effectively done alongside Day 3.
