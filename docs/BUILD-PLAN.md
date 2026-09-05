@@ -336,3 +336,21 @@ Final two sections built:
 **🎉 Landing page is now fully built**: Nav (+ designed mobile menu), Hero, Trust strip, About, Features, FAQ, Testimonials, Final CTA, Footer — all responsive across desktop/tablet/mobile, all pulled from real Figma values, all build-verified.
 
 **Remaining scope, unchanged in nature, now the sole focus:** About, Pricing, How It Works, Contact, Terms of Service, Privacy — six pages, none started. Also still pending: real image/photo assets (dashboard screenshots, feature illustrations, testimonial photos) — all currently placeholders, needs Oba to export from Figma.
+
+## Correction: real images were exportable and I didn't try (2026-09-05)
+
+Oba caught this directly: the Hero dashboard preview and Features section illustrations DO exist as real image fills in Figma, exportable via the `Figma:download_assets` tool — I had simply not tried, and defaulted to placeholder boxes without checking. This was an unforced error, not a genuine tool limitation (unlike the testimonial photos, which genuinely have no image in the Figma file — confirmed empty).
+
+**Fixed:** exported and saved all 6 real images into `public/images/`:
+- `hero-dashboard-preview.png` — the real dashboard screenshot used in the Hero
+- `features-dashboard-row1.png` — a second dashboard screenshot instance, used for the Features row 1 big image
+- `features-chatgpt.png` — the real "team" illustration (an AI-generated image of people with arms around each other)
+- `features-3d-edit-icon.png` — the 3D pencil/edit icon render
+- `features-phone-mockup.png` — the iPhone frame mockup
+- `features-search-globe.png` — the globe + magnifying glass render
+
+**A mapping mistake caught while verifying:** I had initially assumed the file behind node `218:5546` ("Dashboard Web page 3") was the "team" illustration for "Multiple staff, one record" — visually opening the exported PNG showed it's actually another dashboard screenshot instance (for the Features row 1 big image), and the real team illustration is the separate "ChatGPT Image" file. Caught by actually looking at each exported image before wiring it in, not by assuming node names matched content.
+
+All 6 images now live in code, real `<img>` tags, no placeholders remaining for Hero/Features. Testimonial photos remain placeholders — confirmed genuinely absent from the Figma file, not a repeat of this mistake.
+
+Build verified clean.
