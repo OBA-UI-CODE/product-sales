@@ -279,3 +279,20 @@ Oba confirmed no mobile hamburger menu design exists in Figma and asked me to de
 Built: a full-screen overlay menu (not a small dropdown) — replaces the hamburger icon with a close (X) icon when open, locks body scroll while open, shows the four nav links at 24px DM Sans SemiBold with generous tap targets, a divider, then full-width Sign In (outline) and Get Started (filled) buttons pinned to the bottom of the screen. Uses only existing design tokens (colors, fonts, button radius) already established from the audited pages — no new colors invented.
 
 Build verified clean.
+
+## Landing page progress (2026-09-05, continued)
+
+Building section by section, each with desktop/tablet/mobile from exact Figma values:
+- ✅ Nav (all 3 breakpoints) + designed mobile menu
+- ✅ Hero (all 3 breakpoints)
+- ✅ Trust strip / niche pill marquee (all 3 breakpoints) — auto-scrolling, built with a CSS keyframe animation, duplicated content for a seamless loop, matching the "Auto Scroll" pattern already in the Figma layers
+- ✅ About section (all 3 breakpoints) — caught that the heading/paragraph use a staggered two-column layout on desktop/tablet (paragraph offset down and to the right, not a clean stacked or side-by-side grid) but collapse to a single stacked column on mobile, with the paragraph switching from DM Sans SemiBold to Inter Regular at the mobile breakpoint
+
+**Landing page sections remaining** (identified by inspecting the actual Figma layer tree, not guessed):
+- ❌ Features grid (Figma: "Frame 22", ~2356px tall on desktop — likely the 6 feature cards)
+- ❌ Testimonials section (Figma: "Frame 27"/"Frame 28")
+- ❌ Pricing teaser section (Figma: "Frame 44"/"Frame 49")
+- ❌ Final CTA section with large background wordmark (Figma: "Frame 86" — contains "Reko text", appears to be the "Stop losing track, start with Reko" pattern)
+- ❌ Footer
+
+Still after Landing: About, Pricing, How It Works, Contact, Terms, Privacy pages — none started.
