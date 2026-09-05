@@ -477,3 +477,12 @@ Build verified clean across all 21 routes.
 **Not replicated yet, flagged for later:** mom's app also has `edit-sale-modal.tsx`, `product-modal.tsx` (edit existing product), and `remove-product-modal.tsx` (confirmation dialog before archiving) — Reko currently archives products with a single click, no confirmation step. These are the next logical modals to port over using the same read-the-real-code-first approach.
 
 **Confirmed with Oba:** the "Add Staff Account" Supabase service-role key requirement will be handled by Oba directly pasting the key into Claude Code — not something to work around in this session.
+
+## All 5 mom's-app modals complete (2026-09-05)
+
+- **EditSaleModal** — click any sale row (Dashboard or Sales History) to open it. Editable: price, quantity, payment mode, debtor name. Delete with a confirm/cancel step (not instant), matching mom's UX exactly. Item name shown read-only rather than editable, since Reko's `update_sale()` RPC (Day 1) doesn't support changing which product a sale references — only mom's app's schema allows that. Adapted rather than silently pretending the field works.
+- **RemoveProductModal** — confirmation dialog before archiving a product, replacing the previous single-click delete. Copy adjusted to be accurate to Reko's actual behavior (always soft-archives, keeps past sales) rather than copying mom's dual archive/hard-delete wording, since Reko's `deleteProduct` action doesn't have that distinction.
+
+Built a shared `SaleList` component so both Dashboard and Sales History use the same clickable, editable sale row — avoiding duplicated logic between the two pages.
+
+Build verified clean across all 21 routes.
