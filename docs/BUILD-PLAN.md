@@ -516,3 +516,17 @@ Recomputed fresh on each page visit (server component re-renders per navigation)
 **Also confirmed per Oba's question:** the mobile hamburger menu was already fully wired — audited again and verified every link uses real Next.js routing to actual pages, not a decorative overlay. Nothing was missing there.
 
 Build verified clean across all 21 routes.
+
+## Contact form now fully functional (2026-09-05)
+
+Since no email-sending service is configured yet (flagged earlier — Supabase's shared mailer isn't meant for this, and no Resend/SendGrid key exists), chose the safest fully-working option: store submissions in a new `contact_messages` table rather than leave the form non-functional or attempt email sending that would fail.
+
+**Real, tested database setup:**
+- New `contact_messages` table (name, email, inquiry_type, message, created_at) — not shop-scoped, since it's a general inquiry to Reko, not tied to any shop
+- RLS: anyone (anon or authenticated) can INSERT; nobody can SELECT via the public API — verified directly (`set local role anon` insert succeeded, subsequent select returned empty). Submissions are only visible via the Supabase dashboard, which is intentional — this isn't customer data that should be publicly queryable.
+
+**Frontend:** form now uses a real server action, shows the actual error state if the insert fails, and a genuine success message after a successful submission (not a fake "sent" state).
+
+Build verified clean across all 21 routes.
+
+**Still pending for later:** actual email notification when a message comes in (would need the email-sender setup already flagged), and a simple admin view to read submissions (currently only visible via raw Supabase dashboard table browsing).
