@@ -1,6 +1,10 @@
+import TrustStrip from "./TrustStrip";
+import AboutSection from "./AboutSection";
+
 export default function LandingPage() {
   return (
-    <section className="mx-auto flex max-w-[1312px] flex-col gap-6 px-6 pt-6 pb-16 md:gap-12 lg:gap-16 lg:pt-11">
+    <>
+      <section className="mx-auto flex max-w-[1312px] flex-col gap-6 px-6 pt-6 pb-16 md:gap-12 lg:gap-16 lg:pt-11">
       <div className="flex flex-col gap-6 lg:gap-16">
         <div className="flex max-w-[871px] flex-col gap-6">
           <span
@@ -52,6 +56,9 @@ export default function LandingPage() {
           Dashboard preview image — pending asset export
         </div>
       </div>
-    </section>
+      </section>
+      <TrustStrip />
+      <AboutSection />
+    </>
   );
 }

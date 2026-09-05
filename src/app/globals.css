@@ -15,6 +15,7 @@
   --color-primary: #158060;
   --color-primary-hover: #1d9e75;
   --color-border: #303030;
+  --color-border-strong: #3d3d3d;
   --color-danger: #eb6767;
   --color-danger-bg: #240000;
   --color-success: #85d7be;
@@ -31,4 +32,17 @@ body {
 
 h1, h2, h3, .font-heading {
   font-family: "DM Sans", sans-serif;
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee-scroll 25s linear infinite;
 }
