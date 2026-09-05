@@ -102,14 +102,6 @@ export default function PricingPage() {
         </div>
 
         <div className="flex flex-col gap-8 md:flex-row">
-          {/* NOTE: pricing figures below match exactly what's in Figma
-              (₦1,599/mo, ₦19,188/yr), but there are two real
-              inconsistencies flagged for Oba to resolve:
-              1. This differs from the ₦3,599/mo figure discussed and
-                 calculated earlier in this project's chat history.
-              2. ₦19,188/yr = exactly 12 × ₦1,599 (zero discount), yet
-                 the yearly card is labeled "2 months free" / "Best
-                 Value" in Figma — those don't mathematically agree. */}
           <PricingCard
             planName="Reko Starter Plan"
             subLine="14 day free trial, no card required to start"
@@ -119,7 +111,7 @@ export default function PricingPage() {
           <PricingCard
             planName="Reko Starter / Best Value"
             subLine="2 months free."
-            price="₦ 19,188"
+            price="₦ 15,990"
             period="/yearly"
           />
         </div>
