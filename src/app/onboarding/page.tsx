@@ -21,7 +21,7 @@ export default async function OnboardingPage() {
     .maybeSingle();
 
   if (profile) {
-    redirect("/");
+    redirect("/dashboard");
   }
 
   return <OnboardingWizard />;

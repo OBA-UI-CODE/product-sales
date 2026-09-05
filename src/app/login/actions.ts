@@ -27,7 +27,7 @@ export async function signInWithEmail(
     return { error: "Incorrect email or password." };
   }
 
-  redirect("/");
+  redirect("/dashboard");
 }
 
 export async function signInWithGoogle() {
@@ -37,7 +37,7 @@ export async function signInWithGoogle() {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${origin}/auth/callback?next=/`,
+      redirectTo: `${origin}/auth/callback?next=/dashboard`,
     },
   });
 

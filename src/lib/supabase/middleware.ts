@@ -11,6 +11,11 @@ const PUBLIC_PATHS = [
 
 const ONBOARDING_EXEMPT_PATHS = [...PUBLIC_PATHS, "/onboarding"];
 
+// Only these paths require a signed-in user at all. Everything else
+// (the marketing site: /, /about, /pricing, /how-it-works, /contact,
+// /terms, /privacy) is public and served to anyone.
+const PROTECTED_PREFIXES = ["/dashboard", "/onboarding"];
+
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
 
@@ -41,11 +46,11 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const isPublicPath = PUBLIC_PATHS.some((path) =>
+  const isProtectedPath = PROTECTED_PREFIXES.some((path) =>
     request.nextUrl.pathname.startsWith(path)
   );
 
-  if (!user && !isPublicPath) {
+  if (!user && isProtectedPath) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     return NextResponse.redirect(url);
@@ -53,12 +58,10 @@ export async function updateSession(request: NextRequest) {
 
   // Authenticated but hasn't finished onboarding yet (no profile/shop) —
   // force them into the wizard rather than letting them reach the
-  // dashboard with no shop_id to operate against.
-  const isOnboardingExemptPath = ONBOARDING_EXEMPT_PATHS.some((path) =>
-    request.nextUrl.pathname.startsWith(path)
-  );
-
-  if (user && !isOnboardingExemptPath) {
+  // dashboard with no shop_id to operate against. Only applies to
+  // protected paths — an authenticated user browsing the public
+  // marketing site doesn't need to be interrupted.
+  if (user && isProtectedPath && request.nextUrl.pathname !== "/onboarding") {
     const { data: profile } = await supabase
       .from("profiles")
       .select("id")

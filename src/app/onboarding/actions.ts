@@ -44,5 +44,5 @@ export async function completeOnboarding(
     return { error: error.message };
   }
 
-  redirect("/");
+  redirect("/dashboard");
 }
