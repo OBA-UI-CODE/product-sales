@@ -113,3 +113,10 @@ Stock-affecting operations (`create_sale`, `update_sale`, `delete_sale`, `restoc
 ## 5. Change log
 
 - **2026-09-04:** Initial plan created. Confirmed `product-sales` repo has zero code (PRD + brand docs only). Confirmed no Supabase project exists yet for Reko (only mom's `salebook` project exists). Full 7-day sequence drafted above.
+- **2026-09-04 (Day 1 progress):** Created Supabase project `reko` (id `ktpqywmtgswjmvdyvvlg`, region eu-west-1, free tier, $0/month). Applied migrations 0001–0005:
+  - 0001: `shops`, `profiles`, `current_shop_id()`, `is_owner()`, RLS enabled with owner/staff-scoped policies
+  - 0002: `products`, `sales`, `stock_adjustments`, `payments` — all shop-scoped, RLS enabled
+  - 0003: `SECURITY DEFINER` functions (`create_sale`, `update_sale`, `delete_sale`, `restock_product`, `record_payment`) built correctly from day one, each with an internal `shop_id` ownership check (required since SECURITY DEFINER bypasses RLS)
+  - 0004–0005: Security advisor flagged leftover default PUBLIC/anon execute grants on `current_shop_id()`/`is_owner()`; revoked. Re-ran advisor — clean except for expected `authenticated`-role warnings on the 5 action functions, which are intentional (shop-scoped checks happen inside each function body).
+  - Verified RLS is enabled (`relrowsecurity = true`) on all 6 shop-scoped tables.
+  - **Not yet done today:** auth setup (email/password, Google OAuth, email confirmation, forgot password), Next.js app scaffold, two-shop isolation test with real data (only schema-level RLS confirmed so far, not yet tested with actual rows from two different shops).
