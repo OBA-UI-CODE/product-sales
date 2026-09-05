@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "@fontsource/dm-sans/600.css";
 @import "@fontsource/dm-sans/700.css";
 @import "@fontsource/inter/400.css";
 @import "@fontsource/inter/500.css";
@@ -18,6 +19,8 @@
   --color-danger-bg: #240000;
   --color-success: #85d7be;
   --color-success-bg: #062e24;
+  --color-accent-light: #5dcaa5;
+  --color-accent-highlight: #b3e6d6;
 }
 
 body {
