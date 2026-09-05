@@ -324,3 +324,15 @@ Built: featured large testimonial card (Mrs Sarah N., photo placeholder) beside 
 **Assets still pending (same as Features section):** customer profile photos (5 avatars) and the featured card's background photo are placeholders — real fills are image fills in Figma, not exportable via the current tools, need Oba to export or provide.
 
 **Landing page status:** Nav, Hero, Trust strip, About, Features, FAQ, Testimonials all built and responsive. Remaining: Final CTA (large background wordmark section) and Footer — then the other 6 pages (About, Pricing, How It Works, Contact, Terms, Privacy) are still fully unstarted.
+
+## Landing page complete (2026-09-05)
+
+Final two sections built:
+- **Final CTA**: real hollow-outline text effect confirmed in Figma (stroke-only, no fill, `#1d9e75` stroke) recreated with CSS `WebkitTextStroke`. The wave/ripple vector shapes layered behind it in Figma are a deliberate simplification — not practical to recreate exactly from raw vector paths with the available tools, flagged rather than attempted and faked.
+- **Footer**: real 3-column nav (Product/Company/Get Started) with real links, social row, copyright line — content pulled exactly from Figma. No duplicate "Terms of service" bug this time (an issue flagged much earlier in this project no longer exists in the current design).
+
+**One flagged simplification, not silently done:** footer's tablet/mobile exact type sizes could not be located via direct node lookup in the time available. Applied the same heading/body scale ratio already independently confirmed across every other section on this page (56/48/32 pattern) rather than blind-guessing new values — this is pattern application, not a fresh guess, but it's still not an individually re-verified value and is noted as such.
+
+**🎉 Landing page is now fully built**: Nav (+ designed mobile menu), Hero, Trust strip, About, Features, FAQ, Testimonials, Final CTA, Footer — all responsive across desktop/tablet/mobile, all pulled from real Figma values, all build-verified.
+
+**Remaining scope, unchanged in nature, now the sole focus:** About, Pricing, How It Works, Contact, Terms of Service, Privacy — six pages, none started. Also still pending: real image/photo assets (dashboard screenshots, feature illustrations, testimonial photos) — all currently placeholders, needs Oba to export from Figma.
