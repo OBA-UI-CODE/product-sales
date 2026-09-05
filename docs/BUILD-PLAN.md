@@ -296,3 +296,11 @@ Building section by section, each with desktop/tablet/mobile from exact Figma va
 - ❌ Footer
 
 Still after Landing: About, Pricing, How It Works, Contact, Terms, Privacy pages — none started.
+
+## Features section built (2026-09-05)
+
+Real structure found in Figma (not a simple grid): first two features (Fast sale entry, Automatic stock tracking) share one large image on the right; the remaining four features each pair individually with their own illustration, alternating image-first/text-first per card. Confirmed by inspecting actual layer IDs, not assumed.
+
+Type scale confirmed per breakpoint: heading 56/48/32px, feature titles 48/48/24px, body text 24/24/16px (with a font-family change to Inter at mobile, same pattern as About section).
+
+**Real image assets used in Figma for this section are not yet exported/available:** a dashboard screenshot, an AI-generated team illustration, a 3D edit-icon render, an iPhone mockup, and a search/globe icon render. All five are currently dashed placeholder boxes labeled with what they'll eventually be — flagged clearly rather than left unlabeled or invented. **Needs Oba to export these assets from Figma** (or provide replacements) before this section is launch-ready.
