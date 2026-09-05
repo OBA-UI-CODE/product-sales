@@ -1,20 +1,17 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-const PUBLIC_PATHS = [
-  "/login",
-  "/signup",
-  "/forgot-password",
-  "/reset-password",
-  "/auth/callback",
-];
-
-const ONBOARDING_EXEMPT_PATHS = [...PUBLIC_PATHS, "/onboarding"];
-
 // Only these paths require a signed-in user at all. Everything else
 // (the marketing site: /, /about, /pricing, /how-it-works, /contact,
 // /terms, /privacy) is public and served to anyone.
-const PROTECTED_PREFIXES = ["/dashboard", "/onboarding"];
+const PROTECTED_PREFIXES = [
+  "/dashboard",
+  "/onboarding",
+  "/sales-history",
+  "/products",
+  "/debts",
+  "/settings",
+];
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });

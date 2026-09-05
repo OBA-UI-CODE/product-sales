@@ -72,7 +72,11 @@ export default function Footer() {
           <div className="flex flex-wrap items-center gap-4 text-sm text-[var(--color-text-secondary)] md:text-base">
             {SOCIAL_LINKS.map((label, i) => (
               <span key={label} className="flex items-center gap-4">
-                <a href="#">{label}</a>
+                {/* No real social accounts exist yet — rendered as
+                    non-navigating text rather than a dead href="#" link,
+                    which would jump the page to top on click. Swap in
+                    real URLs once the accounts exist. */}
+                <span className="cursor-default">{label}</span>
                 {i < SOCIAL_LINKS.length - 1 && (
                   <span className="h-4 w-px bg-[var(--color-border)]" />
                 )}
