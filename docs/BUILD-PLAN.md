@@ -137,3 +137,25 @@ Real end-to-end test performed, not just schema inspection. Created two real tes
 **Result: all isolation tests passed.** Both the RLS policies (read/write on tables directly) and the internal checks inside the SECURITY DEFINER functions (which bypass RLS by nature) independently enforce shop boundaries. Test data was fully cleaned up afterward (0 shops remaining in the database).
 
 **Day 1 is now genuinely complete** for the schema/security portion. Remaining before Day 1 can close entirely: auth setup (email/password, Google OAuth, email confirmation, forgot password) and the Next.js app scaffold — not yet started.
+
+### Day 1 — Auth + scaffold (2026-09-04)
+
+Built and pushed:
+- Next.js 16 (App Router, TypeScript, Tailwind v4) scaffold — matches mom's app's stack
+- Supabase client/server/proxy setup using `@supabase/ssr` (proxy.ts, not middleware.ts — Next.js 16 deprecated the old convention; mom's app already uses `proxy.ts` too, so this matches)
+- Sign In page + `signInWithEmail` action (deliberately vague error message — never reveals whether an email exists)
+- Sign Up page + `signUpWithEmail` action — creates the `auth.users` row only; does NOT create `shops`/`profiles` yet, that happens at the end of onboarding (Day 2)
+- Google OAuth wired on both Sign In and Sign Up via `signInWithOAuth`
+- `/auth/callback` route — handles both the Google OAuth redirect and email confirmation/reset links (both arrive as a `code` param)
+- Forgot password page + action — always reports success regardless of whether the email exists, so the form can't be used to enumerate accounts
+- Reset password page + action
+
+**Verified, not assumed:** ran `npm install` and `npx next build` for real. First build caught genuine TypeScript errors (implicit `any` on cookie-handling callbacks) — fixed and rebuilt clean. All 6 auth routes compiled successfully.
+
+**What I could NOT do (requires the Supabase Dashboard UI, no management-API tool exposes this):**
+1. Enabling the Google OAuth provider in Supabase Auth settings — needs a Google Cloud OAuth Client ID + Secret pasted into Authentication → Providers → Google. **Oba must do this.** Callback URL to register in Google Cloud: `https://ktpqywmtgswjmvdyvvlg.supabase.co/auth/v1/callback`
+2. Confirming "Confirm email" is switched ON under Authentication → Settings (should be on by default, but not verified via any tool — needs a manual check).
+
+Until #1 is done, the "Continue with Google" button will fail gracefully (redirects back to the page with `?error=google_oauth_failed`) rather than crash — but it won't actually work end-to-end yet.
+
+**Day 1 is now fully complete except for the two manual Supabase Dashboard steps above.**
