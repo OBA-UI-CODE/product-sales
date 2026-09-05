@@ -120,3 +120,20 @@ Stock-affecting operations (`create_sale`, `update_sale`, `delete_sale`, `restoc
   - 0004–0005: Security advisor flagged leftover default PUBLIC/anon execute grants on `current_shop_id()`/`is_owner()`; revoked. Re-ran advisor — clean except for expected `authenticated`-role warnings on the 5 action functions, which are intentional (shop-scoped checks happen inside each function body).
   - Verified RLS is enabled (`relrowsecurity = true`) on all 6 shop-scoped tables.
   - **Not yet done today:** auth setup (email/password, Google OAuth, email confirmation, forgot password), Next.js app scaffold, two-shop isolation test with real data (only schema-level RLS confirmed so far, not yet tested with actual rows from two different shops).
+
+### Day 1 — Two-shop isolation test results (2026-09-04)
+
+Real end-to-end test performed, not just schema inspection. Created two real test shops (Shop A, Shop B) with real auth.users, profiles, products, and sales, then simulated each user's authenticated session (`SET LOCAL request.jwt.claims`) and attempted several attacks:
+
+| Test | Result |
+|---|---|
+| Owner A reads `shops`/`products` while authenticated as A | ✅ Sees only Shop A's data |
+| Owner B reads `shops`/`products` while authenticated as B | ✅ Sees only Shop B's data |
+| Owner A attempts direct `INSERT` into `products` with Shop B's `shop_id` | ✅ Blocked — RLS raised `new row violates row-level security policy` |
+| Owner A calls `create_sale()` against Shop B's product ID (tests the SECURITY DEFINER internal check, since this bypasses table RLS) | ✅ Blocked — function raised `Product does not belong to your shop` |
+| Owner A attempts to read Shop B's specific sale by ID (direct lookup, not listing) | ✅ Returned zero rows — invisible even when the ID is known |
+| Owner A calls `record_payment()` against Shop B's sale ID, trying to manipulate Shop B's debt | ✅ Blocked — function raised `Sale not found in your shop` |
+
+**Result: all isolation tests passed.** Both the RLS policies (read/write on tables directly) and the internal checks inside the SECURITY DEFINER functions (which bypass RLS by nature) independently enforce shop boundaries. Test data was fully cleaned up afterward (0 shops remaining in the database).
+
+**Day 1 is now genuinely complete** for the schema/security portion. Remaining before Day 1 can close entirely: auth setup (email/password, Google OAuth, email confirmation, forgot password) and the Next.js app scaffold — not yet started.
