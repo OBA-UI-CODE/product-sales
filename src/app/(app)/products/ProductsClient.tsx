@@ -2,8 +2,9 @@
 
 import { useState, useTransition } from "react";
 import { RefreshCw, X, Plus } from "lucide-react";
-import { addProduct, deleteProduct } from "./actions";
+import { addProduct } from "./actions";
 import { RestockModal } from "./RestockModal";
+import { RemoveProductModal } from "./RemoveProductModal";
 
 interface Product {
   id: string;
@@ -16,6 +17,7 @@ interface Product {
 export default function ProductsClient({ products }: { products: Product[] }) {
   const [showForm, setShowForm] = useState(false);
   const [restockTarget, setRestockTarget] = useState<Product | null>(null);
+  const [removeTarget, setRemoveTarget] = useState<Product | null>(null);
   const [pending, startTransition] = useTransition();
 
   return (
@@ -116,8 +118,8 @@ export default function ProductsClient({ products }: { products: Product[] }) {
                   <RefreshCw size={16} />
                 </button>
                 <button
-                  onClick={() => startTransition(() => deleteProduct(p.id))}
-                  title="Archive product"
+                  onClick={() => setRemoveTarget(p)}
+                  title="Remove product"
                   className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--color-border-strong)]"
                 >
                   <X size={16} />
@@ -132,6 +134,13 @@ export default function ProductsClient({ products }: { products: Product[] }) {
         <RestockModal
           product={restockTarget}
           onClose={() => setRestockTarget(null)}
+        />
+      )}
+
+      {removeTarget && (
+        <RemoveProductModal
+          product={removeTarget}
+          onClose={() => setRemoveTarget(null)}
         />
       )}
     </div>

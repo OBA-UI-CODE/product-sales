@@ -35,10 +35,11 @@ export async function restockProduct(productId: string, quantity: number) {
 
 export async function deleteProduct(productId: string) {
   const { supabase, profile } = await getCurrentShopContext();
-  await supabase
+  const { error } = await supabase
     .from("products")
     .update({ archived_at: new Date().toISOString() })
     .eq("id", productId)
     .eq("shop_id", profile.shop_id);
+  if (error) throw new Error(error.message);
   revalidatePath("/products");
 }
