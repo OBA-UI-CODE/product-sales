@@ -354,3 +354,17 @@ Oba caught this directly: the Hero dashboard preview and Features section illust
 All 6 images now live in code, real `<img>` tags, no placeholders remaining for Hero/Features. Testimonial photos remain placeholders — confirmed genuinely absent from the Figma file, not a repeat of this mistake.
 
 Build verified clean.
+
+## About page built (2026-09-05)
+
+Confirmed real page structure: Hero → Trust strip (identical component to Landing, reused directly) → Our Story (3 sub-sections: Our Story, The Build, Personas) → Why Reko (headline + 3 reason cards) → Mission/Vision (2 columns with photos) → Final CTA (identical to Landing's, reused directly).
+
+**5 more real images found and exported this time** (in addition to Landing's 6): the About hero's own dashboard screenshot, a second dashboard screenshot instance, a generic "About Us" stock-style graphic (flagged below), and two real photos of actual shop owners for Mission/Vision.
+
+**Flagged, not silently used:** the "Our Story" side image (`about-story-side.png`) is a generic, colorful stock-clipart-style "About Us" graphic that doesn't match Reko's brand palette or visual style at all — looks like a placeholder Oba may have dropped in rather than a final asset. Used it as-is since it's literally what's in the Figma file, per the standing rule, but flagging it as something Oba likely wants to swap before launch.
+
+Confirmed one real breakpoint difference from Landing's Hero: About's heading scales 72/64/56 (desktop/tablet/mobile) vs Landing's 72/64/64 — checked rather than assumed reuse.
+
+Build verified clean, `/about` route live.
+
+**Pages remaining:** Pricing, How It Works, Contact, Terms of Service, Privacy — 5 pages, none started.
