@@ -159,3 +159,24 @@ Built and pushed:
 Until #1 is done, the "Continue with Google" button will fail gracefully (redirects back to the page with `?error=google_oauth_failed`) rather than crash — but it won't actually work end-to-end yet.
 
 **Day 1 is now fully complete except for the two manual Supabase Dashboard steps above.**
+
+## Day 2 — Onboarding (2026-09-05)
+
+Built and pushed:
+- `complete_onboarding()` SECURITY DEFINER function — the same bootstrap-problem pattern as Day 1's sale functions. Creates the `shops` row, the owner's `profiles` row, backfills `owner_id`, and optionally creates a first product, all in one call.
+- 5-step onboarding wizard (Welcome → Shop Details + Category → Theme colour → Optional first product → Done), matching the Figma design's step-dot pattern and copy
+- Redirect logic in `proxy.ts`: an authenticated user with no `profiles` row is now forced into `/onboarding` from any other route, so nobody can reach the dashboard without a shop
+- Placeholder home page (`/`) — real dashboard is Day 3 work; this just proves the redirect chain (signup → confirm → onboarding → dashboard) actually connects end to end
+
+**A real bug caught by testing, not assumed away:** the first version of `complete_onboarding()` failed immediately — `shops.owner_id` has a foreign key to `profiles(id)`, but `profiles.shop_id` is NOT NULL and references `shops(id)`. Neither table could be inserted first. Fixed by inserting the shop with `owner_id` left null, inserting the profile, then backfilling `owner_id`. Re-tested and confirmed working.
+
+**Verified with real SQL-level tests (same rigor as Day 1's isolation test), not just a clean build:**
+- Onboarding a fresh test user succeeds: shop created, profile created with role=owner, `owner_id` backfilled, `trial_ends_at` set 14 days out, sample product created and correctly linked to the new shop's `shop_id`
+- Re-running onboarding as the same user is correctly rejected: `"Onboarding already completed for this account"`
+- Test data cleaned up afterward
+
+**Build verified:** `npx next build` clean, 9 routes compiled (`/`, `/login`, `/signup`, `/onboarding`, `/forgot-password`, `/reset-password`, `/auth/callback`, `/signup/check-email`, `/_not-found`).
+
+**Not yet tested:** a full real browser session through the actual signed-in flow (signup → click email link → land in onboarding → complete it → land on dashboard). Everything has been verified at the SQL/RPC level and via production build, but not yet clicked through in a live browser — flagging this rather than claiming full E2E coverage I haven't actually done.
+
+**Day 2 is functionally complete**, pending that live browser walkthrough and the still-outstanding Google OAuth dashboard setup from Day 1 (blocked on Oba's side, per prior update).
