@@ -304,3 +304,13 @@ Real structure found in Figma (not a simple grid): first two features (Fast sale
 Type scale confirmed per breakpoint: heading 56/48/32px, feature titles 48/48/24px, body text 24/24/16px (with a font-family change to Inter at mobile, same pattern as About section).
 
 **Real image assets used in Figma for this section are not yet exported/available:** a dashboard screenshot, an AI-generated team illustration, a 3D edit-icon render, an iPhone mockup, and a search/globe icon render. All five are currently dashed placeholder boxes labeled with what they'll eventually be — flagged clearly rather than left unlabeled or invented. **Needs Oba to export these assets from Figma** (or provide replacements) before this section is launch-ready.
+
+## FAQ section built, section order corrected (2026-09-05)
+
+Checking Figma directly (not assuming from memory) caught a real ordering mistake before it happened: what I'd assumed was "Testimonials" (Frame 27/28) is actually **FAQ**, and the real Testimonials section (5 reviews: Sarah N, Chiamaka O, Tunde A, Ngozi E, Fatima B — one fewer and different names than my much-earlier draft copy from this chat) comes **after** FAQ, not before. Confirmed page order: Nav → Hero → Trust strip → About → Features → **FAQ** → **Testimonials** → Final CTA → Footer.
+
+Built FAQ as an accordion (all 4 items start expanded per Figma, toggle collapsed/expanded with −/+ — the + is an inferred toggle state, not a separate Figma design, since only the expanded − state exists in the file; this is the natural interactive complement to a shown accordion indicator, not an invented design element).
+
+Type scale confirmed: badge 24/24/18px, question 32/24/20px, answer 24/20/16px across desktop/tablet/mobile. Card styling: `#1a1a1a` background, `#303030` border, 10px radius.
+
+Build verified clean.
