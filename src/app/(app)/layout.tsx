@@ -1,5 +1,6 @@
 import { LogOut } from "lucide-react";
-import { getCurrentShopContext, initials } from "@/lib/shop-context";
+import { getCurrentShopContext } from "@/lib/shop-context";
+import { initials } from "@/lib/format";
 import { signOut } from "./actions";
 import SidebarNav from "./SidebarNav";
 

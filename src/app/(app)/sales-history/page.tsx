@@ -1,4 +1,5 @@
-import { getCurrentShopContext, initials, formatNaira } from "@/lib/shop-context";
+import { getCurrentShopContext } from "@/lib/shop-context";
+import { initials, formatNaira } from "@/lib/format";
 import DatePicker from "./DatePicker";
 
 export default async function SalesHistoryPage({
