@@ -461,3 +461,19 @@ Built the actual product behind the login — not mockups, real Supabase-backed 
 Full production build verified clean across all 21 routes (7 marketing pages + 5 auth pages + 5 app pages + 4 utility routes).
 
 **Remaining from the original 7-day plan:** Day 5 (Paystack billing) and Day 6 (UI-level two-shop isolation test) — Day 4 (the four core app pages) is now effectively done alongside Day 3.
+
+## Real modals replicated from mom's app (2026-09-05)
+
+Per Oba's explicit instruction: read mom's app's actual modal source code directly (not memory, not approximation) and replicated the real functionality for Reko, restyled with Reko's tokens:
+
+- **AddSaleModal** — catalog search (autocomplete against real products) + manual one-off entry, quantity stepper, payment mode toggle (Paid/Part-paid/Not paid) with debtor name field, live total. Wired to Reko's actual `create_sale()` RPC signature, which differs from mom's app: Reko takes `total_price` (computed client-side as price × quantity) rather than `unit_price`, and derives the seller from `auth.uid()` server-side rather than accepting a client-supplied `sold_by` — preserving the Day 1 security decision rather than regressing it to match mom's older pattern.
+- **RestockModal** — replaced the earlier hardcoded "+10" button with mom's real pattern: a quantity input, shows current stock, wired to `restock_product()`.
+- **RecordPaymentModal** — replaced the earlier "always pay in full" button with mom's real pattern: an amount input capped at what's actually owed, wired to `record_payment()` with `p_pay_full: false`.
+
+All three use `router.refresh()` after a successful mutation (matching mom's app's pattern) so the underlying server-fetched list actually updates.
+
+Build verified clean across all 21 routes.
+
+**Not replicated yet, flagged for later:** mom's app also has `edit-sale-modal.tsx`, `product-modal.tsx` (edit existing product), and `remove-product-modal.tsx` (confirmation dialog before archiving) — Reko currently archives products with a single click, no confirmation step. These are the next logical modals to port over using the same read-the-real-code-first approach.
+
+**Confirmed with Oba:** the "Add Staff Account" Supabase service-role key requirement will be handled by Oba directly pasting the key into Claude Code — not something to work around in this session.
