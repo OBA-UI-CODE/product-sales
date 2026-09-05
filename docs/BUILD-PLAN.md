@@ -271,3 +271,11 @@ Note: font *family* itself changes for the hero subtext between mobile (Inter Re
 **Flagged, not guessed:** no expanded mobile-menu state was found anywhere in the Figma file for the hamburger icon — only the collapsed nav bar with logo + hamburger exists. Built a functional toggle using the tablet nav's link sizing as a reasonable placeholder, but this is an assumption, not a confirmed Figma value. **Needs Oba's confirmation** — either point to the actual mobile menu design if one exists elsewhere in the file, or confirm this placeholder approach is fine.
 
 **Breakpoint mapping note:** Tailwind v4's default breakpoints (`md`=768px, `lg`=1024px) are being used to approximate Figma's exact frame widths (834px tablet, 1440px desktop) — not a pixel-exact match to the breakpoint value itself, just the closest standard Tailwind breakpoint. Flagging this as a deliberate simplification, not an oversight.
+
+## Mobile menu designed (not extracted) — 2026-09-05
+
+Oba confirmed no mobile hamburger menu design exists in Figma and asked me to design one directly, sized properly for the mobile viewport. Since there's nothing to extract here, this is a designed component, not a Figma-audited one — noted explicitly so it's not confused with the "everything must come from Figma" rule, which applies when a Figma design exists.
+
+Built: a full-screen overlay menu (not a small dropdown) — replaces the hamburger icon with a close (X) icon when open, locks body scroll while open, shows the four nav links at 24px DM Sans SemiBold with generous tap targets, a divider, then full-width Sign In (outline) and Get Started (filled) buttons pinned to the bottom of the screen. Uses only existing design tokens (colors, fonts, button radius) already established from the audited pages — no new colors invented.
+
+Build verified clean.
