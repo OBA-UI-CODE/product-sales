@@ -388,3 +388,11 @@ Build verified clean, `/pricing` route live.
 ## Pricing resolved by Oba (2026-09-05)
 
 Confirmed directly by Oba: ₦1,599/month is the correct, intentional price — he deliberately lowered it from the earlier ₦3,599 figure to be cheaper. Yearly corrected to **₦15,990** (= ₦1,599 × 10, a genuine 2-months-free discount matching the card's own label). Updated in code and pushed. Figma itself still shows the old ₦19,188 yearly figure — not edited, since Oba only asked for the code fix; he can update the source file separately if he wants them to match.
+
+## How It Works page built (2026-09-05)
+
+Structure: Hero (badge + heading) → 3 alternating text/image steps (Set up your shop / Log sales as they happen / Know your numbers) → Final CTA (reused). Both step images are real dashboard screenshots exported from Figma, not placeholders.
+
+Build verified clean, `/how-it-works` route live.
+
+**Pages remaining: Contact, Terms of Service, Privacy** — 3 pages left.
