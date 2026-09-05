@@ -384,3 +384,7 @@ Built the page using the literal Figma numbers as-is (₦1,599 / ₦19,188), per
 Build verified clean, `/pricing` route live.
 
 **Pages remaining:** How It Works, Contact, Terms of Service, Privacy — 4 pages, none started.
+
+## Pricing resolved by Oba (2026-09-05)
+
+Confirmed directly by Oba: ₦1,599/month is the correct, intentional price — he deliberately lowered it from the earlier ₦3,599 figure to be cheaper. Yearly corrected to **₦15,990** (= ₦1,599 × 10, a genuine 2-months-free discount matching the card's own label). Updated in code and pushed. Figma itself still shows the old ₦19,188 yearly figure — not edited, since Oba only asked for the code fix; he can update the source file separately if he wants them to match.
