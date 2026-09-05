@@ -396,3 +396,15 @@ Structure: Hero (badge + heading) → 3 alternating text/image steps (Set up you
 Build verified clean, `/how-it-works` route live.
 
 **Pages remaining: Contact, Terms of Service, Privacy** — 3 pages left.
+
+## Contact page built (2026-09-05)
+
+Structure: heading + subtext on the left, real contact form on the right (Name, Email address, Inquiry type dropdown, Message textarea, Send Message button) — all fields match Figma exactly.
+
+**Flagged, not silently changed:** Figma's form input placeholders use a "Geist" font that appears nowhere else in the entire design file (every other page uses only DM Sans + Inter). This looks like an unintentional artifact from a copy-pasted form component template, not a deliberate choice. Used Inter instead, matching every other input field already built across the site, rather than importing a third font family for one page's placeholder text alone. Oba can correct this in Figma if Geist was actually intentional.
+
+**Not yet done — form has no submit handler.** It's real, styled, functional-looking UI, but submitting it does nothing yet (no server action, no email sending). That's backend work for later — flagged here so it's not mistaken for a working contact form.
+
+Build verified clean, `/contact` route live.
+
+**Pages remaining: Terms of Service, Privacy** — 2 pages left, then the entire website will be complete.
