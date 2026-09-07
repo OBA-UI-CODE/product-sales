@@ -7,3 +7,10 @@ node_modules/
 
 # TypeScript incremental build cache
 *.tsbuildinfo
+
+# Vercel deploy token and CLI state — never commit
+.vercel-token
+.vercel
+
+.vercel
+.env*

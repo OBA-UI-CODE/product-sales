@@ -86,15 +86,17 @@ export async function checkPasswordPwned(
 }
 
 /*
-  The message shown to a shop owner. Deliberately explains WHY rather than
-  just refusing, because "choose another password" with no reason reads as
-  the app being difficult.
-*/
-export function pwnedPasswordMessage(count: number): string {
-  const times =
-    count >= 1000
-      ? `${Math.round(count / 1000)},000+ times`
-      : `${count} time${count === 1 ? "" : "s"}`;
+  The message shown to a shop owner.
 
-  return `This password has appeared in ${times} in known data breaches, so it is unsafe to use. Please choose a different one.`;
+  Deliberately says nothing about breaches, counts or danger. The earlier
+  version read "this password has appeared in 70,606,000+ times in known data
+  breaches, so it is unsafe to use" — which is accurate, alarming, blames the
+  person, and tells them nothing about what to do next. Someone signing up for
+  a shop app does not need a security lecture; they need to know the password
+  is too common and what to type instead.
+
+  (It also formatted the number wrongly, rendering 70,606,000 as "70606,000+".)
+*/
+export function pwnedPasswordMessage(_count: number): string {
+  return "That password is too common to be safe. Try adding a few words or numbers only you would think of.";
 }

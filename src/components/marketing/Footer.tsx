@@ -7,6 +7,10 @@ import { BRAND, LogoMark } from "@/components/Brand";
     tablet 96:2377 (834x910)   brand mark 60 · col heads 32/39 · links 18/22
     mobile 99:2493 (393x934)   brand mark 60 · col heads 24/29 · links 18/22
 
+  The mobile columns are minmax(0,1fr) rather than auto, and the 59px gap the
+  file uses only kicks in from 380 up. On a 320-wide phone the fixed gap plus
+  auto columns pushed "Terms of service" and "Social Media" past the edge.
+
   Link area is one grid in one DOM order (Product, Company, Get Started, Social):
     mobile  2 columns -> Product/Company on row 1, Get Started/Social on row 2
     tab/web 3 columns -> the three link columns on row 1, Social alone on row 2
@@ -97,7 +101,16 @@ export default function Footer() {
               line made the brand block ~360px wide instead of ~178, which is
               what squeezed the three link columns off the right edge.
             */}
-            <p className="whitespace-nowrap font-heading text-[24px] font-semibold leading-[29px] tracking-[-1px] text-text-secondary tab:whitespace-normal">
+            {/*
+              20/24 on mobile (99:2499), not 24/29 — at 24 the line is wider
+              than the 345 content column and ran off the side of the screen.
+
+              nowrap is also gone. The file sets it because the line just fits
+              a 393 frame, but plenty of phones are 360 or 320 wide and there
+              it overflowed and took the whole page with it. Wrapping is the
+              graceful failure; at 393 it still sits on one line as drawn.
+            */}
+            <p className="font-heading text-[20px] font-semibold leading-[24px] tracking-[-1px] text-text-secondary tab:text-[24px] tab:leading-[29px]">
               JOHTA. Every sale,{" "}
               <br className="hidden tab:inline web:hidden" />
               <span className="text-primary-text">accounted for.</span>
@@ -111,7 +124,7 @@ export default function Footer() {
             has them at 112 / 143 / 162 on tablet. grid-cols-3 split the space
             evenly, starving "Get Started" and jamming it into "Company".
           */}
-          <div className="grid grid-cols-2 gap-x-[59px] gap-y-6 tab:grid-cols-[max-content_max-content_max-content] tab:justify-start tab:gap-x-12 tab:gap-y-14 web:gap-x-20 web:gap-y-[133px]">
+          <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-x-6 gap-y-6 min-[380px]:gap-x-[59px] tab:grid-cols-[max-content_max-content_max-content] tab:justify-start tab:gap-x-12 tab:gap-y-14 web:gap-x-20 web:gap-y-[133px]">
             <Column title="Product" links={PRODUCT} />
             <Column title="Company" links={COMPANY} />
             <Column title="Get Started" links={GET_STARTED} />

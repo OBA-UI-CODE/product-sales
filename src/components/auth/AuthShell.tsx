@@ -12,6 +12,9 @@
   so the form stays first in the document for keyboard and screen-reader users
   even where the panel is painted above it.
 
+  The mobile column is max-w-345 rather than a fixed 345: the file draws it in
+  a 393 frame, but on a 320 phone a hard 345 pushed the whole page sideways.
+
   IMPORTANT — panel coordinate origin differs by breakpoint:
     On web, the panel's contents live inside an inset box at left/top 48
     (Sign In 180:10138, Sign Up 183:1638), so every child offset the extractor
@@ -72,7 +75,7 @@ export default function AuthShell({
     <main className="min-h-screen w-full bg-bg-canvas">
       <div className="flex flex-col items-center gap-6 tab:items-start tab:gap-12 tab:px-12 tab:pt-6 web:mx-auto web:max-w-[1440px] web:flex-row web:items-center web:gap-16 web:px-11 web:py-6">
         {/* Form — first in the DOM, painted second on mobile */}
-        <div className="order-2 flex w-[345px] shrink-0 flex-col items-start gap-6 pb-10 tab:order-1 tab:w-full tab:gap-12 tab:pb-0 web:w-[546px] web:gap-16">
+        <div className="order-2 flex w-full max-w-[345px] shrink-0 flex-col items-start gap-6 px-4 pb-10 tab:order-1 tab:w-full tab:max-w-none tab:px-0 tab:gap-12 tab:pb-0 web:w-[546px] web:gap-16">
           {form}
         </div>
         <div className="order-1 w-full tab:order-2 web:w-auto">{panel}</div>

@@ -140,6 +140,24 @@ h3 {
   font-family: var(--font-heading);
 }
 
+/*
+  Nothing may scroll the page sideways.
+
+  The design is drawn at a 393 frame and several decorative pieces are placed
+  with absolute offsets that assume it — a phone at 360 or 320 would otherwise
+  drag the whole layout across, which reads as the page "shaking" when you
+  scroll. The real fixes are on the elements themselves; this is the net that
+  catches anything drawn past the edge on a narrower screen.
+
+  clip, not hidden: `overflow-x: hidden` turns the body into a scroll container
+  and breaks `position: sticky` on the dashboard sidebar. `clip` does not.
+*/
+html,
+body {
+  overflow-x: clip;
+  max-width: 100%;
+}
+
 body {
   background: var(--color-bg-canvas);
   color: var(--color-text-primary);
