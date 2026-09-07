@@ -15,8 +15,8 @@ export default function ForgotPasswordPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-[var(--color-bg-canvas)] px-4">
       <div className="flex w-full max-w-[420px] flex-col gap-5">
-        <span className="font-heading text-2xl font-bold text-[var(--color-primary)]">
-          Reko
+        <span className="font-brand text-3xl text-[var(--color-accent-light)]">
+          JOHTA
         </span>
 
         {state.success ? (

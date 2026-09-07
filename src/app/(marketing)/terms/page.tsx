@@ -1,7 +1,16 @@
-const SECTIONS = [
+import LegalPage, { type LegalSection } from "@/components/marketing/LegalPage";
+
+/*
+  Terms of Service — Figma 187:1667 (web) / 187:1732 (tablet) / 187:1797 (mobile)
+
+  Gap to the footer, measured from the file: 67 / 98 / 69
+  (mobile 2371->2438, tablet 2748->2846, web 2635->2704).
+*/
+
+const SECTIONS: LegalSection[] = [
   {
     heading: "1. Acceptable use",
-    body: "You agree to use Reko only for lawful business purposes. You may not use Reko to store fraudulent records, evade taxes, or engage in any illegal activity.",
+    body: "You agree to use JOHTA only for lawful business purposes. You may not use JOHTA to store fraudulent records, evade taxes, or engage in any illegal activity.",
   },
   {
     heading: "2. Your account",
@@ -9,15 +18,15 @@ const SECTIONS = [
   },
   {
     heading: "3. Subscription and billing",
-    body: "Reko is billed on a monthly or yearly subscription after your 14-day free trial. Subscriptions renew automatically unless cancelled. Fees are non-refundable except where required by law.",
+    body: "JOHTA is billed on a monthly or yearly subscription after your one-month free trial. Subscriptions renew automatically unless cancelled. Fees are non-refundable except where required by law.",
   },
   {
     heading: "4. Intellectual property",
-    body: "Reko, its logo, and all related branding are the property of Reko. You retain ownership of the sales and shop data you enter into the platform.",
+    body: "JOHTA, its logo, and all related branding are the property of JOHTA. You retain ownership of the sales and shop data you enter into the platform.",
   },
   {
     heading: "5. Limitation of liability",
-    body: 'Reko is provided "as is." We are not liable for indirect or consequential damages arising from use of the service, including data loss, to the extent permitted by law.',
+    body: "JOHTA is provided “as is.” We are not liable for indirect or consequential damages arising from use of the service, including data loss, to the extent permitted by law.",
   },
   {
     heading: "6. Termination",
@@ -25,37 +34,22 @@ const SECTIONS = [
   },
   {
     heading: "7. Changes to these terms",
-    body: "We may update these terms from time to time. We'll notify you of material changes by email or in-app notice before they take effect.",
+    body: "We may update these terms from time to time. We’ll notify you of material changes by email or in-app notice before they take effect.",
   },
   {
     heading: "8. Contact us",
-    body: "If you have questions about these Terms of Service, contact us at legal@reko.app.",
+    body: "If you have questions about these Terms of Service, contact us at johtahelp@gmail.com",
   },
 ];
 
 export default function TermsPage() {
   return (
-    <section className="mx-auto flex max-w-[890px] flex-col gap-8 px-6 py-16 md:py-20">
-      <div className="flex flex-col gap-4">
-        <h1 className="font-heading text-[48px] font-semibold leading-tight md:text-[72px]">
-          Terms of Service
-        </h1>
-        <p className="text-base text-[var(--color-text-secondary)] md:text-2xl md:font-heading md:font-semibold">
-          Last updated: September 2026. These Terms govern your use of Reko.
-          By using Reko, you agree to these terms.
-        </p>
-      </div>
-
-      {SECTIONS.map((s) => (
-        <div key={s.heading} className="flex flex-col gap-3">
-          <h2 className="font-heading text-2xl font-semibold md:text-[40px]">
-            {s.heading}
-          </h2>
-          <p className="text-base text-[var(--color-text-secondary)] md:text-2xl md:font-heading md:font-semibold">
-            {s.body}
-          </p>
-        </div>
-      ))}
-    </section>
+    <div className="pb-[67px] tab:pb-[98px] web:pb-[69px]">
+      <LegalPage
+        title="Terms of Service"
+        intro="Last updated: September 2026. These Terms govern your use of JOHTA. By using JOHTA, you agree to these terms."
+        sections={SECTIONS}
+      />
+    </div>
   );
 }

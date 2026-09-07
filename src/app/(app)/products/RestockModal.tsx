@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { X } from "lucide-react";
-import { restockProduct } from "./actions";
+import { restockProduct, restockVariant } from "./actions";
 
 interface Product {
   id: string;
@@ -13,9 +13,13 @@ interface Product {
 
 export function RestockModal({
   product,
+  variantId,
   onClose,
 }: {
   product: Product;
+  /* When set, the stock being topped up belongs to a size rather than to the
+     product itself, so the variant RPC is the one that must run. */
+  variantId?: string;
   onClose: () => void;
 }) {
   const router = useRouter();
@@ -31,7 +35,11 @@ export function RestockModal({
     setError(null);
 
     try {
-      await restockProduct(product.id, Number(amount));
+      if (variantId) {
+        await restockVariant(variantId, Number(amount));
+      } else {
+        await restockProduct(product.id, Number(amount));
+      }
       router.refresh();
       onClose();
     } catch {

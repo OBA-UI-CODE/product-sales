@@ -24,5 +24,14 @@ export default async function OnboardingPage() {
     redirect("/dashboard");
   }
 
-  return <OnboardingWizard />;
+  /*
+    The welcome screen greets the user by name (Figma 191:2137, "Welcome to
+    JOHTA, Oba"), but the name field is not collected until step 3 — so it comes
+    from the metadata that sign-up stashes on the auth user, and prefills the
+    step 3 field too.
+  */
+  const initialOwnerName =
+    (user.user_metadata?.full_name as string | undefined) ?? "";
+
+  return <OnboardingWizard initialOwnerName={initialOwnerName} />;
 }

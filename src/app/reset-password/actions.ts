@@ -2,6 +2,10 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import {
+  checkPasswordPwned,
+  pwnedPasswordMessage,
+} from "@/lib/password-check";
 
 export interface ResetPasswordState {
   error?: string;
@@ -19,6 +23,11 @@ export async function updatePassword(
   }
   if (password !== confirmPassword) {
     return { error: "Passwords do not match." };
+  }
+
+  const pwned = await checkPasswordPwned(password);
+  if (pwned?.pwned) {
+    return { error: pwnedPasswordMessage(pwned.count) };
   }
 
   const supabase = await createClient();

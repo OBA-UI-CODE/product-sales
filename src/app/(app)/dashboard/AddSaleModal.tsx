@@ -15,15 +15,42 @@ interface Product {
   default_price: number;
 }
 
+interface Variant {
+  id: string;
+  product_id: string;
+  label: string;
+  price: number;
+  stock_quantity: number;
+}
+
+/*
+  One searchable line in the picker.
+
+  A product with sizes contributes one option PER size, so typing "relaxer"
+  lists "Relaxer — Small", "Relaxer — Big", "Relaxer — Big 6-pack" with their
+  own prices, and picking one fills that price in. A product with no sizes
+  contributes a single option and behaves exactly as it always has.
+*/
+interface SaleOption {
+  key: string;
+  productId: string;
+  variantId: string | null;
+  productName: string;
+  variantLabel: string | null;
+  category: string | null;
+  price: number;
+  stock: number | null;
+}
+
 type Mode = "catalog" | "manual";
 
 export function AddSaleModal({ onClose }: { onClose: () => void }) {
   const router = useRouter();
   const [mode, setMode] = useState<Mode>("catalog");
-  const [products, setProducts] = useState<Product[]>([]);
+  const [options, setOptions] = useState<SaleOption[]>([]);
   const [loadingProducts, setLoadingProducts] = useState(true);
   const [query, setQuery] = useState("");
-  const [selected, setSelected] = useState<Product | null>(null);
+  const [selected, setSelected] = useState<SaleOption | null>(null);
   const [customName, setCustomName] = useState("");
   const [price, setPrice] = useState<string>("");
   const [quantity, setQuantity] = useState(1);
@@ -35,27 +62,90 @@ export function AddSaleModal({ onClose }: { onClose: () => void }) {
 
   useEffect(() => {
     const supabase = createClient();
-    supabase
-      .from("products")
-      .select("id, name, category, default_price")
-      .is("archived_at", null)
-      .order("name", { ascending: true })
-      .then(({ data, error }) => {
-        if (!error && data) setProducts(data);
-        setLoadingProducts(false);
-      });
+    let cancelled = false;
+
+    async function load() {
+      const [{ data: products }, { data: variants }] = await Promise.all([
+        supabase
+          .from("products")
+          .select("id, name, category, default_price")
+          .is("archived_at", null)
+          .order("name", { ascending: true }),
+        supabase
+          .from("product_variants")
+          .select("id, product_id, label, price, stock_quantity")
+          .is("archived_at", null)
+          .order("price", { ascending: true }),
+      ]);
+
+      if (cancelled) return;
+
+      const byProduct = new Map<string, Variant[]>();
+      for (const v of (variants ?? []) as Variant[]) {
+        const list = byProduct.get(v.product_id) ?? [];
+        list.push(v);
+        byProduct.set(v.product_id, list);
+      }
+
+      const built: SaleOption[] = [];
+      for (const p of (products ?? []) as Product[]) {
+        const vs = byProduct.get(p.id);
+        if (vs && vs.length > 0) {
+          for (const v of vs) {
+            built.push({
+              key: v.id,
+              productId: p.id,
+              variantId: v.id,
+              productName: p.name,
+              variantLabel: v.label,
+              category: p.category,
+              price: Number(v.price),
+              stock: v.stock_quantity,
+            });
+          }
+        } else {
+          built.push({
+            key: p.id,
+            productId: p.id,
+            variantId: null,
+            productName: p.name,
+            variantLabel: null,
+            category: p.category,
+            price: Number(p.default_price),
+            stock: null,
+          });
+        }
+      }
+
+      setOptions(built);
+      setLoadingProducts(false);
+    }
+
+    load();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const matches = useMemo(() => {
     if (!query.trim() || selected) return [];
     const q = query.trim().toLowerCase();
-    return products.filter((p) => p.name.toLowerCase().includes(q)).slice(0, 6);
-  }, [query, products, selected]);
+    /* Matching the size label too means "12 pack" finds it as readily as
+       "relaxer". The cap is 8 rather than 6 because one product can now fill
+       several rows on its own. */
+    return options
+      .filter(
+        (o) =>
+          o.productName.toLowerCase().includes(q) ||
+          (o.variantLabel ?? "").toLowerCase().includes(q)
+      )
+      .slice(0, 8);
+  }, [query, options, selected]);
 
-  function selectProduct(p: Product) {
-    setSelected(p);
-    setQuery(p.name);
-    setPrice(String(p.default_price));
+  function selectOption(o: SaleOption) {
+    setSelected(o);
+    setQuery(o.variantLabel ? `${o.productName} — ${o.variantLabel}` : o.productName);
+    setPrice(String(o.price));
   }
 
   function switchMode(next: Mode) {
@@ -87,7 +177,8 @@ export function AddSaleModal({ onClose }: { onClose: () => void }) {
       paymentMode === "paid" ? null : debtorName.trim() || null;
 
     const result = await addSale({
-      productId: mode === "catalog" ? selected!.id : null,
+      productId: mode === "catalog" ? selected!.productId : null,
+      variantId: mode === "catalog" ? selected!.variantId : null,
       customItemName: mode === "manual" ? customName.trim() : null,
       category: mode === "catalog" ? selected?.category ?? null : null,
       quantity,
@@ -159,23 +250,49 @@ export function AddSaleModal({ onClose }: { onClose: () => void }) {
                   setQuery(e.target.value);
                   setSelected(null);
                 }}
-                placeholder="Search products by name"
+                placeholder="Search products by name or size"
                 className={`w-full rounded-[14px] border bg-[var(--color-bg-canvas)] px-4 py-3 text-sm outline-none ${
                   selected ? "border-[var(--color-primary-hover)]" : "border-[var(--color-border)]"
                 }`}
               />
               {matches.length > 0 && (
                 <ul className="absolute z-10 mt-1 w-full overflow-hidden rounded-[14px] border border-[var(--color-border)] bg-[var(--color-bg-surface)] shadow-lg">
-                  {matches.map((p) => (
-                    <li key={p.id}>
+                  {matches.map((o) => (
+                    <li key={o.key}>
                       <button
                         type="button"
-                        onClick={() => selectProduct(p)}
-                        className="flex w-full items-center justify-between px-4 py-3 text-left text-sm hover:bg-[var(--color-bg-canvas)]"
+                        onClick={() => selectOption(o)}
+                        className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left text-sm hover:bg-[var(--color-bg-canvas)]"
                       >
-                        <span>{p.name}</span>
-                        <span className="text-xs text-[var(--color-text-muted)]">
-                          {formatNaira(p.default_price)}
+                        <span className="min-w-0">
+                          <span className="block truncate">
+                            {o.productName}
+                            {o.variantLabel && (
+                              <span className="text-[var(--color-text-secondary)]">
+                                {" "}
+                                — {o.variantLabel}
+                              </span>
+                            )}
+                          </span>
+                          {/* Stock is shown but never blocks the sale: the last
+                              packet often goes out before anyone updates the
+                              count, and an unrecorded sale is the worse error. */}
+                          {o.stock !== null && (
+                            <span
+                              className={`block text-xs ${
+                                o.stock <= 0
+                                  ? "text-[var(--color-danger)]"
+                                  : "text-[var(--color-text-muted)]"
+                              }`}
+                            >
+                              {o.stock <= 0
+                                ? "Out of stock"
+                                : `${o.stock} in stock`}
+                            </span>
+                          )}
+                        </span>
+                        <span className="shrink-0 text-xs text-[var(--color-text-muted)]">
+                          {formatNaira(o.price)}
                         </span>
                       </button>
                     </li>
@@ -194,10 +311,15 @@ export function AddSaleModal({ onClose }: { onClose: () => void }) {
               <div className="flex items-center gap-3 rounded-[14px] bg-[var(--color-bg-canvas)] p-4">
                 <div className="h-10 w-10 shrink-0 rounded-[10px] bg-[var(--color-border-strong)]" />
                 <div className="min-w-0">
-                  <p className="truncate text-sm font-semibold">{selected.name}</p>
+                  <p className="truncate text-sm font-semibold">
+                    {selected.productName}
+                    {selected.variantLabel && ` — ${selected.variantLabel}`}
+                  </p>
                   <p className="text-xs text-[var(--color-text-muted)]">
-                    {selected.category ?? "General"} &middot; Default price{" "}
-                    {formatNaira(selected.default_price)}
+                    {selected.category ?? "General"} &middot;{" "}
+                    {selected.variantLabel ? "Price" : "Default price"}{" "}
+                    {formatNaira(selected.price)}
+                    {selected.stock !== null && ` · ${selected.stock} in stock`}
                   </p>
                 </div>
               </div>

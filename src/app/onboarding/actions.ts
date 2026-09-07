@@ -15,6 +15,7 @@ export interface OnboardingData {
 
 export interface OnboardingState {
   error?: string;
+  ok?: boolean;
 }
 
 export async function completeOnboarding(
@@ -44,5 +45,11 @@ export async function completeOnboarding(
     return { error: error.message };
   }
 
-  redirect("/dashboard");
+  /*
+    Deliberately does NOT redirect. The design ends on a confirmation step
+    ("You're all set!", Figma 198:2826) that the wizard shows after this
+    resolves, and the user leaves it via its own "Go to shop" button. The RPC
+    call itself is unchanged.
+  */
+  return { ok: true };
 }

@@ -1,48 +1,157 @@
 @import "tailwindcss";
-@import "@fontsource/dm-sans/600.css";
-@import "@fontsource/dm-sans/700.css";
-@import "@fontsource/inter/400.css";
-@import "@fontsource/inter/500.css";
-@import "@fontsource/inter/600.css";
 
-:root {
+/* Fonts — DM Sans (headings) + Inter (body), per the Figma type styles.
+   Figma renders these as VARIABLE fonts pinned to optical size 14 (it emits
+   font-variation-settings: "opsz" 14). The static @fontsource cuts have
+   slightly wider metrics, which pushed the 72px hero headline past its 871px
+   box and made it wrap where the design keeps it on one line. Use the variable
+   families with opsz 14 so metrics match the file. */
+@import "@fontsource-variable/dm-sans/opsz.css";
+@import "@fontsource-variable/inter/wght.css";
+/* Dokdo — the JOHTA wordmark face. Display only: the logo, the nav and footer
+   wordmarks, and the brand name where it appears inside a heading. Never body
+   copy, which stays DM Sans / Inter. Dokdo ships a single 400 weight. */
+@import "@fontsource/dokdo/400.css";
+
+/*
+  Design tokens — read directly from the Figma file's variable collections
+  (file DAmYfcjHZjuv2cDTBXSMIY). Do not edit these by eye; re-read from Figma.
+
+  Breakpoints match the Figma frame widths exactly rather than approximating
+  with Tailwind's defaults:
+    base = Mobile  (393px frame)
+    tab  = Tablet  (834px frame)
+    web  = Desktop (1440px frame)
+*/
+@theme {
+  --breakpoint-tab: 834px;
+  --breakpoint-web: 1440px;
+
+  /* color/primary */
+  --color-primary-default: #158060;
+  --color-primary-text: #5dcaa5;
+  --color-primary-border: #1d9e75;
+  --color-primary-subtle: #062e24;
+
+  /* color/green */
+  --color-green-50: #e1f5ee;
+  --color-green-100: #b3e6d6;
+  --color-green-200: #85d7be;
+  --color-green-300: #5dcaa5;
+  --color-green-900: #062e24;
+
+  /* color/bg */
   --color-bg-canvas: #0a0a0a;
   --color-bg-surface: #1a1a1a;
-  --color-bg-surface-raised: #303030;
+  --color-bg-inverse: #ffffff;
+
+  /* color/text */
   --color-text-primary: #ffffff;
   --color-text-secondary: #cacaca;
-  --color-text-muted: #616161;
-  --color-primary: #158060;
-  --color-primary-hover: #1d9e75;
-  --color-border: #303030;
+  --color-text-on-primary: #ffffff;
+  /* Used by the Contact page (texts/text-strong, texts/text-sub,
+     color/text/muted). text-muted is neutral 400 per the brand system. */
+  --color-text-strong: #fafafa;
+  --color-text-sub: #d1d1d1;
+  --color-text-muted: #9a9a9a;
+
+  /* Raised surface + hairline rule used by the Contact form panel.
+     Both reference variables that are not in the published collection; these
+     are the brand system's neutral-800 and the file's own rgba fallback. */
+  --color-bg-surface-raised: #303030;
+  --color-stroke-soft: rgba(255, 255, 255, 0.05);
+
+  /* color/border */
+  --color-border-default: #303030;
+  --color-border-subtle: #1a1a1a;
   --color-border-strong: #3d3d3d;
+
+  /* color/info + color/warning */
+  --color-info-subtle: #00161c;
+  --color-warning-default: #e6a900;
+
+  /* Status. Not in the Figma variable collection; carried over from the
+     previous build so form error states have a real utility class. */
   --color-danger: #eb6767;
   --color-danger-bg: #240000;
-  --color-success: #85d7be;
-  --color-success-bg: #062e24;
-  --color-accent-light: #5dcaa5;
-  --color-accent-highlight: #b3e6d6;
+
+  /* radius */
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-2xl: 28px;
+
+  /* type families */
+  --font-heading: "DM Sans Variable", "DM Sans", sans-serif;
+  --font-body: "Inter Variable", "Inter", sans-serif;
+  /* cursive is the right generic fallback here: if Dokdo fails to load, a
+     handwriting face keeps the wordmark distinct from the surrounding text
+     rather than collapsing into it. */
+  --font-brand: "Dokdo", cursive;
 }
 
-body {
-  background: var(--color-bg-canvas);
-  color: var(--color-text-primary);
-  font-family: "Inter", sans-serif;
+/*
+  TEMPORARY — legacy aliases for the previous build's variable names, so pages
+  that have not been rebuilt from Figma yet keep rendering while the rebuild is
+  in progress. Delete each line as the last page using it is rebuilt; this whole
+  block should be gone when the rebuild is finished.
+*/
+:root {
+  --color-primary: var(--color-primary-default);
+  --color-primary-hover: var(--color-primary-border);
+  --color-border: var(--color-border-default);
+  --color-accent-light: var(--color-primary-text);
+  --color-accent-highlight: var(--color-green-100);
+  --color-success: var(--color-green-100);
+  --color-success-bg: var(--color-green-900);
+  /* bg-surface-raised and text-muted are now real tokens in @theme above. */
 }
 
-h1, h2, h3, .font-heading {
-  font-family: "DM Sans", sans-serif;
-}
-
+/*
+  Marquee for the trust strip. The track holds two identical pill sets inside a
+  flex row with a uniform gap G, so one full repeat is (setWidth + G). The
+  element is 2*setWidth + G wide, so -50% lands half a gap short — hence the
+  extra -G/2. The 0px fallback keeps any not-yet-rebuilt callers on the old
+  plain -50% behaviour.
+*/
 @keyframes marquee-scroll {
   from {
     transform: translateX(0);
   }
   to {
-    transform: translateX(-50%);
+    transform: translateX(calc(-50% - var(--marquee-gap, 0px) / 2));
   }
 }
 
 .animate-marquee {
-  animation: marquee-scroll 25s linear infinite;
+  animation: marquee-scroll 30s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
+}
+
+/* TEMPORARY — the previous build relied on bare headings defaulting to DM Sans. */
+h1,
+h2,
+h3 {
+  font-family: var(--font-heading);
+}
+
+body {
+  background: var(--color-bg-canvas);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  /*
+    Deliberately NOT setting font-variation-settings: "opsz" 14.
+    Figma's generated code emits that hint, but measuring both instances against
+    the file's own geometry shows it is wrong: the 72px hero headline measures
+    889px at opsz 14 (overflowing its 871px box and wrapping to two lines),
+    versus 807px at the variable font's default instance — and Figma's own node
+    19:349 is 871x87, i.e. exactly one line. Default matches the design; opsz 14
+    does not. Re-verify with public/_measure.html before changing this.
+  */
+  -webkit-font-smoothing: antialiased;
 }

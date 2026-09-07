@@ -1,9 +1,18 @@
-import { LogOut } from "lucide-react";
 import { getCurrentShopContext } from "@/lib/shop-context";
 import { initials } from "@/lib/format";
 import { signOut } from "./actions";
-import SidebarNav from "./SidebarNav";
+import Sidebar from "@/components/dashboard/Sidebar";
+import BottomNav from "@/components/dashboard/BottomNav";
+import { themeVars } from "@/lib/theme";
 
+/*
+  App shell — Figma 201:3069 (web) / 201:3077 (tablet) / 201:3085 (mobile).
+
+  Sidebar 256 wide from tablet up; on mobile it is replaced by the fixed bottom
+  bar. The main column starts at x294 on web and tablet — 256 of sidebar plus a
+  38px gutter — and is inset 24 from the top. On mobile the content is 24 in
+  from each edge and 40 down, with room left at the bottom for the bar.
+*/
 export default async function AppLayout({
   children,
 }: {
@@ -11,39 +20,29 @@ export default async function AppLayout({
 }) {
   const { profile } = await getCurrentShopContext();
 
+  /*
+    The shop's accent colour, applied as CSS variables on the shell. Every
+    primary-* utility in the signed-in app resolves to these, so the sidebar,
+    buttons, badges, avatars and links all follow the owner's choice without
+    any component knowing about it. The marketing site is outside this layout
+    and keeps the brand green.
+  */
+  const shop = profile.shops as unknown as { theme_color: string | null } | null;
+
   return (
-    <div className="flex min-h-screen bg-[var(--color-bg-canvas)]">
-      <aside className="sticky top-0 flex h-screen w-[280px] shrink-0 flex-col justify-between border-r border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-6 py-8">
-        <div className="flex flex-col gap-10">
-          <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[var(--color-primary)] font-medium text-white">
-              {initials(profile.name)}
-            </div>
-            <div className="flex flex-col">
-              <span className="font-heading text-xl font-medium">
-                {profile.name}
-              </span>
-              <span className="text-base capitalize text-[var(--color-text-secondary)]">
-                {profile.role}
-              </span>
-            </div>
-          </div>
+    <div className="flex min-h-screen bg-bg-canvas" style={themeVars(shop?.theme_color)}>
+      <Sidebar
+        name={profile.name}
+        role={profile.role}
+        initials={initials(profile.name)}
+        onSignOut={signOut}
+      />
 
-          <SidebarNav />
-        </div>
+      <main className="min-w-0 flex-1 px-6 pb-[141px] pt-10 tab:px-0 tab:pb-6 tab:pl-[38px] tab:pr-[38px] tab:pt-6">
+        {children}
+      </main>
 
-        <form action={signOut}>
-          <button
-            type="submit"
-            className="flex items-center gap-3 rounded-[10px] px-4 py-3 text-lg font-medium text-[var(--color-text-secondary)] transition hover:bg-[var(--color-bg-surface)]"
-          >
-            <LogOut size={20} />
-            Logout
-          </button>
-        </form>
-      </aside>
-
-      <main className="flex-1 px-10 py-10">{children}</main>
+      <BottomNav />
     </div>
   );
 }

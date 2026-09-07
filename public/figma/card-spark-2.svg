@@ -1,0 +1,13 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="63.5002" height="32.5002" viewBox="0 0 63.5002 32.5002" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="_Chart">
+<path id="Background base" d="M62.7502 0.750042C52.6772 1.58946 52.0534 21.6856 42.0835 24C33.8622 25.9086 29.6991 15.0749 21.4169 16.25C12.4335 17.5247 9.5588 28.8138 0.750203 31.75H62.7502V0.750042Z" fill="#292929"/>
+<path id="Background gradient" d="M62.7502 0.750042C52.6772 1.58946 52.0534 21.6856 42.0835 24C33.8622 25.9086 29.6991 15.0749 21.4169 16.25C12.4335 17.5247 9.5588 28.8138 0.750203 31.75H62.7502V0.750042Z" fill="url(#paint0_linear_0_69)"/>
+<path id="Line" d="M0.750203 31.75C9.5588 28.8138 12.4335 17.5247 21.4169 16.25C29.6991 15.0749 33.8622 25.9086 42.0835 24C52.0534 21.6856 52.6772 1.58946 62.7502 0.750042" stroke="#6E00B7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_69" x1="31.7502" y1="0.750042" x2="31.7502" y2="31.75" gradientUnits="userSpaceOnUse">
+<stop offset="0.641167" stop-color="#292929"/>
+<stop offset="1" stop-color="#1C1C1C"/>
+</linearGradient>
+</defs>
+</svg>

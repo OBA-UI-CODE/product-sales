@@ -3,6 +3,10 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
+import {
+  checkPasswordPwned,
+  pwnedPasswordMessage,
+} from "@/lib/password-check";
 
 export interface SignupFormState {
   error?: string;
@@ -21,6 +25,13 @@ export async function signUpWithEmail(
   }
   if (password.length < 8) {
     return { error: "Password must be at least 8 characters." };
+  }
+
+  /* Free stand-in for Supabase's paid leaked-password protection. Returns
+     null if HIBP could not be reached, in which case the signup proceeds. */
+  const pwned = await checkPasswordPwned(password);
+  if (pwned?.pwned) {
+    return { error: pwnedPasswordMessage(pwned.count) };
   }
 
   const supabase = await createClient();

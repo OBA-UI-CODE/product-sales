@@ -5,6 +5,9 @@ import { revalidatePath } from "next/cache";
 
 export interface AddSaleInput {
   productId: string | null;
+  /* Set when the shop picked a specific size / pack. Stock then moves on the
+     variant rather than the product. */
+  variantId: string | null;
   customItemName: string | null;
   category: string | null;
   quantity: number;
@@ -18,6 +21,7 @@ export async function addSale(input: AddSaleInput) {
 
   const { error } = await supabase.rpc("create_sale", {
     p_product_id: input.productId,
+    p_variant_id: input.variantId,
     p_custom_item_name: input.customItemName,
     p_category: input.category,
     p_quantity: input.quantity,

@@ -3,6 +3,7 @@
 import { useActionState, useTransition } from "react";
 import { X } from "lucide-react";
 import { addStaffAccount, removeStaffAccount, type AddStaffState } from "./actions";
+import PasswordInput from "@/components/ui/PasswordInput";
 import { initials } from "@/lib/format";
 
 interface Staff {
@@ -68,11 +69,28 @@ export default function SettingsClient({
         <div className="flex flex-col gap-4 rounded-[14px] bg-[var(--color-bg-surface)] p-6">
           <h3 className="font-semibold">Add a staff account</h3>
           {state.error && (
-            <p className="rounded-[10px] bg-[var(--color-danger-bg)] px-4 py-3 text-sm text-[var(--color-danger)]">
+            <p
+              role="alert"
+              className="rounded-[10px] bg-[var(--color-danger-bg)] px-4 py-3 text-sm text-[var(--color-danger)]"
+            >
               {state.error}
             </p>
           )}
-          <form action={formAction} className="flex flex-col gap-4">
+          {state.success && (
+            <p
+              role="status"
+              className="rounded-[10px] bg-primary-subtle px-4 py-3 text-sm text-primary-text"
+            >
+              {state.success}
+            </p>
+          )}
+          {/* key resets the fields after a successful add, so the owner is not
+              left looking at the previous person's details. */}
+          <form
+            key={state.success ?? "add-staff"}
+            action={formAction}
+            className="flex flex-col gap-4"
+          >
             <input
               name="name"
               required
@@ -86,12 +104,14 @@ export default function SettingsClient({
               placeholder="Email"
               className="h-11 rounded-[10px] border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-4 text-sm"
             />
-            <input
+            {/* Toggle via the shared PasswordInput; field styling unchanged. */}
+            <PasswordInput
+              id="staff-password"
               name="password"
-              type="password"
               required
+              autoComplete="new-password"
               placeholder="Temporary password"
-              className="h-11 rounded-[10px] border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-4 text-sm"
+              className="h-11 w-full rounded-[10px] border border-[var(--color-border)] bg-[var(--color-bg-canvas)] pl-4 pr-12 text-sm"
             />
             <button
               type="submit"

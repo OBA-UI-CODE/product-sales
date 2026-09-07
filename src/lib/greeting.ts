@@ -1,5 +1,5 @@
 /**
- * Reko's target users are Nigerian shop owners, so "today" and the
+ * JOHTA's target users are Nigerian shop owners, so "today" and the
  * time-of-day greeting are computed against Africa/Lagos time — same
  * convention already used for "today" boundaries elsewhere in the app —
  * rather than the server's or visitor's local time.
