@@ -4,6 +4,7 @@ import ColourSwatch, { THEME_COLORS } from "./ColourSwatch";
 import { themeVars } from "@/lib/theme";
 import OnboardingButton from "./OnboardingButton";
 import OnboardingProgress from "./OnboardingProgress";
+import OnboardingBack from "./OnboardingBack";
 
 /*
   Onboarding step 4 — "Make it yours"
@@ -53,11 +54,13 @@ export default function ThemeStep({
   themeColor,
   onSelect,
   onDone,
+  onBack,
   pending,
 }: {
   themeColor: string;
   onSelect?: (c: string) => void;
   onDone?: () => void;
+  onBack?: () => void;
   pending?: boolean;
 }) {
   return (
@@ -71,6 +74,7 @@ export default function ThemeStep({
         {/* Form — first in the DOM, painted second on mobile */}
         <div className="order-2 flex w-[345px] shrink-0 flex-col items-start gap-8 tab:order-1 tab:ml-12 tab:w-[515px] tab:gap-12 web:ml-0 web:mt-[53px] web:w-[489px] web:gap-16">
           <div className="flex w-[316px] flex-col items-start gap-6 tab:w-full tab:gap-16">
+            <OnboardingBack onBack={onBack} />
             <p className="w-full font-brand text-[40px] leading-[48px] tracking-[-1px] text-primary-text tab:text-[64px] tab:leading-[68px]">
               JOHTA
             </p>

@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 export interface OnboardingData {
   ownerName: string;
   shopName: string;
-  category: string;
+  categories: string[];
   themeColor: string;
   firstProductName?: string;
   firstProductPrice?: number;
@@ -34,7 +34,7 @@ export async function completeOnboarding(
   const { error } = await supabase.rpc("complete_onboarding", {
     p_owner_name: data.ownerName,
     p_shop_name: data.shopName,
-    p_category: data.category,
+    p_categories: data.categories,
     p_theme_color: data.themeColor,
     p_first_product_name: data.firstProductName || null,
     p_first_product_price: data.firstProductPrice ?? null,

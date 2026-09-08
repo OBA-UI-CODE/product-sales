@@ -11,9 +11,12 @@
   Regular, not a smaller cut of the web's DM Sans SemiBold.
 
   SELECTED STATE IS NOT IN FIGMA: the file only draws the resting pill, but the
-  step is a single-choice question and needs to show the choice. Built from the
+  step takes several answers and has to show which are on. Built from the
   existing system — primary/border ring on primary/subtle — rather than
   inventing a new colour.
+
+  aria-pressed rather than aria-checked, because these are independent toggles
+  now, not one choice out of a set.
 */
 export default function CategoryPill({
   label,

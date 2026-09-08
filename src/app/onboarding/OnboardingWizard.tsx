@@ -24,6 +24,12 @@ import { THEME_COLORS } from "@/components/onboarding/ColourSwatch";
   the design, so it is gone from the flow; completeOnboarding still accepts the
   optional product arguments and simply receives none.
 
+  Steps 2-4 carry a back arrow. It is not in the design file, which draws the
+  flow as one-way, but every answer lives in this component's state — so going
+  back and forward again shows what was already entered rather than clearing
+  it. Step 1 has nothing to go back to and step 5 is past the point of no
+  return, so neither has one.
+
   The RPC is called on step 4's "Done" and, once it resolves, the wizard shows
   step 5 rather than jumping to the dashboard — the confirmation screen is part
   of the design and the user leaves it through "Go to shop".
@@ -42,7 +48,17 @@ export default function OnboardingWizard({
   const [ownerName, setOwnerName] = useState(initialOwnerName);
   const [shopName, setShopName] = useState("");
   const [staffCount, setStaffCount] = useState("");
-  const [category, setCategory] = useState("");
+  /* Multiple, because a shop that sells provisions usually sells drinks and
+     snacks too. Kept in the wizard rather than the step so that going back
+     and forward again shows what was already picked. */
+  const [categories, setCategories] = useState<string[]>([]);
+
+  function toggleCategory(c: string) {
+    setError(null);
+    setCategories((prev) =>
+      prev.includes(c) ? prev.filter((x) => x !== c) : [...prev, c]
+    );
+  }
   const [themeColor, setThemeColor] = useState(THEME_COLORS[0]);
 
   function handleChange(
@@ -61,7 +77,7 @@ export default function OnboardingWizard({
       const result = await completeOnboarding({
         ownerName: ownerName.trim(),
         shopName: shopName.trim(),
-        category,
+        categories,
         themeColor,
       });
       if (result.error) {
@@ -97,9 +113,10 @@ export default function OnboardingWizard({
 
       {step === 2 && (
         <CategoryStep
-          category={category}
-          onSelect={setCategory}
+          categories={categories}
+          onToggle={toggleCategory}
           onNext={() => setStep(3)}
+          onBack={() => setStep(1)}
         />
       )}
 
@@ -110,6 +127,7 @@ export default function OnboardingWizard({
           staffCount={staffCount}
           onChange={handleChange}
           onNext={() => setStep(4)}
+          onBack={() => setStep(2)}
         />
       )}
 
@@ -118,6 +136,7 @@ export default function OnboardingWizard({
           themeColor={themeColor}
           onSelect={setThemeColor}
           onDone={finish}
+          onBack={() => setStep(3)}
           pending={pending}
         />
       )}

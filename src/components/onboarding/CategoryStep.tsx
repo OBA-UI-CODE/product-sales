@@ -3,9 +3,12 @@
 import CategoryPill from "./CategoryPill";
 import OnboardingButton from "./OnboardingButton";
 import OnboardingProgress from "./OnboardingProgress";
+import OnboardingBack from "./OnboardingBack";
 
 /*
   Onboarding step 2 — "Tell us about your shop" / "What are you into?"
+  Multiple answers: a shop that sells provisions usually sells drinks and
+  snacks too, so this is a multi-select rather than a single choice.
   Figma 196:2177 (web) / 196:2185 (tablet) / 196:2193 (mobile)
 
   Columns reorder rather than merely stack, as on the auth screens:
@@ -64,12 +67,16 @@ function Illustration({ className }: { className: string }) {
 function Panel() {
   return (
     <div className="relative h-[311px] w-full shrink-0 overflow-hidden bg-primary-subtle tab:h-[353px] tab:w-[786px] tab:rounded-md web:h-[852px] web:w-[647px]">
-      {/* Mobile: three crops laid across the band exactly as the file stacks
-          them — 259 wide at x134, a 410-wide sliver at x376, and a second 259
-          at x49 painted last, on top. */}
+      {/*
+        Mobile: ONE crop, 259x201 at x134 — frame 197:2288, rectangle 436:6529.
+
+        This used to render three copies of the same illustration side by side,
+        because the earlier version of the frame stacked three instances and I
+        reproduced them literally. On a phone that read as the same woman
+        printed three times. The design file now carries a single rectangle,
+        which is what this matches.
+      */}
       <Illustration className="absolute left-[134px] top-[110px] h-[201px] w-[259px] tab:hidden" />
-      <Illustration className="absolute left-[376px] top-[35px] h-[318px] w-[410px] tab:hidden" />
-      <Illustration className="absolute left-[49px] top-[110px] h-[201px] w-[259px] tab:hidden" />
 
       {/* Web: the full square, bled off the top-left corner. */}
       <div className="absolute left-[-188px] top-[-86px] hidden size-[1024px] web:block">
@@ -91,13 +98,15 @@ function Panel() {
 }
 
 export default function CategoryStep({
-  category,
-  onSelect,
+  categories,
+  onToggle,
   onNext,
+  onBack,
 }: {
-  category: string;
-  onSelect?: (c: string) => void;
+  categories: string[];
+  onToggle?: (c: string) => void;
   onNext?: () => void;
+  onBack?: () => void;
 }) {
   return (
     <div className="min-h-screen w-full bg-bg-canvas">
@@ -106,6 +115,7 @@ export default function CategoryStep({
         <div className="order-2 flex w-[345px] shrink-0 flex-col items-start gap-8 tab:order-1 tab:ml-12 tab:w-[633px] tab:gap-16 web:ml-0">
           <div className="flex w-full flex-col items-start gap-8 tab:gap-16">
             <div className="flex w-full flex-col items-start gap-6 tab:w-[515px] tab:gap-16">
+              <OnboardingBack onBack={onBack} />
               <p className="w-full font-brand text-[40px] leading-[48px] tracking-[-1px] text-primary-text tab:text-[64px] tab:leading-[68px]">
                 JOHTA
               </p>
@@ -125,9 +135,16 @@ export default function CategoryStep({
             </div>
 
             <div className="flex w-full flex-col items-start gap-6 tab:gap-7">
-              <p className="w-full font-heading text-[24px] font-semibold leading-[29px] tracking-[-1px] text-text-primary tab:text-[32px] tab:leading-[39px]">
-                What are you into?
-              </p>
+              <div className="flex w-full flex-col items-start gap-1">
+                <p className="w-full font-heading text-[24px] font-semibold leading-[29px] tracking-[-1px] text-text-primary tab:text-[32px] tab:leading-[39px]">
+                  What are you into?
+                </p>
+                {/* Said plainly, because a row of pills does not otherwise
+                    look like it takes more than one answer. */}
+                <p className="font-body text-[14px] leading-[20px] text-text-secondary tab:text-[16px] tab:leading-[24px]">
+                  Pick as many as you sell.
+                </p>
+              </div>
               {/* Pills wrap naturally at 345 and 633; the resulting rows match
                   the file's hand-placed rows at both widths. */}
               <div className="flex w-full flex-wrap items-start gap-6">
@@ -135,15 +152,15 @@ export default function CategoryStep({
                   <CategoryPill
                     key={c}
                     label={c}
-                    selected={c === category}
-                    onSelect={() => onSelect?.(c)}
+                    selected={categories.includes(c)}
+                    onSelect={() => onToggle?.(c)}
                   />
                 ))}
               </div>
             </div>
           </div>
 
-          <OnboardingButton onClick={onNext} disabled={!category}>
+          <OnboardingButton onClick={onNext} disabled={categories.length === 0}>
             Next
           </OnboardingButton>
         </div>

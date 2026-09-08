@@ -286,6 +286,36 @@ colour, after the dashboard's trend arrow.
 
 ---
 
+## 6d. Onboarding — back button, multiple categories, one illustration
+
+**The illustration was printed three times.** On mobile, step 2's banner
+rendered the same image at three positions, because the earlier Figma frame
+stacked three instances and I reproduced them literally. It read as the same
+woman repeated across the band. The frame (197:2288) now holds a single
+rectangle at x134 y110, 259x201, and the code matches it.
+
+**"What are you into?" takes several answers.** A Nigerian shop that sells
+provisions usually sells drinks and snacks too, so one choice never described
+a real shop. The pills are toggles now, with "Pick as many as you sell."
+said plainly under the question, since a row of pills does not otherwise look
+multi-select.
+
+`shops.categories text[]` was added alongside `category` rather than replacing
+it — the singular column is read in several places and by existing rows, so it
+is kept and set to the FIRST category picked. `complete_onboarding` takes
+`p_categories text[]`, drops blanks and duplicates, and preserves the order
+they were chosen in (the first attempt used `array_agg(distinct ...)`, which
+sorts alphabetically and made `category` name a category picked second).
+
+**Steps 2-4 have a back arrow.** Not in the design file, which draws the flow
+as one-way — but someone who mistypes their shop name should not have to
+abandon onboarding and start again. Every answer lives in the wizard's state,
+so going back and forward again shows what was already entered. Step 1 has
+nothing to return to and step 5 is past the point of no return, so neither
+has one.
+
+---
+
 ## 7. Database changes
 
 All applied to the live Supabase project (`ktpqywmtgswjmvdyvvlg`) as migrations.
@@ -307,6 +337,8 @@ All applied to the live Supabase project (`ktpqywmtgswjmvdyvvlg`) as migrations.
 | `add_revoke_shop_sessions` | Ends every session in a shop when it is closed. |
 | `fix_revoke_shop_sessions_refresh_token_match` | `auth.refresh_tokens.user_id` holds the uuid as text, not the email — the first version matched nothing. |
 | `archive_removed_staff_instead_of_deleting` | `profiles.removed_at`, `current_shop_id()` ignores removed staff, and `revoke_user_sessions()`. |
+| `allow_multiple_shop_categories` | `shops.categories text[]`; `complete_onboarding` takes an array. |
+| `preserve_category_pick_order` | Keeps the order categories were chosen in. |
 
 ### Tenant isolation
 

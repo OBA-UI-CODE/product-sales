@@ -3,6 +3,7 @@
 import OnboardingButton from "./OnboardingButton";
 import OnboardingField from "./OnboardingField";
 import OnboardingProgress from "./OnboardingProgress";
+import OnboardingBack from "./OnboardingBack";
 
 /*
   Onboarding step 3 — "What's the name of your shop?"
@@ -57,12 +58,14 @@ export default function ShopDetailsStep({
   staffCount,
   onChange,
   onNext,
+  onBack,
 }: {
   ownerName: string;
   shopName: string;
   staffCount: string;
   onChange?: (field: "ownerName" | "shopName" | "staffCount", v: string) => void;
   onNext?: () => void;
+  onBack?: () => void;
 }) {
   return (
     <div className="min-h-screen w-full bg-bg-canvas">
@@ -70,6 +73,7 @@ export default function ShopDetailsStep({
         {/* Form — first in the DOM, painted second on mobile */}
         <div className="order-2 flex w-[345px] shrink-0 flex-col items-start gap-8 tab:order-1 tab:ml-12 tab:w-[633px] tab:gap-12 web:ml-0 web:w-[625px] web:gap-16">
           <div className="flex w-[316px] flex-col items-start gap-6 tab:w-[515px] tab:gap-16">
+            <OnboardingBack onBack={onBack} />
             <p className="w-full font-brand text-[40px] leading-[48px] tracking-[-1px] text-primary-text tab:text-[64px] tab:leading-[68px]">
               JOHTA
             </p>
