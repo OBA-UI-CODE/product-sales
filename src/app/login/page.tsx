@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState } from "react";
+import { Suspense, useActionState } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { signInWithEmail, signInWithGoogle, type LoginFormState } from "./actions";
 import AuthShell, { AuthPanel } from "@/components/auth/AuthShell";
@@ -15,6 +16,64 @@ import {
   PasswordField,
   SubmitButton,
 } from "@/components/auth/AuthFormParts";
+
+/*
+  Notices carried in the query string — an expired confirmation link, a
+  password reset that went through, a failed Google sign-in. Without these the
+  user clicks a dead link and lands on a blank sign-in form with no idea why.
+
+  In its own component behind Suspense because useSearchParams opts the whole
+  route into client rendering otherwise.
+*/
+const NOTICES: Record<string, { text: string; tone: "error" | "good" }> = {
+  link_expired: {
+    text: "That confirmation link has expired or was already used. Sign in below, or sign up again to get a new link.",
+    tone: "error",
+  },
+  invalid_link: {
+    text: "That link didn't look right. Try opening it again from your email, or sign up for a new one.",
+    tone: "error",
+  },
+  auth_callback_failed: {
+    text: "We couldn't finish signing you in. Please try again.",
+    tone: "error",
+  },
+  google_oauth_failed: {
+    text: "Google sign-in didn't complete. Try again, or use your email and password.",
+    tone: "error",
+  },
+};
+
+function LoginNotice() {
+  const params = useSearchParams();
+
+  if (params.get("reset") === "success") {
+    return (
+      <p
+        role="status"
+        className="w-full rounded-md bg-primary-subtle px-4 py-3 font-body text-[14px] leading-[20px] text-primary-text"
+      >
+        Your password has been changed. Sign in with it below.
+      </p>
+    );
+  }
+
+  const notice = NOTICES[params.get("error") ?? ""];
+  if (!notice) return null;
+
+  return (
+    <p
+      role="alert"
+      className={`w-full rounded-md px-4 py-3 font-body text-[14px] leading-[20px] ${
+        notice.tone === "error"
+          ? "bg-danger-bg text-danger"
+          : "bg-primary-subtle text-primary-text"
+      }`}
+    >
+      {notice.text}
+    </p>
+  );
+}
 
 /*
   Sign In — Figma 180:10177 (web) / 180:10139 (tablet) / 180:10140 (mobile)
@@ -88,6 +147,9 @@ export default function LoginPage() {
               </Link>
             </div>
 
+            <Suspense fallback={null}>
+              <LoginNotice />
+            </Suspense>
             <FormError message={state.error} />
             <SubmitButton pending={pending}>Sign In</SubmitButton>
           </form>
