@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { X, Minus, Plus } from "lucide-react";
+import { matchesSearch } from "@/lib/search";
 import { createClient } from "@/lib/supabase/client";
 import { formatNaira } from "@/lib/format";
 import { PaymentFields, type PaymentMode } from "./PaymentFields";
@@ -129,16 +130,21 @@ export function AddSaleModal({ onClose }: { onClose: () => void }) {
 
   const matches = useMemo(() => {
     if (!query.trim() || selected) return [];
-    const q = query.trim().toLowerCase();
-    /* Matching the size label too means "12 pack" finds it as readily as
-       "relaxer". The cap is 8 rather than 6 because one product can now fill
-       several rows on its own. */
+    /*
+      The comment here used to claim that "12 pack" found the size as readily
+      as "relaxer". It did not: this was a plain substring test, and
+      "small 12-pack" does not contain "12 pack" because of the hyphen — so
+      the one product being searched for was the one that never came back.
+
+      matchesSearch strips punctuation and requires every word to appear
+      somewhere across the name AND the size label, so "12 pack", "12-pack"
+      and "relaxer big" all work.
+
+      The cap is 8 rather than 6 because one product can now fill several rows
+      on its own.
+    */
     return options
-      .filter(
-        (o) =>
-          o.productName.toLowerCase().includes(q) ||
-          (o.variantLabel ?? "").toLowerCase().includes(q)
-      )
+      .filter((o) => matchesSearch(query, o.productName, o.variantLabel))
       .slice(0, 8);
   }, [query, options, selected]);
 

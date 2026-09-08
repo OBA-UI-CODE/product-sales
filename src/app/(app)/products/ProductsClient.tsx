@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { RefreshCw, X, Plus } from "lucide-react";
+import { RefreshCw, X, Plus, Search } from "lucide-react";
 import { addProduct, addVariant, deleteVariant } from "./actions";
+import { matchesSearch } from "@/lib/search";
 import { RestockModal } from "./RestockModal";
 import { RemoveProductModal } from "./RemoveProductModal";
 
@@ -39,6 +40,7 @@ export default function ProductsClient({
   variants: Variant[];
 }) {
   const [showForm, setShowForm] = useState(false);
+  const [query, setQuery] = useState("");
   /*
     Sizes are opt-in. Most shops sell a thing at one price and should not have
     to think about variants at all; the ones that sell a relaxer in small,
@@ -53,6 +55,25 @@ export default function ProductsClient({
   const [restockVariantTarget, setRestockVariantTarget] =
     useState<Variant | null>(null);
   const [pending, startTransition] = useTransition();
+
+  /*
+    Which products survive the search.
+
+    Size labels are part of the haystack, so a product is kept when the query
+    matches the product itself OR any of its sizes — otherwise searching
+    "6-pack" would return nothing, since no product is called that.
+
+    Recomputed each render rather than memoised: it is a handful of string
+    comparisons over one shop's catalogue, and useMemo here would cost more in
+    complexity than it saves.
+  */
+  const visible = products.filter((p) => {
+    const labels = variants
+      .filter((v) => v.product_id === p.id)
+      .map((v) => v.label)
+      .join(" ");
+    return matchesSearch(query, p.name, p.category, labels);
+  });
 
   return (
     <div className="flex flex-col gap-6">
@@ -210,13 +231,68 @@ export default function ProductsClient({
         </form>
       )}
 
+      {/*
+        Search.
+
+        Filtered here in the browser, not on the server: the whole list is
+        already loaded, so results appear as fast as the owner types instead
+        of waiting on a round trip for every keystroke. A shop's own catalogue
+        is small enough that this stays instant.
+
+        A product matches on its name, its category, or ANY of its size
+        labels — so searching "12 pack" finds the Relaxer that has one, even
+        though the word never appears in the product's own name.
+      */}
+      {products.length > 0 && (
+        <div className="flex flex-col gap-2">
+          <div className="relative">
+            <Search
+              size={18}
+              aria-hidden
+              className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[var(--color-text-secondary)]"
+            />
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search your products"
+              aria-label="Search your products"
+              className="h-12 w-full rounded-[10px] border border-[var(--color-border)] bg-[var(--color-bg-surface)] pl-11 pr-11 text-sm"
+            />
+            {query && (
+              <button
+                type="button"
+                onClick={() => setQuery("")}
+                aria-label="Clear search"
+                className="absolute right-3 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-[var(--color-border-strong)]"
+              >
+                <X size={14} />
+              </button>
+            )}
+          </div>
+          {query.trim() && (
+            <p role="status" className="text-sm text-[var(--color-text-secondary)]">
+              {visible.length === 0
+                ? "No product matches that."
+                : `${visible.length} of ${products.length} products`}
+            </p>
+          )}
+        </div>
+      )}
+
       <div className="flex flex-col gap-3">
         {products.length === 0 && (
           <p className="rounded-[14px] border border-dashed border-[var(--color-border)] p-6 text-center text-[var(--color-text-secondary)]">
             No products yet. Add your first one above.
           </p>
         )}
-        {products.map((p) => {
+        {products.length > 0 && visible.length === 0 && (
+          <p className="rounded-[14px] border border-dashed border-[var(--color-border)] p-6 text-center text-[var(--color-text-secondary)]">
+            Nothing matches &ldquo;{query.trim()}&rdquo;. Try a shorter word, or
+            the size you are looking for.
+          </p>
+        )}
+        {visible.map((p) => {
           const productVariants = variants.filter((v) => v.product_id === p.id);
           const hasVariants = productVariants.length > 0;
           /* With sizes, the product's own stock figure is meaningless — the
@@ -283,10 +359,15 @@ export default function ProductsClient({
                       key={v.id}
                       className="flex items-center justify-between gap-3 text-sm"
                     >
-                      <span className="min-w-0 truncate">
-                        {v.label}
-                        <span className="text-[var(--color-text-muted)]">
-                          {" "}
+                      {/*
+                        The price is outside the truncating span on purpose.
+                        Both used to sit in one, so a long size name ate the
+                        figure — "Small 12-pack · ₦7,6..." — which is the one
+                        thing the row exists to show. The NAME clips instead.
+                      */}
+                      <span className="flex min-w-0 items-baseline gap-1">
+                        <span className="truncate">{v.label}</span>
+                        <span className="shrink-0 text-[var(--color-text-muted)]">
                           · ₦{Number(v.price).toLocaleString()}
                         </span>
                       </span>
