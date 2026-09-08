@@ -31,7 +31,7 @@ export const getCurrentShopContext = cache(async function getCurrentShopContext(
   const { data: profile, error } = await supabase
     .from("profiles")
     .select(
-      "id, name, role, shop_id, shops!profiles_shop_id_fkey(name, category, theme_color)"
+      "id, name, role, shop_id, shops!profiles_shop_id_fkey(name, category, theme_color, deactivated_at, deletion_requested_at, purge_after)"
     )
     .eq("id", user.id)
     .maybeSingle();
@@ -53,3 +53,31 @@ export const getCurrentShopContext = cache(async function getCurrentShopContext(
 
   return { supabase, user, profile };
 });
+
+/*
+  The shape of the shop embedded above. PostgREST types embeds loosely, so
+  every reader was casting it by hand; this gives them one name to use.
+*/
+export interface EmbeddedShop {
+  name: string;
+  category: string | null;
+  theme_color: string | null;
+  deactivated_at: string | null;
+  deletion_requested_at: string | null;
+  purge_after: string | null;
+}
+
+export function shopOf(profile: { shops: unknown }): EmbeddedShop | null {
+  return (profile.shops as EmbeddedShop | null) ?? null;
+}
+
+/*
+  True when the shop is paused or waiting to be deleted.
+
+  Both states mean the same thing to the app — the records are still there,
+  but nobody works in this shop today. They are told apart only on the screen
+  that offers to bring it back.
+*/
+export function isSuspended(shop: EmbeddedShop | null): boolean {
+  return !!(shop?.deactivated_at || shop?.deletion_requested_at);
+}

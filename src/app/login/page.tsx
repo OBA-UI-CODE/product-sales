@@ -44,6 +44,20 @@ const NOTICES: Record<string, { text: string; tone: "error" | "good" }> = {
   },
 };
 
+/*
+  Notices for things that went RIGHT but end with the user signed out, so
+  there is nowhere else to tell them. Kept separate from NOTICES because they
+  arrive as ?notice= rather than ?error= — pausing your own shop is not an
+  error, and should not be shown in red.
+*/
+const SIGNED_OUT_NOTICES: Record<string, string> = {
+  paused:
+    "Your shop is paused and your subscription has stopped. Sign in whenever you want to open it again — nothing has been deleted.",
+  deletion_scheduled:
+    "Your shop is scheduled for deletion and your subscription has stopped. If you change your mind, sign in within 30 days and everything comes back.",
+  account_deleted: "Your account has been deleted.",
+};
+
 function LoginNotice() {
   const params = useSearchParams();
 
@@ -54,6 +68,18 @@ function LoginNotice() {
         className="w-full rounded-md bg-primary-subtle px-4 py-3 font-body text-[14px] leading-[20px] text-primary-text"
       >
         Your password has been changed. Sign in with it below.
+      </p>
+    );
+  }
+
+  const signedOut = SIGNED_OUT_NOTICES[params.get("notice") ?? ""];
+  if (signedOut) {
+    return (
+      <p
+        role="status"
+        className="w-full rounded-md bg-primary-subtle px-4 py-3 font-body text-[14px] leading-[20px] text-primary-text"
+      >
+        {signedOut}
       </p>
     );
   }

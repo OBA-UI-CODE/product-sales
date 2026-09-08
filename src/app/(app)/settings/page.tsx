@@ -2,6 +2,8 @@ import { getCurrentShopContext } from "@/lib/shop-context";
 import SettingsClient from "./SettingsClient";
 import BillingSection, { type BillingInfo } from "./BillingSection";
 import { isConfigured } from "@/lib/paystack";
+import AccountSection from "./AccountSection";
+import { GRACE_DAYS } from "@/lib/account";
 
 export default async function SettingsPage() {
   const { supabase, profile } = await getCurrentShopContext();
@@ -19,7 +21,7 @@ export default async function SettingsPage() {
   const { data: shop } = await supabase
     .from("shops")
     .select(
-      "subscription_status, trial_ends_at, current_period_end, billing_plan"
+      "name, subscription_status, trial_ends_at, current_period_end, billing_plan"
     )
     .eq("id", profile.shop_id)
     .maybeSingle();
@@ -46,6 +48,17 @@ export default async function SettingsPage() {
       {profile.role === "owner" && billing && (
         <BillingSection billing={billing} />
       )}
+
+      {/*
+        Last on the page, and after billing, on purpose. Nobody arrives at
+        Settings looking to close their shop, and the things people do come
+        here for should not sit underneath the button that deletes everything.
+      */}
+      <AccountSection
+        isOwner={profile.role === "owner"}
+        shopName={shop?.name ?? ""}
+        graceDays={GRACE_DAYS}
+      />
     </div>
   );
 }

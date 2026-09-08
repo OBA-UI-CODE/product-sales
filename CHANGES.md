@@ -149,6 +149,66 @@ at it and deleting would corrupt the record of what was sold.
 
 ---
 
+## 6a. Closing an account — pause and delete
+
+Settings gained a **Your account** section. It is last on the page, below
+billing, because nobody comes to Settings looking to close their shop.
+
+### Pause
+
+Cancels the subscription, closes the shop and signs everybody out — but keeps
+every record. The owner signs back in, presses **Reopen my shop**, and carries
+on. Meant as the softer option for someone about to delete out of frustration,
+or who simply wants the billing to stop.
+
+### Delete — with an export and 30 days' grace
+
+Owner only, and confirmed by typing the shop's own name (not a checkbox, and
+not "type DELETE" — the name is the thing being destroyed).
+
+Before the confirmation, the flow offers **Download my records**: a CSV of
+every sale, debt and product. A shop's sales are its business records and may
+be needed for tax years after they stop using JOHTA, so destroying them without
+ever offering a copy would be careless.
+
+Deleting then:
+
+1. cancels the Paystack subscription, so no further money is taken
+2. closes the shop and revokes every session
+3. keeps the data for **30 days**, then destroys it permanently
+
+Within those 30 days, signing in lands on a screen showing the exact date it
+will be destroyed and a **Keep my shop** button that undoes everything. The
+export still works throughout.
+
+`purge_expired_shops()` does the destroying, run nightly at 03:15 UTC by
+**pg_cron**. Keeping it in the database means the grace period does not depend
+on the app being deployed or a request arriving.
+
+### Staff deleting themselves
+
+A staff member gets **Delete my account** instead, which removes their login
+only. Sales they logged stay in the shop's records — `sales.seller_id` is
+NO ACTION precisely so that removing a person cannot rewrite the history of
+what was sold. The shop keeps a complete record; the person keeps nothing.
+
+### Where it is enforced
+
+`shop_can_write()` refuses writes for a paused or pending-deletion shop, so it
+holds for anyone calling the REST API directly, not just for these screens.
+**Reads stay allowed** on purpose — that is what lets the export and the
+restore screen work.
+
+Sessions are revoked through `revoke_shop_sessions()` rather than the client
+library, because `auth.admin.signOut()` takes a JWT, not a user id: there is no
+way to end somebody else's session from the server through supabase-js. Without
+this, an already-open tab keeps a valid access token for up to an hour.
+
+The privacy policy was updated to match — deletion is now self-serve, and the
+30-day retention is stated plainly instead of "as long as necessary".
+
+---
+
 ## 7. Database changes
 
 All applied to the live Supabase project (`ktpqywmtgswjmvdyvvlg`) as migrations.
@@ -165,6 +225,10 @@ All applied to the live Supabase project (`ktpqywmtgswjmvdyvvlg`) as migrations.
 | `variant_aware_sale_functions` | Sale functions move stock on the variant. |
 | `tighten_function_grants_before_deploy` | Drops a duplicate `create_sale`. |
 | `revoke_function_execute_from_public` | Signed-out users can no longer execute the RPCs. |
+| `add_account_pause_and_scheduled_deletion` | `deactivated_at` / `deletion_requested_at` / `purge_after` on shops, the write guard extended, and `purge_expired_shops()`. |
+| `schedule_nightly_shop_purge` | pg_cron job at 03:15 UTC that runs the purge. |
+| `add_revoke_shop_sessions` | Ends every session in a shop when it is closed. |
+| `fix_revoke_shop_sessions_refresh_token_match` | `auth.refresh_tokens.user_id` holds the uuid as text, not the email — the first version matched nothing. |
 
 ### Tenant isolation
 
@@ -231,4 +295,18 @@ Checked against the live database and a real browser, not assumed:
 - Layout measured against Figma coordinates at all three breakpoints
 - No horizontal overflow on any screen at 393 / 834 / 1440
 
-All test accounts and shops created during this work were deleted.
+- Pause and deletion: the write guard checked in all four states (open, paused,
+  queued for deletion, restored) against the live database — writes refused,
+  reads still working, writing allowed again after restoring
+- The purge run against a throwaway shop carrying a sale, a payment, a stock
+  adjustment, a variant and two users — every one of the NO ACTION foreign
+  keys — leaving zero rows behind, and leaving the shop untouched while still
+  inside its grace period
+- Session revocation removes the rows (2 sessions in, 0 out)
+- `purge_expired_shops()` and `revoke_shop_sessions()` not callable by `anon`
+  or `authenticated`
+- Owner and staff both signed in for real: the owner sees pause and delete,
+  staff see neither and get "Delete my account" instead
+
+All test accounts and shops created during this work were deleted, and row
+counts were checked back to their exact starting values.

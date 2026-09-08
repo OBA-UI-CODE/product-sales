@@ -26,7 +26,7 @@ const SECTIONS: LegalSection[] = [
   },
   {
     heading: "5. Your rights",
-    body: "You can access, correct, or request deletion of your data at any time by reaching out to us. If you close your account, your data is retained only as long as necessary and then deleted.",
+    body: "You can access, correct, download or delete your data at any time from Settings — you do not need to ask us. You can also pause your shop, which stops billing but keeps your records. When you delete your shop we keep it for 30 days so you can change your mind, then it is permanently destroyed, including your staff’s logins. Before deleting, you can download a spreadsheet of every sale, debt and product to keep for your own records.",
   },
   {
     heading: "6. Contact us",
