@@ -36,14 +36,24 @@ export default function Hero() {
               <span className="leading-[77px] web:leading-[87px]"> Accounted For.</span>
             </h1>
 
-            <div className="w-full whitespace-pre-wrap text-center font-body text-[16px] font-normal leading-[24px] text-text-secondary tab:font-heading tab:text-[18px] tab:font-semibold tab:leading-[22px] tab:tracking-[-1px] web:text-[24px] web:leading-[29px]">
-              <p>
-                <span className="text-primary-text">JOHTA</span>
-                {` turns your paper notebook into a system your whole team can trust,  log sales`}
-              </p>
-              <p>{`in seconds, track stock automatically, and know exactly what stock was sold, `}</p>
-              <p>{`how much you made and what remains `}</p>
-            </div>
+            {/*
+              One paragraph that wraps, not three hard-coded lines.
+
+              The design draws this as three lines, and it was built that way —
+              but the first line does not actually fit the 871px column at
+              24px, so it wrapped and left "sales" stranded on a line of its
+              own. That happened at 1440 too, not just on narrower laptops.
+
+              Letting it wrap inside a max-width gives the same three-line
+              shape at the design width and degrades gracefully everywhere
+              else, instead of breaking at one exact viewport size.
+            */}
+            <p className="mx-auto w-full max-w-[900px] text-center font-body text-[16px] font-normal leading-[24px] text-text-secondary tab:font-heading tab:text-[18px] tab:font-semibold tab:leading-[22px] tab:tracking-[-1px] web:text-[24px] web:leading-[29px]">
+              <span className="text-primary-text">JOHTA</span> turns your paper
+              notebook into a system your whole team can trust, log sales in
+              seconds, track stock automatically, and know exactly what stock
+              was sold, how much you made and what remains
+            </p>
           </div>
         </div>
 
@@ -69,7 +79,7 @@ export default function Hero() {
         <div className="absolute inset-0 web:inset-auto web:left-1/2 web:top-7 web:w-[96.27%] web:-translate-x-1/2">
           <picture>
             <source
-              media="(min-width: 834px) and (max-width: 1439px)"
+              media="(min-width: 834px) and (max-width: 1199px)"
               srcSet="/figma/hero-dashboard-tablet.webp"
             />
             <img

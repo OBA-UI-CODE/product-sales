@@ -59,7 +59,7 @@ export default function HowItWorksSteps() {
         <div className="absolute left-[34px] top-[217px] h-[336px] w-[311px] overflow-hidden rounded-tl-md border-2 border-border-strong tab:left-16 tab:top-[359px] tab:h-[483px] tab:w-[674px] tab:rounded-md web:left-[585px] web:top-[122px] web:h-[546px] web:w-[874px] web:border-[3px]">
           <picture>
             <source
-              media="(min-width: 834px) and (max-width: 1439px)"
+              media="(min-width: 834px) and (max-width: 1199px)"
               srcSet="/figma/hero-dashboard-tablet.webp"
             />
             <img
@@ -83,7 +83,7 @@ export default function HowItWorksSteps() {
           <div className="absolute -left-1 top-[223px] h-[255px] w-[282px] overflow-hidden rounded-tr-md border-2 border-border-strong tab:-left-[33px] tab:top-[329px] tab:h-[483px] tab:w-[674px] tab:rounded-md web:left-[-97px] web:top-[335px] web:h-[373px] web:w-[596px] web:rounded-md web:border-[3px]">
             <picture>
               <source
-                media="(min-width: 834px) and (max-width: 1439px)"
+                media="(min-width: 834px) and (max-width: 1199px)"
                 srcSet="/figma/hero-dashboard-tablet.webp"
               />
               <img
@@ -105,7 +105,7 @@ export default function HowItWorksSteps() {
           {/* Stat block — single card on mobile, 2x2 grid above */}
           <picture>
             <source
-              media="(min-width: 1440px)"
+              media="(min-width: 1200px)"
               srcSet="/figma/hiw-stats.webp"
             />
             <source

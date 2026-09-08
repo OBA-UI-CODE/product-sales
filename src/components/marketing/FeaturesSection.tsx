@@ -56,7 +56,7 @@ export default function FeaturesSection() {
       {/* Cards */}
       <div className="flex w-full flex-col gap-6 tab:gap-16">
         {/* 1 — Fast sale entry + Automatic stock tracking (shared dashboard) */}
-        <div className={`${CARD} h-[733px] w-full tab:h-[842px] web:h-[657px]`}>
+        <div className={`${CARD} min-h-[733px] w-full tab:min-h-[842px] web:min-h-[657px]`}>
           <div className="absolute left-4 top-10 flex flex-col items-start gap-6 tab:left-16 tab:top-16 tab:gap-12 web:w-[470px] web:gap-[220px]">
             <div className="flex flex-col items-start gap-6">
               <p className={`${TITLE} whitespace-nowrap`}>Fast sale entry</p>
@@ -66,9 +66,13 @@ export default function FeaturesSection() {
               </div>
             </div>
             <div className="flex w-[312px] flex-col items-start gap-6 tab:w-auto">
-              <p className={`${TITLE} whitespace-nowrap`}>
-                Automatic stock tracking
-              </p>
+              {/*
+                No whitespace-nowrap here. At 48px this title is wider than the
+                470px column it sits in, so it ran out of its box and the
+                dashboard image — painted after it — covered the end of the
+                word. It read as "Automatic stock trackin".
+              */}
+              <p className={TITLE}>Automatic stock tracking</p>
               <div className={`${BODY} w-[303px] tab:w-auto`}>
                 <p className="tab:hidden">
                   Every sale updates your stock in real time. Every restock does
@@ -88,7 +92,7 @@ export default function FeaturesSection() {
           <div className="absolute left-[9.86%] top-[397px] h-[336px] w-[90.14%] overflow-hidden rounded-tl-md border-2 border-border-strong tab:left-[22.76%] tab:top-[488px] tab:h-[354px] tab:w-[77.24%] web:left-[44.59%] web:top-[122px] web:h-[546px] web:w-[66.62%] web:rounded-md web:border-[3px]">
             <picture>
               <source
-                media="(min-width: 834px) and (max-width: 1439px)"
+                media="(min-width: 834px) and (max-width: 1199px)"
                 srcSet="/figma/feat-dash-tab.webp"
               />
               <source media="(max-width: 833px)" srcSet="/figma/feat-dash-mob.webp" />

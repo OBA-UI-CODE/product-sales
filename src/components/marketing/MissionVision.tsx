@@ -86,13 +86,13 @@ export default function MissionVision() {
               src="/figma/about-star-2.svg"
               alt=""
               aria-hidden
-              className="pointer-events-none absolute left-[293px] top-[224px] h-[71px] w-[65px] tab:left-[327px] tab:top-[293px] tab:size-[100px] web:left-[656px] web:top-[315px]"
+              className="pointer-events-none absolute left-[293px] top-[224px] h-[71px] w-[65px] tab:left-[327px] tab:top-[293px] tab:size-[100px] web:left-1/2 web:top-[315px]"
             />
             <img
               src="/figma/about-star-1.svg"
               alt=""
               aria-hidden
-              className="pointer-events-none absolute -left-[18px] top-[557px] h-[71px] w-[65px] tab:left-[655px] tab:-top-[32px] tab:size-[100px] web:left-[1228px] web:-top-[21px]"
+              className="pointer-events-none absolute -left-[18px] top-[557px] h-[71px] w-[65px] tab:left-[655px] tab:-top-[32px] tab:size-[100px] web:left-[93.6%] web:-top-[21px]"
             />
 
             {/* Photo — on top at mobile, on the left above */}

@@ -46,9 +46,17 @@ export default function WhyJohta() {
         <span className="text-primary-text"> JOHTA?</span>
       </h2>
 
-      <div className="flex w-full flex-col gap-6 tab:flex-row tab:items-center tab:gap-12 web:justify-between web:gap-16">
+      {/*
+        A grid in the design's own ratio, not two fixed widths.
+
+        These columns were web:w-[574px] and web:w-[674px]. With the 64px gap
+        that is 1312 — exactly the 1440 frame minus its padding — so the row
+        fitted at precisely 1440 and was cut off at every width below it.
+        574fr/674fr keeps the same proportion and shrinks with the viewport.
+      */}
+      <div className="flex w-full flex-col gap-6 tab:flex-row tab:items-center tab:gap-12 web:grid web:grid-cols-[574fr_674fr] web:items-center web:gap-16">
         {/* Left — headline + dashboard */}
-        <div className="relative flex h-[336px] w-full shrink-0 items-center overflow-hidden rounded-md bg-primary-subtle tab:h-[462px] tab:w-[322px] web:h-[579px] web:w-[574px]">
+        <div className="relative flex h-[336px] w-full shrink-0 items-center overflow-hidden rounded-md bg-primary-subtle tab:h-[462px] tab:w-[322px] web:h-[579px] web:w-full">
           <div className="flex w-full flex-col items-start gap-4 px-[15px] tab:gap-6 tab:px-4 web:px-6">
             <p className="w-full font-heading text-[24px] font-semibold leading-[29px] tracking-[-1px] text-text-primary tab:text-[40px] tab:leading-[48px] web:text-[48px] web:leading-[58px]">
               Your sales <br />
@@ -58,7 +66,7 @@ export default function WhyJohta() {
             <div className="w-full overflow-hidden rounded-md border-2 border-border-strong tab:h-[214px] web:h-[329px] web:border-[3px]">
               <picture>
                 <source
-                  media="(min-width: 834px) and (max-width: 1439px)"
+                  media="(min-width: 834px) and (max-width: 1199px)"
                   srcSet="/figma/hero-dashboard-tablet.webp"
                 />
                 <img
@@ -72,7 +80,7 @@ export default function WhyJohta() {
         </div>
 
         {/* Right — reasons */}
-        <div className="flex w-full shrink-0 items-start overflow-hidden rounded-md border border-border-strong bg-bg-surface px-4 py-6 tab:h-[462px] tab:w-[368px] web:h-[579px] web:w-[674px] web:px-[23px] web:py-[29px]">
+        <div className="flex w-full shrink-0 items-start overflow-hidden rounded-md border border-border-strong bg-bg-surface px-4 py-6 tab:h-[462px] tab:w-[368px] web:h-[579px] web:w-full web:px-[23px] web:py-[29px]">
           <div className="flex w-full flex-col items-start gap-6 web:gap-[38px]">
             <p className="w-full font-heading text-[24px] font-semibold leading-[29px] tracking-[-1px] text-primary-text web:text-[40px] web:leading-[48px]">
               Why Shop Owners Switch

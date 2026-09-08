@@ -68,7 +68,7 @@ export default function AboutHero() {
         <div className="h-[233px] w-full overflow-hidden rounded-l-md border-[3px] border-border-subtle tab:h-[516px] tab:min-w-0 tab:flex-1 tab:border-2 tab:border-border-strong web:h-[727px] web:border-[3px]">
           <picture>
             <source
-              media="(min-width: 834px) and (max-width: 1439px)"
+              media="(min-width: 834px) and (max-width: 1199px)"
               srcSet="/figma/hero-dashboard-tablet.webp"
             />
             <source media="(max-width: 833px)" srcSet="/figma/feat-dash-mob.webp" />

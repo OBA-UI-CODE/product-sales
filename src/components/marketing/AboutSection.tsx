@@ -28,30 +28,39 @@ export default function AboutSection() {
         </p>
       </div>
 
-      {/* Staggered heading + paragraph */}
-      <div className="relative min-h-[246px] w-full tab:min-h-[314px] web:min-h-[394px]">
-        <h2 className="absolute left-0 top-0 w-[324px] font-heading text-[32px] font-semibold leading-[39px] tracking-[-1px] text-text-primary tab:w-auto tab:text-[48px] tab:leading-[58px] web:text-[56px] web:leading-[68px]">
-          Made for the shop, not the
-          <br className="hidden tab:inline" />{" "}
+      {/*
+        Staggered heading + paragraph.
+
+        This was two absolutely-positioned blocks inside a fixed min-height,
+        with hard <br> breaks placed for the 1440 frame. Two things went wrong
+        away from that exact width: the breaks landed mid-sentence and stranded
+        single words, and because absolute children do not contribute height,
+        an extra wrapped line overflowed the min-height and collided with the
+        "Features" badge in the next section.
+
+        It is a grid now, so the height is whatever the content needs, and the
+        text wraps to its column instead of to hard-coded break points. The
+        stagger — heading left, paragraph right and lower — is kept, using the
+        same proportions the file specifies.
+      */}
+      <div className="grid w-full grid-cols-1 gap-6 tab:grid-cols-[35.23%_1fr] tab:gap-0 web:grid-cols-[52.21%_1fr]">
+        <h2 className="max-w-[324px] font-heading text-[32px] font-semibold leading-[39px] tracking-[-1px] text-text-primary tab:max-w-none tab:text-[48px] tab:leading-[58px] web:text-[56px] web:leading-[68px]">
+          Made for the shop, not the{" "}
           <span className="text-green-100">spreadsheet</span>
         </h2>
 
-        <div className="absolute right-0 top-[102px] left-[4.64%] font-body text-[16px] font-normal leading-[24px] text-text-secondary tab:left-[35.23%] tab:top-[140px] tab:font-heading tab:text-[24px] tab:font-semibold tab:leading-[29px] tab:tracking-[-1px] web:left-[52.21%] web:top-[160px] web:text-[32px] web:leading-[39px]">
+        <div className="flex flex-col gap-6 pl-[4.64%] font-body text-[16px] font-normal leading-[24px] text-text-secondary tab:pl-0 tab:pt-[140px] tab:font-heading tab:text-[24px] tab:font-semibold tab:leading-[29px] tab:tracking-[-1px] web:pt-[160px] web:text-[32px] web:leading-[39px]">
           <p>
-            We started with one real shop, real sales, and
-            <br className="hidden tab:inline" /> real mistakes a notebook or a
-            shop owner
-            <br className="hidden tab:inline" /> makes and can’t catch.
+            We started with one real shop, real sales, and real mistakes a
+            notebook or a shop owner makes and can&rsquo;t catch.
           </p>
-          {/* Figma uses a zero-width-space line to create the blank row */}
-          <p>&#8203;</p>
           <p>
             <span className="text-primary-text">JOHTA</span> is what came out of
-            it. simple enough to
-            <br className="hidden tab:inline" /> use or hand to any staff member.
+            it. Simple enough to use or hand to any staff member.
           </p>
         </div>
       </div>
+
     </section>
   );
 }

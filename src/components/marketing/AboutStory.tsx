@@ -42,9 +42,11 @@ export default function AboutStory() {
         </h2>
 
         {/* mobile: one column · tablet: image+panel then two cards · web: image column + right column */}
-        <div className="flex w-full flex-col gap-6 tab:gap-12 web:flex-row web:items-start web:gap-16">
+        {/* 409 + 839 + 64 gap = 1312, the 1440 frame exactly — so this row was
+            cut off below 1440. Same ratio, expressed as fractions. */}
+        <div className="flex w-full flex-col gap-6 tab:gap-12 web:grid web:grid-cols-[409fr_839fr] web:items-start web:gap-16">
           {/* Illustration */}
-          <div className="h-[307px] w-full shrink-0 overflow-hidden rounded-md border border-border-strong tab:hidden web:block web:h-[673px] web:w-[409px]">
+          <div className="h-[307px] w-full shrink-0 overflow-hidden rounded-md border border-border-strong tab:hidden web:block web:h-[673px] web:w-full">
             <img
               src="/figma/about-story.webp"
               alt=""
@@ -52,7 +54,7 @@ export default function AboutStory() {
             />
           </div>
 
-          <div className="flex w-full flex-col gap-6 tab:gap-12 web:w-[839px] web:gap-16">
+          <div className="flex w-full flex-col gap-6 tab:gap-12 web:w-full web:gap-16">
             {/* Tablet places the illustration beside the Our Story panel */}
             <div className="flex w-full flex-col gap-6 tab:flex-row tab:items-center tab:gap-12">
               <div className="hidden shrink-0 overflow-hidden rounded-md border border-border-strong tab:block tab:h-[240px] tab:w-[214px] web:hidden">
