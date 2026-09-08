@@ -39,15 +39,33 @@ export async function updateSession(request: NextRequest) {
     }
   );
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
   const isProtectedPath = PROTECTED_PREFIXES.some((path) =>
     request.nextUrl.pathname.startsWith(path)
   );
 
-  if (!user && isProtectedPath) {
+  /*
+    Public pages do no auth work at all.
+
+    auth.getUser() is a NETWORK CALL to Supabase — it validates the token with
+    the auth server rather than just reading the cookie. This used to run on
+    every request the matcher caught, which is every marketing page, so
+    visitors to the home page waited on a round trip to Ireland for an answer
+    nothing on the page used. Returning early is why the public site got
+    noticeably quicker.
+
+    The session refresh is skipped here too. That is fine: the only thing it
+    would refresh is a token that only the signed-in area reads, and the first
+    protected request refreshes it anyway.
+  */
+  if (!isProtectedPath) {
+    return supabaseResponse;
+  }
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     return NextResponse.redirect(url);
@@ -58,7 +76,7 @@ export async function updateSession(request: NextRequest) {
   // dashboard with no shop_id to operate against. Only applies to
   // protected paths — an authenticated user browsing the public
   // marketing site doesn't need to be interrupted.
-  if (user && isProtectedPath && request.nextUrl.pathname !== "/onboarding") {
+  if (user && request.nextUrl.pathname !== "/onboarding") {
     const { data: profile } = await supabase
       .from("profiles")
       .select("id")
