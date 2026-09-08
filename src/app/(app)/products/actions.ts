@@ -112,13 +112,20 @@ export async function restockVariant(variantId: string, quantity: number) {
   revalidatePath("/dashboard");
 }
 
+/*
+  Archives the product AND its sizes.
+
+  This used to update only the products row, which left every variant active
+  forever — still holding stock, attached to a product the app no longer
+  shows. Both archives now happen inside one database function so they cannot
+  half-happen, and so the paywall and ownership checks run in the same place
+  as every other write.
+*/
 export async function deleteProduct(productId: string) {
-  const { supabase, profile } = await getCurrentShopContext();
-  const { error } = await supabase
-    .from("products")
-    .update({ archived_at: new Date().toISOString() })
-    .eq("id", productId)
-    .eq("shop_id", profile.shop_id);
+  const { supabase } = await getCurrentShopContext();
+  const { error } = await supabase.rpc("archive_product", {
+    p_product_id: productId,
+  });
   if (error) throw new Error(error.message);
   revalidatePath("/products");
   revalidatePath("/dashboard");
