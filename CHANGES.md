@@ -8,7 +8,10 @@ document explains what changed, why, and what still needs doing.
 layer with the Figma design, renames the product from **Reko** to **JOHTA**,
 and adds billing, product variants and a paywall.
 
-**Nothing here has been deployed.** It has only ever run locally.
+**This is live at https://johta.click**, on its own domain with SSL, sending
+email through Resend and holding live Paystack keys in production. Test keys
+remain in preview and local development, so local work cannot charge a real
+card.
 
 ---
 
@@ -332,30 +335,43 @@ NEXT_PUBLIC_SITE_URL           # must be the deployed URL, not localhost
 
 ## 9. Before this can serve real users
 
-**Blocking:**
+### Done since this document was first written
 
-1. **Email.** Supabase's built-in email is development-only and rate-limited to
-   a handful per hour. At any real signup volume most people never receive a
-   confirmation and cannot get in. Needs a domain plus Resend or Brevo.
-2. **A domain.** Required for email; a `.vercel.app` subdomain cannot be
-   verified for sending.
-3. **Paystack live approval.** Still in test mode — no real payments possible.
-   Live mode needs new `PLN_` plan codes; test plans do not carry over.
-4. **The webhook** needs a public URL, so payment confirmation is untested
-   end-to-end.
+1. **Email.** Sending moved from Supabase's development mailer to Resend on
+   `johta.click`. Verified from a real delivered message: `From: JOHTA
+   <hello@johta.click>`, SPF, DKIM and DMARC all pass, and it lands in the
+   inbox rather than spam.
+2. **A domain.** `johta.click`, live with SSL, used for both the site and email.
+3. **The webhook** has a public URL and is live. It returns 401 to unsigned and
+   forged requests — checked against the deployed endpoint.
+4. **Email links.** Both templates point at `/auth/confirm`; following a real
+   signup token lands on `/onboarding` and a recovery token on
+   `/reset-password`.
 
-**Not blocking, but wanted:**
+### Still open
 
-- Rebuild the five screens still on the old design
-- Staff cannot change their temporary password
+**The one that matters:**
+
+- **No live payment has ever completed.** All four shops are `trialing` and
+  none has a `paystack_subscription_code`. Two have a `billing_plan` set, which
+  is written just before the redirect to Paystack — so checkout was reached
+  twice and never finished. The live keys, live plan codes and the live-mode
+  webhook registration are therefore unproven, and Paystack keeps test and live
+  webhook configuration entirely separate: setting it up in test mode does not
+  carry over. **The earliest trial ends 5 October 2026**, so this needs proving
+  before then, ideally with a real card that is then refunded.
+
+**Wanted, not blocking:**
+
+- Rebuild the five screens still on the old design (Sales History, Products,
+  Debts, Settings, Add Sale modal)
 - No "update card" flow for a failed payment
 - `past_due` becomes read-only immediately; a few days' grace would be kinder
 - No error monitoring — failures are currently invisible
 - Any staff member can edit or delete any sale, including ones they did not log
 
-**Fixed since:** staff removal was broken — see 6b. Staff still cannot change
-their own password, and that is deliberate: the owner administers staff logins,
-and now has a **Set new password** button for each of them.
+**Resolved:** staff removal (6b), staff passwords (6b), account deletion (6a),
+nav theming (6c).
 
 ---
 
