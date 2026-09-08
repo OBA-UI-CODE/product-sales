@@ -8,10 +8,18 @@ import { GRACE_DAYS } from "@/lib/account";
 export default async function SettingsPage() {
   const { supabase, profile } = await getCurrentShopContext();
 
+  /*
+    Removed staff are archived, not deleted, so that past sales still say who
+    sold them — hence the removed_at filter. Every other place that reads
+    profiles (the dashboard, sales history, debts, the CSV export) deliberately
+    does NOT filter, because those are looking up the seller's name and need
+    people who have since left.
+  */
   const { data: staff } = await supabase
     .from("profiles")
     .select("id, name, role")
     .eq("shop_id", profile.shop_id)
+    .is("removed_at", null)
     .order("role", { ascending: false });
 
   /*

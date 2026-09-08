@@ -209,6 +209,52 @@ The privacy policy was updated to match — deletion is now self-serve, and the
 
 ---
 
+## 6b. Staff removal was broken, and staff passwords
+
+### The bug
+
+Removing a staff member silently did nothing for anyone who had logged a sale.
+
+`sales.seller_id` references profiles with `NO ACTION`, so the database refuses
+to delete a profile whose name is on a sale. Deleting the auth user failed for
+the same reason, because profiles cascades from it. Neither delete checked its
+error, so the owner pressed remove, saw no complaint, and **the staff member
+could still sign in**. It only ever worked for staff who had never sold
+anything — which is why it looked fine.
+
+Verified against the live database before fixing: profile delete failed, auth
+user delete failed, the login remained usable.
+
+### The fix
+
+Staff are **archived**, not deleted — the same approach products and variants
+already use, and for the same reason. Removing someone now:
+
+- sets `profiles.removed_at`, so they leave the staff list but past sales still
+  say who sold them
+- bans the login, so they cannot sign in
+- revokes their sessions, so an open tab stops working immediately
+- moves their address to a `.invalid` one (reserved by RFC 2606, so it can
+  never reach a real mailbox), which frees their real email to be added back
+
+Only the Settings staff list filters `removed_at`. The dashboard, sales
+history, debts and the CSV export deliberately do not — they are looking up a
+seller's name and need people who have since left.
+
+`current_shop_id()` now ignores removed profiles too, so RLS denies them even
+if a token somehow outlived the ban.
+
+### Staff passwords
+
+Staff cannot change their own password, by design: the owner administers the
+shop, including its logins. Each staff row now has a **Set new password**
+button so the owner can rotate one directly — previously the only way was to
+remove the person and add them back, which is what exposed the bug above. The
+new password is checked against Have I Been Pwned, and setting it signs that
+staff member out everywhere.
+
+---
+
 ## 7. Database changes
 
 All applied to the live Supabase project (`ktpqywmtgswjmvdyvvlg`) as migrations.
@@ -229,6 +275,7 @@ All applied to the live Supabase project (`ktpqywmtgswjmvdyvvlg`) as migrations.
 | `schedule_nightly_shop_purge` | pg_cron job at 03:15 UTC that runs the purge. |
 | `add_revoke_shop_sessions` | Ends every session in a shop when it is closed. |
 | `fix_revoke_shop_sessions_refresh_token_match` | `auth.refresh_tokens.user_id` holds the uuid as text, not the email — the first version matched nothing. |
+| `archive_removed_staff_instead_of_deleting` | `profiles.removed_at`, `current_shop_id()` ignores removed staff, and `revoke_user_sessions()`. |
 
 ### Tenant isolation
 
@@ -278,6 +325,10 @@ NEXT_PUBLIC_SITE_URL           # must be the deployed URL, not localhost
 - No error monitoring — failures are currently invisible
 - Any staff member can edit or delete any sale, including ones they did not log
 
+**Fixed since:** staff removal was broken — see 6b. Staff still cannot change
+their own password, and that is deliberate: the owner administers staff logins,
+and now has a **Set new password** button for each of them.
+
 ---
 
 ## 10. What was verified, and how
@@ -307,6 +358,10 @@ Checked against the live database and a real browser, not assumed:
   or `authenticated`
 - Owner and staff both signed in for real: the owner sees pause and delete,
   staff see neither and get "Delete my account" instead
+- Staff removal end to end for a staff member holding a sale: archived, banned,
+  signed out, still named on the sale, gone from the staff list, and their
+  email freed so the same person could be added back and sign in again
+- Setting a staff password: the new one works, the old one is refused
 
 All test accounts and shops created during this work were deleted, and row
 counts were checked back to their exact starting values.
