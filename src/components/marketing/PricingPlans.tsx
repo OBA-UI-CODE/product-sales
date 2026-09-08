@@ -112,7 +112,7 @@ function PlanCard({ plan }: { plan: Plan }) {
 
         <Link
           href="/signup"
-          className="flex h-12 min-h-12 w-full items-center justify-center whitespace-nowrap rounded-md bg-primary-default px-6 font-heading text-[18px] font-semibold leading-[22px] tracking-[-1px] text-text-on-primary"
+          className="press flex h-12 min-h-12 w-full items-center justify-center whitespace-nowrap rounded-md bg-primary-default px-6 font-heading text-[18px] font-semibold leading-[22px] tracking-[-1px] text-text-on-primary"
         >
           Start free trial
         </Link>
@@ -133,7 +133,7 @@ export default function PricingPlans() {
     // edge on tablet and mobile). Band padding from the file: mobile
     // (1326 - 1285 stacked cards)/2 ≈ 20, tablet pt 30 / pb 37,
     // web (680 - 584)/2 = 48.
-    <section className="mt-6 w-full bg-info-subtle px-6 py-5 tab:mt-12 tab:px-12 tab:pb-[37px] tab:pt-[30px] web:mt-16 web:py-12">
+    <section data-reveal className="mt-6 w-full bg-info-subtle px-6 py-5 tab:mt-12 tab:px-12 tab:pb-[37px] tab:pt-[30px] web:mt-16 web:py-12">
       <div className="mx-auto flex w-full max-w-[1440px] flex-col items-center gap-6 tab:flex-row tab:items-stretch tab:justify-center tab:gap-12 web:gap-16">
         {PLANS.map((p) => (
           <PlanCard key={p.name} plan={p} />

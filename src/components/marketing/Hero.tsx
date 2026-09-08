@@ -61,13 +61,13 @@ export default function Hero() {
         <div className="flex flex-col items-center gap-6 tab:flex-row tab:gap-[31px]">
           <Link
             href="/signup"
-            className="flex h-12 min-h-12 items-center justify-center whitespace-nowrap rounded-md bg-primary-default px-6 font-heading text-[20px] font-semibold leading-[24px] tracking-[-1px] text-text-on-primary tab:text-[24px] tab:leading-[29px]"
+            className="press flex h-12 min-h-12 items-center justify-center whitespace-nowrap rounded-md bg-primary-default px-6 font-heading text-[20px] font-semibold leading-[24px] tracking-[-1px] text-text-on-primary tab:text-[24px] tab:leading-[29px]"
           >
             Start Free Trial
           </Link>
           <Link
             href="/how-it-works"
-            className="flex h-12 min-h-12 items-center justify-center whitespace-nowrap rounded-md border border-border-default px-6 font-heading text-[18px] font-semibold leading-[22px] tracking-[-1px] text-text-primary tab:text-[24px] tab:leading-[29px]"
+            className="press flex h-12 min-h-12 items-center justify-center whitespace-nowrap rounded-md border border-border-default px-6 font-heading text-[18px] font-semibold leading-[22px] tracking-[-1px] text-text-primary hover:border-primary-border tab:text-[24px] tab:leading-[29px]"
           >
             See How It Works
           </Link>

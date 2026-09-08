@@ -49,7 +49,7 @@ export default function ContactSection() {
   );
 
   return (
-    <section className="w-full bg-bg-surface px-4 py-6 tab:px-12 tab:py-[25px] web:px-[120px] web:py-[72px]">
+    <section data-reveal className="w-full bg-bg-surface px-4 py-6 tab:px-12 tab:py-[25px] web:px-[120px] web:py-[72px]">
       <div className="flex flex-col items-center gap-6 tab:flex-row tab:items-center tab:gap-[59px] web:items-start web:gap-12">
         {/* Copy */}
         <div className="flex shrink-0 flex-col items-start gap-6 py-20 tab:gap-7 web:min-w-px web:flex-1">
@@ -139,7 +139,7 @@ export default function ContactSection() {
             <button
               type="submit"
               disabled={pending}
-              className="flex h-12 min-h-12 w-full items-center justify-center whitespace-nowrap rounded-md bg-primary-default px-6 font-heading text-[20px] font-semibold leading-[24px] tracking-[-1px] text-text-on-primary disabled:opacity-70"
+              className="press flex h-12 min-h-12 w-full items-center justify-center whitespace-nowrap rounded-md bg-primary-default px-6 font-heading text-[20px] font-semibold leading-[24px] tracking-[-1px] text-text-on-primary disabled:opacity-70"
             >
               {pending ? "Sending…" : "Send Message"}
             </button>

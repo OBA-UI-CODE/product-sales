@@ -63,7 +63,7 @@ export default function FAQSection() {
     setOpen((prev) => prev.map((v, idx) => (idx === i ? !v : v)));
 
   return (
-    <section className="mx-auto flex w-full max-w-[1440px] flex-col items-center px-6 pt-6 tab:px-12 tab:pt-12 web:px-16 web:pt-16">
+    <section data-reveal className="mx-auto flex w-full max-w-[1440px] flex-col items-center px-6 pt-6 tab:px-12 tab:pt-12 web:px-16 web:pt-16">
       <div className="flex w-full max-w-[1087px] flex-col items-center gap-6 tab:gap-12 web:gap-16">
         {/* Heading */}
         <div className="flex w-full max-w-[295px] flex-col items-center gap-6 tab:max-w-[556px] web:max-w-[653px]">
@@ -84,7 +84,7 @@ export default function FAQSection() {
             return (
               <div
                 key={i}
-                className="flex w-full flex-col items-start gap-6 rounded-md border border-border-default bg-bg-surface px-5 py-8 tab:min-h-[156px]"
+                className="card-hover flex w-full flex-col items-start gap-6 rounded-md border border-border-default bg-bg-surface px-5 py-8 tab:min-h-[156px]"
               >
                 <button
                   type="button"
@@ -95,11 +95,19 @@ export default function FAQSection() {
                   <span className="min-w-px flex-1 font-heading text-[20px] font-semibold leading-[24px] tracking-[-1px] text-text-primary tab:text-[24px] tab:leading-[29px] web:text-[32px] web:leading-[39px]">
                     {faq.q}
                   </span>
+                  {/*
+                    One glyph that turns, rather than swapping + for −. A swap
+                    is instant and easy to miss; a 90 degree turn shows the
+                    row responded to the tap. Always a "+" in the markup, so
+                    the rotation has something continuous to animate.
+                  */}
                   <span
                     aria-hidden
-                    className="shrink-0 whitespace-nowrap font-body text-[18px] font-semibold text-text-secondary"
+                    className={`shrink-0 whitespace-nowrap font-body text-[18px] font-semibold text-text-secondary transition-transform duration-200 motion-reduce:transition-none ${
+                      isOpen ? "rotate-45" : ""
+                    }`}
                   >
-                    {isOpen ? "−" : "+"}
+                    +
                   </span>
                 </button>
 

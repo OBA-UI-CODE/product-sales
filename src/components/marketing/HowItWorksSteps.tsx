@@ -48,7 +48,7 @@ function StepText({
 
 export default function HowItWorksSteps() {
   return (
-    <section className="mx-auto flex w-full max-w-[1440px] flex-col items-start gap-6 px-6 pt-6 tab:gap-6 tab:px-12 tab:pt-12 web:gap-16 web:px-16 web:pt-16">
+    <section data-reveal className="mx-auto flex w-full max-w-[1440px] flex-col items-start gap-6 px-6 pt-6 tab:gap-6 tab:px-12 tab:pt-12 web:gap-16 web:px-16 web:pt-16">
       {/* 1 — Set up your shop */}
       <div className={`${CARD} h-[553px] w-full tab:h-[842px] web:h-[657px]`}>
         <StepText

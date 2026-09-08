@@ -40,7 +40,7 @@ const ROWS = [
 
 export default function WhyJohta() {
   return (
-    <section className="mx-auto flex w-full max-w-[1440px] flex-col items-center gap-6 px-6 pt-6 tab:gap-12 tab:px-12 tab:pt-12 web:gap-16 web:px-16 web:pt-16">
+    <section data-reveal className="mx-auto flex w-full max-w-[1440px] flex-col items-center gap-6 px-6 pt-6 tab:gap-12 tab:px-12 tab:pt-12 web:gap-16 web:px-16 web:pt-16">
       <h2 className="w-full text-center font-heading text-[24px] font-semibold leading-[29px] tracking-[-1px] tab:text-[48px] tab:leading-[58px] web:text-[56px] web:leading-[68px]">
         <span className="text-text-primary">Why</span>
         <span className="text-primary-text"> JOHTA?</span>

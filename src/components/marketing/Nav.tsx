@@ -54,9 +54,9 @@ export default function Nav() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={
+                className={`link-underline hover:text-text-primary ${
                   isActive(link.href) ? "text-primary-text" : "text-text-secondary"
-                }
+                }`}
               >
                 {link.label}
               </Link>
@@ -67,13 +67,13 @@ export default function Nav() {
           <div className="hidden shrink-0 items-center gap-6 tab:flex">
             <Link
               href="/login"
-              className="flex min-h-12 items-center justify-center whitespace-nowrap rounded-md px-6 font-heading font-semibold tracking-[-1px] text-primary-text tab:text-[18px] tab:leading-[22px] web:h-12 web:text-[24px] web:leading-[29px]"
+              className="press flex min-h-12 items-center justify-center whitespace-nowrap rounded-md px-6 font-heading font-semibold tracking-[-1px] text-primary-text tab:text-[18px] tab:leading-[22px] web:h-12 web:text-[24px] web:leading-[29px]"
             >
               Sign In
             </Link>
             <Link
               href="/signup"
-              className="flex min-h-12 items-center justify-center whitespace-nowrap rounded-md bg-primary-default px-6 font-heading font-semibold tracking-[-1px] text-text-on-primary tab:text-[20px] tab:leading-[24px] web:h-12 web:text-[24px] web:leading-[29px]"
+              className="press flex min-h-12 items-center justify-center whitespace-nowrap rounded-md bg-primary-default px-6 font-heading font-semibold tracking-[-1px] text-text-on-primary tab:text-[20px] tab:leading-[24px] web:h-12 web:text-[24px] web:leading-[29px]"
             >
               Get Started
             </Link>
@@ -145,7 +145,7 @@ export default function Nav() {
             <Link
               href="/signup"
               onClick={() => setMenuOpen(false)}
-              className="flex h-12 items-center justify-center rounded-md bg-primary-default font-heading text-[20px] font-semibold leading-[24px] tracking-[-1px] text-text-on-primary"
+              className="press flex h-12 items-center justify-center rounded-md bg-primary-default font-heading text-[20px] font-semibold leading-[24px] tracking-[-1px] text-text-on-primary"
             >
               Get Started
             </Link>
