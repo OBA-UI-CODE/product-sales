@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NAV_ITEMS } from "./NavItems";
+import { LogoutIcon } from "./NavIcons";
 
 /*
   Dashboard sidebar — Figma 201:3096 (web) / 203:3855 (tablet).
@@ -61,14 +62,10 @@ export default function Sidebar({
                     active ? "bg-primary-default" : ""
                   }`}
                 >
-                  <img
-                    src={item.icon}
-                    alt=""
-                    aria-hidden
-                    width={24}
-                    height={24}
-                    className="size-6 shrink-0"
-                  />
+                  {/* White in both states by design: the active row is a
+                      filled pill in the accent colour, so the icon on top of
+                      it has to stay light to be legible. */}
+                  <item.Icon className="text-text-primary" />
                   <span className="whitespace-nowrap font-body text-[18px] font-medium leading-[28px] text-text-primary">
                     {item.label}
                   </span>
@@ -82,14 +79,7 @@ export default function Sidebar({
               type="submit"
               className="flex w-full items-center gap-2.5 overflow-hidden rounded-[8px] px-3 py-2.5"
             >
-              <img
-                src="/figma/icon-nav-logout.svg"
-                alt=""
-                aria-hidden
-                width={24}
-                height={24}
-                className="size-6 shrink-0"
-              />
+              <LogoutIcon className="text-text-primary" />
               <span className="whitespace-nowrap font-body text-[18px] font-medium leading-[28px] text-text-primary">
                 Logout
               </span>

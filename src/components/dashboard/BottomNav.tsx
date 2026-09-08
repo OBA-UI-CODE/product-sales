@@ -16,8 +16,10 @@ import { NAV_ITEMS } from "./NavItems";
             across the 347-wide row - and unlike a fixed gap it cannot force a
             sideways scroll once a scrollbar narrows the viewport.
     label   Inter Regular 14/20 — text/secondary, primary/text when active
-    active  green icon + green label, with NO filled pill (unlike the sidebar,
-            which fills the active row and keeps its icon white)
+    active  icon AND label both in the shop's accent colour, with NO filled
+            pill (unlike the sidebar, which fills the active row and keeps
+            its icon white). The design shows this as green because green is
+            the default accent; it follows whatever the owner picked.
 
   The file uses an 8px icon-to-label gap on the first three items and 4px on
   the last two. That reads as a slip rather than intent, so 8 is used
@@ -38,13 +40,14 @@ export default function BottomNav() {
               aria-current={active ? "page" : undefined}
               className="flex flex-col items-center gap-2"
             >
-              <img
-                src={active ? item.activeIcon : item.icon}
-                alt=""
-                aria-hidden
-                width={24}
-                height={24}
-                className="size-6 shrink-0"
+              {/*
+                Icon and label take the SAME colour class. Previously the
+                label followed the theme while the icon was a hard-coded
+                green PNG-like SVG, so the active item read as a green icon
+                over a purple word.
+              */}
+              <item.Icon
+                className={active ? "text-primary-text" : "text-text-primary"}
               />
               <span
                 className={`whitespace-nowrap text-center font-body text-[14px] font-normal leading-[20px] ${

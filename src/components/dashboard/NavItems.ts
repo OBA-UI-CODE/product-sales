@@ -1,43 +1,37 @@
+import {
+  BoxIcon,
+  ChartIcon,
+  HomeIcon,
+  ReceiptIcon,
+  ShieldIcon,
+} from "./NavIcons";
+
 /*
   One source for both navs. The labels differ between them in the design —
   the sidebar says "Sales History" / "Product", the mobile bar says
   "History" / "Products" — so each label is carried separately rather than
   picking one and using it in both places.
+
+  Icons are COMPONENTS, not file paths. They used to be <img src=...>, which
+  paints whatever colour is baked into the SVG and cannot follow the shop's
+  theme — see NavIcons.tsx. There is no separate "active" icon any more
+  either: an active icon is just the same icon in a different colour, which
+  is now the caller's business rather than a second file.
 */
 export const NAV_ITEMS = [
-  {
-    href: "/dashboard",
-    label: "Home",
-    shortLabel: "Home",
-    icon: "/figma/icon-nav-home.svg",
-    activeIcon: "/figma/icon-nav-home-active.svg",
-  },
+  { href: "/dashboard", label: "Home", shortLabel: "Home", Icon: HomeIcon },
   {
     href: "/sales-history",
     label: "Sales History",
     shortLabel: "History",
-    icon: "/figma/icon-nav-chart.svg",
-    activeIcon: "/figma/icon-nav-chart.svg",
+    Icon: ChartIcon,
   },
-  {
-    href: "/products",
-    label: "Product",
-    shortLabel: "Products",
-    icon: "/figma/icon-nav-box.svg",
-    activeIcon: "/figma/icon-nav-box.svg",
-  },
-  {
-    href: "/debts",
-    label: "Debts",
-    shortLabel: "Debts",
-    icon: "/figma/icon-nav-receipt.svg",
-    activeIcon: "/figma/icon-nav-receipt.svg",
-  },
+  { href: "/products", label: "Product", shortLabel: "Products", Icon: BoxIcon },
+  { href: "/debts", label: "Debts", shortLabel: "Debts", Icon: ReceiptIcon },
   {
     href: "/settings",
     label: "Settings",
     shortLabel: "Settings",
-    icon: "/figma/icon-nav-shield.svg",
-    activeIcon: "/figma/icon-nav-shield.svg",
+    Icon: ShieldIcon,
   },
 ] as const;

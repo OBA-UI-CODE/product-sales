@@ -255,6 +255,34 @@ staff member out everywhere.
 
 ---
 
+## 6c. The nav icons ignored the theme
+
+On mobile, the active nav item showed a **green icon next to a themed label** —
+a green house over the word "Home" in purple. The other four icons never
+changed colour at all when their page was open.
+
+The icons were `<img src="/figma/icon-nav-*.svg">`. An `<img>` paints the
+colours baked into the file and cannot inherit anything from the page, so:
+
+- `icon-nav-home-active.svg` had `stroke="#1D9E75"` hard-coded — brand green,
+  regardless of the accent the owner picked
+- every other icon was `stroke="white"`, and its "active" variant pointed at
+  the *same file*, so there was no active state to show
+
+They are now inline SVG components (`NavIcons.tsx`) using `currentColor`, so an
+icon is simply the colour of the text around it. Icon and label take the same
+class, which makes the two impossible to drift apart again. Path data is
+verbatim from the exports, including the logout icon's 1.5 stroke weight.
+
+The sidebar was not affected — its active row is a filled pill in the accent
+colour, which already themed correctly — but it now uses the same inline icons,
+so no hard-coded colour is left anywhere in either nav.
+
+This is the third instance of one bug: an exported SVG carrying a baked-in
+colour, after the dashboard's trend arrow.
+
+---
+
 ## 7. Database changes
 
 All applied to the live Supabase project (`ktpqywmtgswjmvdyvvlg`) as migrations.
