@@ -65,10 +65,45 @@ export function isConfigured(): boolean {
   return Boolean(secretKey() && planCode("monthly") && planCode("yearly"));
 }
 
+/*
+  Turns Paystack's own error text into something a shop owner can act on.
+
+  Paystack writes for developers. Its messages were being passed straight to
+  the billing screen, so someone whose address it disliked was told:
+
+      "email" must be a valid email
+
+  which names a JSON field, uses developer punctuation, and does not say what
+  to do. Anything unrecognised falls back to a plain sentence rather than
+  leaking internals — a customer cannot act on "Invalid key" and should not be
+  shown it, so those cases say the shop should contact us while the real text
+  goes to the server log.
+*/
+function humanise(raw: string): string {
+  const m = raw.toLowerCase();
+
+  if (m.includes("email")) {
+    return "Our payment provider would not accept that email address. Try signing up with a different one, or contact us and we will sort it out.";
+  }
+  if (m.includes("plan") && (m.includes("not found") || m.includes("invalid"))) {
+    return "That plan is not available right now. Please contact us — this is a problem on our side, not with your card.";
+  }
+  if (m.includes("key") || m.includes("authorization") || m.includes("unauthorized")) {
+    return "Payments are not set up correctly. Please contact us — do not try again, and you have not been charged.";
+  }
+  if (m.includes("amount") || m.includes("currency")) {
+    return "There was a problem with the amount for this plan. Please contact us — you have not been charged.";
+  }
+  if (m.includes("declin") || m.includes("insufficient")) {
+    return "Your bank declined the payment. Try another card, or check with your bank.";
+  }
+  return "We could not start the payment. Please try again in a moment — you have not been charged.";
+}
+
 async function paystack<T>(
   path: string,
   init?: RequestInit
-): Promise<{ ok: boolean; data?: T; message: string }> {
+): Promise<{ ok: boolean; data?: T; message: string; raw?: string }> {
   const key = secretKey();
   if (!key) return { ok: false, message: "Paystack is not configured." };
 
@@ -90,10 +125,10 @@ async function paystack<T>(
     };
 
     if (!res.ok || body.status === false) {
-      return {
-        ok: false,
-        message: body.message ?? `Paystack returned ${res.status}.`,
-      };
+      const raw = body.message ?? `Paystack returned ${res.status}.`;
+      /* The raw text is kept for us, not shown to the shop owner. */
+      console.error(`Paystack ${path} failed: ${res.status} ${raw}`);
+      return { ok: false, message: humanise(raw), raw };
     }
 
     return { ok: true, data: body.data, message: body.message ?? "" };
