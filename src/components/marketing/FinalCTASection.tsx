@@ -57,7 +57,7 @@ export default function FinalCTASection() {
     // NOTE: the gap before the footer is NOT set here. It differs per page
     // (Landing 156/79/105, About 120/30/138, Pricing 42/49/75), and this
     // component is shared, so each page owns its own bottom spacing.
-    <section data-reveal className="mx-auto w-full max-w-[1440px] px-6 pt-6 tab:px-12 tab:pt-12 web:px-16 web:pt-16">
+    <section className="mx-auto w-full max-w-[1440px] px-6 pt-6 tab:px-12 tab:pt-12 web:px-16 web:pt-16">
       <div className="relative h-[304px] w-full overflow-hidden rounded-md bg-primary-subtle tab:h-[410px] web:h-[526px]">
         <Wordmarks />
 

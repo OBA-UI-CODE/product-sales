@@ -70,7 +70,7 @@ const CARDS: Card[] = [
 
 export default function MissionVision() {
   return (
-    <section data-reveal className="mx-auto flex w-full max-w-[1440px] flex-col items-center gap-6 px-6 pt-6 tab:gap-12 tab:px-12 tab:pt-12 web:gap-16 web:px-16 web:pt-16">
+    <section className="mx-auto flex w-full max-w-[1440px] flex-col items-center gap-6 px-6 pt-6 tab:gap-12 tab:px-12 tab:pt-12 web:gap-16 web:px-16 web:pt-16">
       <h2 className="w-full text-center font-heading text-[24px] font-semibold leading-[29px] tracking-[-1px] text-text-primary tab:text-[48px] tab:leading-[58px] web:text-[56px] web:leading-[68px]">
         For the future of small shops
       </h2>

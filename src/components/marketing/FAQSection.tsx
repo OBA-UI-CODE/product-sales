@@ -63,7 +63,7 @@ export default function FAQSection() {
     setOpen((prev) => prev.map((v, idx) => (idx === i ? !v : v)));
 
   return (
-    <section data-reveal className="mx-auto flex w-full max-w-[1440px] flex-col items-center px-6 pt-6 tab:px-12 tab:pt-12 web:px-16 web:pt-16">
+    <section className="mx-auto flex w-full max-w-[1440px] flex-col items-center px-6 pt-6 tab:px-12 tab:pt-12 web:px-16 web:pt-16">
       <div className="flex w-full max-w-[1087px] flex-col items-center gap-6 tab:gap-12 web:gap-16">
         {/* Heading */}
         <div className="flex w-full max-w-[295px] flex-col items-center gap-6 tab:max-w-[556px] web:max-w-[653px]">

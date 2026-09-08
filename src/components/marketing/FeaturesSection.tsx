@@ -35,7 +35,7 @@ const TEXT_BLOCK =
 
 export default function FeaturesSection() {
   return (
-    <section data-reveal className="mx-auto flex w-full max-w-[1440px] flex-col items-center gap-6 px-6 pt-6 tab:gap-12 tab:px-12 tab:pt-12 web:gap-16 web:px-16 web:pt-16">
+    <section className="mx-auto flex w-full max-w-[1440px] flex-col items-center gap-6 px-6 pt-6 tab:gap-12 tab:px-12 tab:pt-12 web:gap-16 web:px-16 web:pt-16">
       {/* Heading */}
       <div className="flex w-full flex-col items-center gap-6">
         <div className="flex min-h-12 items-center justify-center rounded-md border border-primary-border px-6">

@@ -49,7 +49,7 @@ export default function ContactSection() {
   );
 
   return (
-    <section data-reveal className="w-full bg-bg-surface px-4 py-6 tab:px-12 tab:py-[25px] web:px-[120px] web:py-[72px]">
+    <section className="w-full bg-bg-surface px-4 py-6 tab:px-12 tab:py-[25px] web:px-[120px] web:py-[72px]">
       <div className="flex flex-col items-center gap-6 tab:flex-row tab:items-center tab:gap-[59px] web:items-start web:gap-12">
         {/* Copy */}
         <div className="flex shrink-0 flex-col items-start gap-6 py-20 tab:gap-7 web:min-w-px web:flex-1">
