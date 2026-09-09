@@ -1,5 +1,25 @@
 import LegalPage, { type LegalSection } from "@/components/marketing/LegalPage";
 
+import type { Metadata } from "next";
+
+/*
+  Its own title and description. Every page used to inherit one set from the
+  root layout, which tells a search engine these pages are interchangeable and
+  gives it no reason to show this one for a relevant search. The canonical url
+  states which address is the real one, so query strings and any preview
+  domain do not compete with johta.click.
+*/
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  description: "What JOHTA collects, how your shop's data is protected, and how to download or delete it.",
+  alternates: { canonical: "/privacy" },
+  openGraph: {
+    title: "Privacy Policy · JOHTA",
+    description: "What JOHTA collects, how your shop's data is protected, and how to download or delete it.",
+    url: "/privacy",
+  },
+};
+
 /*
   Privacy Policy — Figma 238:7432 (web) / 238:7531 (tablet) / 238:7629 (mobile)
 

@@ -1,5 +1,25 @@
 import LegalPage, { type LegalSection } from "@/components/marketing/LegalPage";
 
+import type { Metadata } from "next";
+
+/*
+  Its own title and description. Every page used to inherit one set from the
+  root layout, which tells a search engine these pages are interchangeable and
+  gives it no reason to show this one for a relevant search. The canonical url
+  states which address is the real one, so query strings and any preview
+  domain do not compete with johta.click.
+*/
+export const metadata: Metadata = {
+  title: "Terms of Service",
+  description: "The terms covering your use of JOHTA.",
+  alternates: { canonical: "/terms" },
+  openGraph: {
+    title: "Terms of Service · JOHTA",
+    description: "The terms covering your use of JOHTA.",
+    url: "/terms",
+  },
+};
+
 /*
   Terms of Service — Figma 187:1667 (web) / 187:1732 (tablet) / 187:1797 (mobile)
 

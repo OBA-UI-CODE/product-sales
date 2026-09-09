@@ -1,9 +1,50 @@
 import type { Metadata, Viewport } from "next";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "JOHTA — Every sale, accounted for.",
-  description: "Sales, stock, and staff — one simple dashboard for your shop.",
+  /*
+    metadataBase makes every relative url in here absolute. Without it the
+    Open Graph image resolves to a path, which WhatsApp, Facebook and X all
+    ignore — which is why sharing a johta.click link showed no preview card.
+  */
+  metadataBase: new URL(SITE_URL),
+
+  /*
+    A template, so each page can set its own short title and still carry the
+    brand. Every page previously shared one title, which tells Google they are
+    interchangeable and gives it no reason to show the right one.
+  */
+  title: {
+    default: "JOHTA — Every sale, accounted for.",
+    template: "%s · JOHTA",
+  },
+  description:
+    "Log daily sales, track stock and know who owes you — one simple dashboard built for small shops in Nigeria. Free for one month.",
+  keywords: [
+    "shop record keeping",
+    "sales tracking Nigeria",
+    "small business inventory",
+    "stock management app",
+    "record sales app",
+    "JOHTA",
+  ],
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    siteName: "JOHTA",
+    locale: "en_NG",
+    url: SITE_URL,
+    title: "JOHTA — Every sale, accounted for.",
+    description:
+      "Log daily sales, track stock and know who owes you — one simple dashboard built for small shops in Nigeria.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "JOHTA — Every sale, accounted for.",
+    description:
+      "Log daily sales, track stock and know who owes you — built for small shops.",
+  },
   /*
     Next picks up src/app/icon.png and apple-icon.png automatically, so the
     tab icon and the iOS home-screen icon need no configuration. The manifest
