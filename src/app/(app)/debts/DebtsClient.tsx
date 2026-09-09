@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { formatNaira } from "@/lib/format";
 import { RecordPaymentModal } from "./RecordPaymentModal";
+import ReceiptButton from "@/components/dashboard/ReceiptButton";
 
 interface Debt {
   id: string;
@@ -53,12 +54,18 @@ export default function DebtsClient({ debts }: { debts: Debt[] }) {
                 Total {formatNaira(d.total_price)} · Paid {formatNaira(d.amount_paid)} · Owes {formatNaira(owed)}
               </span>
             </div>
-            <button
-              onClick={() => setPayTarget(d)}
-              className="h-11 shrink-0 rounded-[10px] border border-[var(--color-border)] px-5 font-semibold transition hover:bg-[var(--color-bg-canvas)]"
-            >
-              Record payment
-            </button>
+            {/* The receipt matters most here: it is the slip that settles
+                "I already paid you", showing what has been paid and what is
+                still owed. */}
+            <div className="flex shrink-0 flex-col gap-2 tab:flex-row tab:items-center">
+              <ReceiptButton saleId={d.id} label="Receipt" />
+              <button
+                onClick={() => setPayTarget(d)}
+                className="press h-11 shrink-0 rounded-[10px] border border-[var(--color-border)] px-5 font-semibold transition hover:bg-[var(--color-bg-canvas)]"
+              >
+                Record payment
+              </button>
+            </div>
           </div>
         );
       })}

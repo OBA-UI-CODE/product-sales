@@ -3,6 +3,7 @@ import SettingsClient from "./SettingsClient";
 import BillingSection, { type BillingInfo } from "./BillingSection";
 import { isConfigured } from "@/lib/paystack";
 import AccountSection from "./AccountSection";
+import ShopDetailsSection from "./ShopDetailsSection";
 import { GRACE_DAYS } from "@/lib/account";
 
 export default async function SettingsPage() {
@@ -29,7 +30,7 @@ export default async function SettingsPage() {
   const { data: shop } = await supabase
     .from("shops")
     .select(
-      "name, subscription_status, trial_ends_at, current_period_end, billing_plan"
+      "name, phone, subscription_status, trial_ends_at, current_period_end, billing_plan"
     )
     .eq("id", profile.shop_id)
     .maybeSingle();
@@ -51,6 +52,10 @@ export default async function SettingsPage() {
         currentUserId={profile.id}
         isOwner={profile.role === "owner"}
       />
+
+      {profile.role === "owner" && shop && (
+        <ShopDetailsSection name={shop.name} phone={shop.phone} />
+      )}
 
       {/* Billing is the owner's business only. */}
       {profile.role === "owner" && billing && (

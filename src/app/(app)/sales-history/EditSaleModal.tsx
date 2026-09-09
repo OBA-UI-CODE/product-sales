@@ -6,6 +6,7 @@ import { X, Minus, Plus, Trash2 } from "lucide-react";
 import { formatNaira } from "@/lib/format";
 import { PaymentFields, type PaymentMode } from "../dashboard/PaymentFields";
 import { updateSale, deleteSale } from "./actions";
+import ReceiptButton from "@/components/dashboard/ReceiptButton";
 
 interface EditableSale {
   id: string;
@@ -198,6 +199,10 @@ export function EditSaleModal({
         )}
 
         <div className="flex flex-col gap-3">
+          {/* Above Save, because giving the customer their slip is the common
+              errand here; editing the sale is the rare one. */}
+          <ReceiptButton saleId={sale.id} label="Receipt for customer" className="w-full" />
+
           <button
             type="button"
             disabled={!canSubmit}
