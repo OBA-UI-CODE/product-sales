@@ -29,36 +29,56 @@ export const metadata: Metadata = {
 
 const SECTIONS: LegalSection[] = [
   {
-    heading: "1. Acceptable use",
-    body: "You agree to use JOHTA only for lawful business purposes. You may not use JOHTA to store fraudulent records, evade taxes, or engage in any illegal activity.",
+    heading: "1. Who we are and who these terms cover",
+    body: "JOHTA is a record-keeping service for small shops, operated from Nigeria and reachable at johtahelp@gmail.com. These terms are an agreement between JOHTA and the person who opens a shop account (“the owner”). They also cover anyone the owner adds as staff, and the owner is responsible for making sure their staff know them. By creating an account or using JOHTA you accept these terms; if you do not accept them, please do not use the service.",
   },
   {
-    heading: "2. Your account",
-    body: "You are responsible for keeping your login credentials secure and for all activity under your shop account, including actions taken by staff accounts you create.",
+    heading: "2. Your account and your staff",
+    body: "You must give accurate details when you sign up and keep your password to yourself. You are responsible for everything done under your shop account, including by staff accounts you create. Staff accounts are administered entirely by the owner: the owner sets and changes staff passwords and can remove a staff member at any time. Staff may log sales, and may edit or delete only the sales they logged themselves; the owner can edit or delete any sale in the shop. Tell us promptly at johtahelp@gmail.com if you believe someone has gained access to your account.",
   },
   {
-    heading: "3. Subscription and billing",
-    body: "JOHTA is billed on a monthly or yearly subscription after your one-month free trial. Subscriptions renew automatically unless cancelled. Fees are non-refundable except where required by law.",
+    heading: "3. Free trial, subscription and renewal",
+    body: "Every new shop gets one month free. No card is required to start, and we do not ask for one until you choose to subscribe. After the trial, JOHTA costs ₦1,599 per month or ₦15,990 per year. Subscriptions renew automatically at the end of each period at the price then shown on our pricing page, and continue until you cancel. You can cancel at any time from Settings, and cancelling stops the next renewal rather than ending your access immediately — you keep full use until the period you have already paid for runs out. Because payment is taken when a subscription starts, choosing to subscribe while you still have free trial left ends the remaining trial; the billing screen says so before you confirm.",
   },
   {
-    heading: "4. Intellectual property",
-    body: "JOHTA, its logo, and all related branding are the property of JOHTA. You retain ownership of the sales and shop data you enter into the platform.",
+    heading: "4. Payments and refunds",
+    body: "Payments are processed by Paystack. Your card details are entered on Paystack’s own checkout and are never seen or stored by JOHTA. Prices are in Nigerian Naira and include any tax we are required to charge. If a payment fails we may retry it and may limit your account to read-only until it succeeds. We do not generally give refunds for time already paid for, but if you were charged in error, or something on our side stopped you using the service, write to us at johtahelp@gmail.com and we will put it right. Nothing here removes rights you have under Nigerian consumer law.",
   },
   {
-    heading: "5. Limitation of liability",
-    body: "JOHTA is provided “as is.” We are not liable for indirect or consequential damages arising from use of the service, including data loss, to the extent permitted by law.",
+    heading: "5. If you stop paying",
+    body: "When a trial ends without a subscription, or a subscription lapses, your shop becomes read-only. You keep your account and can still sign in, see every record and download your data — you simply cannot log new sales until you subscribe. We do this deliberately: your records are yours, and losing access to them should never be the penalty for not paying.",
   },
   {
-    heading: "6. Termination",
-    body: "You may cancel your subscription at any time. We may suspend or terminate accounts that violate these terms or engage in abusive behavior toward the platform or other users.",
+    heading: "6. Your data belongs to you",
+    body: "The sales, products, stock counts and customer details you enter remain yours. We claim no ownership of them and we do not sell them or use them to advertise to you. You can download everything as a spreadsheet at any time from Settings. We use your data only to run the service for you, to keep it secure, and as described in our Privacy Policy.",
   },
   {
-    heading: "7. Changes to these terms",
-    body: "We may update these terms from time to time. We’ll notify you of material changes by email or in-app notice before they take effect.",
+    heading: "7. Acceptable use",
+    body: "Use JOHTA only for lawful business record-keeping. Do not use it to keep false records, to evade tax, to store other people’s personal information without a proper reason, or for anything illegal. Do not attempt to break into the service, reach another shop’s data, overload our systems, or copy the software. If you record a customer’s name because they owe you money, you are responsible for handling that person’s details lawfully.",
   },
   {
-    heading: "8. Contact us",
-    body: "If you have questions about these Terms of Service, contact us at johtahelp@gmail.com",
+    heading: "8. Availability",
+    body: "We work to keep JOHTA available and dependable, but we do not promise it will never be unavailable. Maintenance, faults, and problems at the suppliers we depend on can interrupt the service. JOHTA needs an internet connection to record a sale, and we do not guarantee it will work while your phone is offline.",
+  },
+  {
+    heading: "9. Our responsibility, and its limits",
+    body: "We provide JOHTA with reasonable care but “as is”, without promises that it will be uninterrupted, error-free, or fit for a particular purpose. JOHTA is a record-keeping tool, not an accountant, and is not a substitute for professional accounting or tax advice. To the fullest extent the law allows, we are not liable for indirect or consequential loss, including lost profit or lost business, and our total liability to you for any claim is limited to the amount you paid us in the twelve months before it arose. Nothing here limits liability that cannot lawfully be limited, including for fraud or for death or personal injury caused by negligence.",
+  },
+  {
+    heading: "10. Ending your account",
+    body: "You can pause or delete your shop at any time from Settings. Pausing stops billing and keeps everything. Deleting closes the shop and removes your staff’s logins, and we keep your records for thirty days before destroying them permanently, so that a decision made in haste can be undone — sign back in within that time and everything returns. We may suspend or close an account that breaks these terms, is used unlawfully, or is used abusively towards our team or other users; where it is reasonable to do so we will warn you first and give you a chance to download your data.",
+  },
+  {
+    heading: "11. Changes to the service and to these terms",
+    body: "JOHTA will change as we improve it, and we may add, alter or withdraw features. We may also update these terms. If a change materially affects your rights we will tell you by email or in the app before it takes effect, and continuing to use JOHTA afterwards means you accept the new terms. If you do not accept them, you may cancel and delete your account.",
+  },
+  {
+    heading: "12. Governing law and disputes",
+    body: "These terms are governed by the laws of the Federal Republic of Nigeria, and the Nigerian courts have jurisdiction over any dispute. Please write to us first at johtahelp@gmail.com — nearly everything can be sorted out that way, and we would much rather fix a problem than argue about it.",
+  },
+  {
+    heading: "13. Contact us",
+    body: "Questions about these Terms of Service can be sent to johtahelp@gmail.com and we will reply as soon as we can.",
   },
 ];
 
@@ -67,7 +87,7 @@ export default function TermsPage() {
     <div className="pb-[67px] tab:pb-[98px] web:pb-[69px]">
       <LegalPage
         title="Terms of Service"
-        intro="Last updated: September 2026. These Terms govern your use of JOHTA. By using JOHTA, you agree to these terms."
+        intro="Last updated 9 September 2026. These terms explain what you can expect from JOHTA and what we ask of you. We have written them in plain English on purpose — they are a real agreement, and you should be able to read them without a lawyer."
         sections={SECTIONS}
       />
     </div>
