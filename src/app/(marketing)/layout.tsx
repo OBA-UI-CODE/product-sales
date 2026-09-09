@@ -1,5 +1,6 @@
 import Nav from "@/components/marketing/Nav";
 import Footer from "@/components/marketing/Footer";
+import IosInstallHint from "@/components/marketing/IosInstallHint";
 
 export default function MarketingLayout({
   children,
@@ -11,6 +12,9 @@ export default function MarketingLayout({
       <Nav />
       <main>{children}</main>
       <Footer />
+      {/* Renders only on iPhone/iPad Safari, and only once. See the component
+          for why the detection has to be this specific. */}
+      <IosInstallHint />
     </div>
   );
 }
