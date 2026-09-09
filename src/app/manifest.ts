@@ -16,10 +16,10 @@ import type { MetadataRoute } from "next";
 */
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "JOHTA — Every sale, accounted for.",
+    name: "JOHTA. Every sale, accounted for.",
     short_name: "JOHTA",
     description:
-      "Log daily sales, track stock and keep record of who owes you — built for small shops.",
+      "Log daily sales, track stock and keep record of who owes you. Built for small shops.",
     start_url: "/dashboard",
     display: "standalone",
     background_color: "#0a0a0a",

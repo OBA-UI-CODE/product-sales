@@ -16,11 +16,11 @@ export const metadata: Metadata = {
     interchangeable and gives it no reason to show the right one.
   */
   title: {
-    default: "JOHTA — Every sale, accounted for.",
+    default: "JOHTA. Every sale, accounted for.",
     template: "%s · JOHTA",
   },
   description:
-    "Log daily sales, track stock and know who owes you — one simple dashboard built for small shops in Nigeria. Free for one month.",
+    "Log daily sales, track stock and know who owes you, in one simple dashboard built for small shops in Nigeria. Free for one month.",
   keywords: [
     "shop record keeping",
     "sales tracking Nigeria",
@@ -35,15 +35,15 @@ export const metadata: Metadata = {
     siteName: "JOHTA",
     locale: "en_NG",
     url: SITE_URL,
-    title: "JOHTA — Every sale, accounted for.",
+    title: "JOHTA. Every sale, accounted for.",
     description:
-      "Log daily sales, track stock and know who owes you — one simple dashboard built for small shops in Nigeria.",
+      "Log daily sales, track stock and know who owes you, in one simple dashboard built for small shops in Nigeria.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "JOHTA — Every sale, accounted for.",
+    title: "JOHTA. Every sale, accounted for.",
     description:
-      "Log daily sales, track stock and know who owes you — built for small shops.",
+      "Log daily sales, track stock and know who owes you. Built for small shops.",
   },
   /*
     Next picks up src/app/icon.png and apple-icon.png automatically, so the

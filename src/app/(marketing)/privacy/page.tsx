@@ -34,15 +34,15 @@ const SECTIONS: LegalSection[] = [
   },
   {
     heading: "2. What we collect",
-    body: "When you sign up we collect your name, email address and a password, which is stored only in scrambled form that nobody at JOHTA can read. When you set up your shop we collect its name, what you sell and the colour you pick. As you use JOHTA we hold the records you enter: sales, prices, quantities, products, stock counts, and the names you type against unpaid debts. If you add staff we hold their name, email and role. If you subscribe we hold your plan and payment status — never your card number, which only Paystack ever sees. We also keep ordinary technical records such as sign-in times, and anything you write to us through the contact form.",
+    body: "When you sign up we collect your name, email address and a password, which is stored only in scrambled form that nobody at JOHTA can read. When you set up your shop we collect its name, what you sell and the colour you pick. As you use JOHTA we hold the records you enter: sales, prices, quantities, products, stock counts, and the names you type against unpaid debts. If you add staff we hold their name, email and role. If you subscribe we hold your plan and payment status, but never your card number, which only Paystack ever sees. We also keep ordinary technical records such as sign-in times, and anything you write to us through the contact form.",
   },
   {
     heading: "3. Information about your customers",
-    body: "This one deserves saying plainly. When you record that someone owes you money, you are giving us another person’s name. We hold it only to show you your own debt list, we never contact them, and we never use it for anything else. Under Nigerian data protection law you are responsible for having a proper reason to record it, and we would ask you to record no more than you need — a first name and what is owed is usually enough.",
+    body: "This one deserves saying plainly. When you record that someone owes you money, you are giving us another person’s name. We hold it only to show you your own debt list, we never contact them, and we never use it for anything else. Under Nigerian data protection law you are responsible for having a proper reason to record it, and we would ask you to record no more than you need. A first name and what is owed is usually enough.",
   },
   {
     heading: "4. Why we are allowed to use it, and what for",
-    body: "We use your data to run the service you asked for — keeping your records, showing your totals, letting your staff sign in — which the law calls performance of a contract. We use it to take payment when you subscribe, also part of that contract. We use limited technical information to keep the service secure and working, which is our legitimate interest as a business. And we keep certain records where the law requires it. We do not use your data to advertise to you, and we do not make automated decisions about you.",
+    body: "We use your data to run the service you asked for: keeping your records, showing your totals and letting your staff sign in. The law calls this performance of a contract. We use it to take payment when you subscribe, also part of that contract. We use limited technical information to keep the service secure and working, which is our legitimate interest as a business. And we keep certain records where the law requires it. We do not use your data to advertise to you, and we do not make automated decisions about you.",
   },
   {
     heading: "5. We do not sell your data",
@@ -50,15 +50,15 @@ const SECTIONS: LegalSection[] = [
   },
   {
     heading: "6. Where your data is kept",
-    body: "Your data is stored on servers in Ireland, and our own servers run in Dublin alongside them so the app stays fast. That means your data leaves Nigeria. We are satisfied this is lawful because Ireland is covered by European data protection law, which gives protection comparable to the Nigeria Data Protection Act, and our providers are bound by contract to protect it. If you would rather your data were held in Nigeria, tell us — we would like to know that people care about it.",
+    body: "Your data is stored on servers in Ireland, and our own servers run in Dublin alongside them so the app stays fast. That means your data leaves Nigeria. We are satisfied this is lawful because Ireland is covered by European data protection law, which gives protection comparable to the Nigeria Data Protection Act, and our providers are bound by contract to protect it. If you would rather your data were held in Nigeria, tell us. We would like to know that people care about it.",
   },
   {
     heading: "7. How long we keep it",
-    body: "We keep your records for as long as your shop is open, because they are the reason you are here. If you pause your shop we keep everything until you return. If you delete your shop we keep it for thirty days so a decision made in haste can be undone, and then it is permanently destroyed — your sales, products, debts and your staff’s logins — by an automatic job that runs every night. After that it is gone, and not even we can bring it back. Messages sent through the contact form are kept for up to two years.",
+    body: "We keep your records for as long as your shop is open, because they are the reason you are here. If you pause your shop we keep everything until you return. If you delete your shop we keep it for thirty days so a decision made in haste can be undone, and then it is permanently destroyed by an automatic job that runs every night, taking your sales, products, debts and your staff’s logins with it. After that it is gone, and not even we can bring it back. Messages sent through the contact form are kept for up to two years.",
   },
   {
     heading: "8. Keeping it safe",
-    body: "Every shop’s data is separated at the database level, not merely hidden in the app, so one shop cannot reach another’s records even by guessing. Traffic is encrypted, passwords are stored scrambled and are checked against a list of passwords known to have leaked elsewhere, and staff access is controlled by the shop owner. No system is perfectly safe, and we will not pretend otherwise — but if a breach ever put your rights at risk, we will report it to the Nigeria Data Protection Commission within 72 hours and tell you directly what happened and what to do.",
+    body: "Every shop’s data is separated at the database level, not merely hidden in the app, so one shop cannot reach another’s records even by guessing. Traffic is encrypted, passwords are stored scrambled and are checked against a list of passwords known to have leaked elsewhere, and staff access is controlled by the shop owner. No system is perfectly safe, and we will not pretend otherwise. If a breach ever put your rights at risk, we will report it to the Nigeria Data Protection Commission within 72 hours and tell you directly what happened and what to do.",
   },
   {
     heading: "9. Your rights over your data",
@@ -87,7 +87,7 @@ export default function PrivacyPage() {
     <div className="pb-[54px] tab:pb-[44px] web:pb-[105px]">
       <LegalPage
         title="Privacy Policy"
-        intro="Last updated 9 September 2026. This policy explains what JOHTA collects, why, who else sees it, and what you can do about it. Your shop’s records are yours — we do not sell them, and you can download or delete them yourself at any time."
+        intro="Last updated 9 September 2026. This policy explains what JOHTA collects, why, who else sees it, and what you can do about it. Your shop’s records are yours. We do not sell them, and you can download or delete them yourself at any time."
         sections={SECTIONS}
       />
     </div>

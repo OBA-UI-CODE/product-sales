@@ -70,7 +70,7 @@ export function PaymentFields({
       {mode !== "paid" && (
         <div className="flex flex-col gap-2">
           <label className="text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
-            Customer name (who owes) — optional
+            Customer name (who owes), optional
           </label>
           <input
             value={debtorName}

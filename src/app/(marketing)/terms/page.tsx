@@ -38,7 +38,7 @@ const SECTIONS: LegalSection[] = [
   },
   {
     heading: "3. Free trial, subscription and renewal",
-    body: "Every new shop gets one month free. No card is required to start, and we do not ask for one until you choose to subscribe. After the trial, JOHTA costs ₦1,599 per month or ₦15,990 per year. Subscriptions renew automatically at the end of each period at the price then shown on our pricing page, and continue until you cancel. You can cancel at any time from Settings, and cancelling stops the next renewal rather than ending your access immediately — you keep full use until the period you have already paid for runs out. Because payment is taken when a subscription starts, choosing to subscribe while you still have free trial left ends the remaining trial; the billing screen says so before you confirm.",
+    body: "Every new shop gets one month free. No card is required to start, and we do not ask for one until you choose to subscribe. After the trial, JOHTA costs ₦1,599 per month or ₦15,990 per year. Subscriptions renew automatically at the end of each period at the price then shown on our pricing page, and continue until you cancel. You can cancel at any time from Settings, and cancelling stops the next renewal rather than ending your access immediately, so you keep full use until the period you have already paid for runs out. Because payment is taken when a subscription starts, choosing to subscribe while you still have free trial left ends the remaining trial; the billing screen says so before you confirm.",
   },
   {
     heading: "4. Payments and refunds",
@@ -46,7 +46,7 @@ const SECTIONS: LegalSection[] = [
   },
   {
     heading: "5. If you stop paying",
-    body: "When a trial ends without a subscription, or a subscription lapses, your shop becomes read-only. You keep your account and can still sign in, see every record and download your data — you simply cannot log new sales until you subscribe. We do this deliberately: your records are yours, and losing access to them should never be the penalty for not paying.",
+    body: "When a trial ends without a subscription, or a subscription lapses, your shop becomes read-only. You keep your account and can still sign in, see every record and download your data. You simply cannot log new sales until you subscribe. We do this deliberately: your records are yours, and losing access to them should never be the penalty for not paying.",
   },
   {
     heading: "6. Your data belongs to you",
@@ -66,7 +66,7 @@ const SECTIONS: LegalSection[] = [
   },
   {
     heading: "10. Ending your account",
-    body: "You can pause or delete your shop at any time from Settings. Pausing stops billing and keeps everything. Deleting closes the shop and removes your staff’s logins, and we keep your records for thirty days before destroying them permanently, so that a decision made in haste can be undone — sign back in within that time and everything returns. We may suspend or close an account that breaks these terms, is used unlawfully, or is used abusively towards our team or other users; where it is reasonable to do so we will warn you first and give you a chance to download your data.",
+    body: "You can pause or delete your shop at any time from Settings. Pausing stops billing and keeps everything. Deleting closes the shop and removes your staff’s logins, and we keep your records for thirty days before destroying them permanently, so that a decision made in haste can be undone. Sign back in within that time and everything returns. We may suspend or close an account that breaks these terms, is used unlawfully, or is used abusively towards our team or other users; where it is reasonable to do so we will warn you first and give you a chance to download your data.",
   },
   {
     heading: "11. Changes to the service and to these terms",
@@ -74,7 +74,7 @@ const SECTIONS: LegalSection[] = [
   },
   {
     heading: "12. Governing law and disputes",
-    body: "These terms are governed by the laws of the Federal Republic of Nigeria, and the Nigerian courts have jurisdiction over any dispute. Please write to us first at johtahelp@gmail.com — nearly everything can be sorted out that way, and we would much rather fix a problem than argue about it.",
+    body: "These terms are governed by the laws of the Federal Republic of Nigeria, and the Nigerian courts have jurisdiction over any dispute. Please write to us first at johtahelp@gmail.com, because nearly everything can be sorted out that way, and we would much rather fix a problem than argue about it.",
   },
   {
     heading: "13. Contact us",
@@ -87,7 +87,7 @@ export default function TermsPage() {
     <div className="pb-[67px] tab:pb-[98px] web:pb-[69px]">
       <LegalPage
         title="Terms of Service"
-        intro="Last updated 9 September 2026. These terms explain what you can expect from JOHTA and what we ask of you. We have written them in plain English on purpose — they are a real agreement, and you should be able to read them without a lawyer."
+        intro="Last updated 9 September 2026. These terms explain what you can expect from JOHTA and what we ask of you. We have written them in plain English on purpose. They are a real agreement, and you should be able to read them without a lawyer."
         sections={SECTIONS}
       />
     </div>

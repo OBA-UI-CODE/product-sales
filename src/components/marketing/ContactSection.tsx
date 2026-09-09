@@ -139,7 +139,7 @@ export default function ContactSection() {
             )}
             {state.success && (
               <p className="mt-4 w-full font-body text-[14px] leading-[20px] text-primary-text">
-                Thanks — your message is with us. We’ll get back to you shortly.
+                Thanks, your message is with us. We’ll get back to you shortly.
               </p>
             )}
           </div>

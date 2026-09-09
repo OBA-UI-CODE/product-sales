@@ -58,16 +58,16 @@ export default function BillingSection({ billing }: { billing: BillingInfo }) {
   const statusLine = (() => {
     if (billing.status === "active")
       return paidUntil
-        ? `Subscribed — renews ${paidUntil}`
+        ? `Subscribed, renews ${paidUntil}`
         : "Subscribed";
     if (billing.status === "past_due")
       return "Your last payment failed. Update your card to keep logging sales.";
     if (billing.status === "canceled")
       return paidUntil && new Date(billing.currentPeriodEnd!) > new Date()
-        ? `Cancelled — you keep full access until ${paidUntil}`
-        : "Cancelled — your shop is read-only until you subscribe again";
+        ? `Cancelled. You keep full access until ${paidUntil}`
+        : "Cancelled. Your shop is read-only until you subscribe again";
     if (trialActive)
-      return `Free trial — ${trialDays} ${trialDays === 1 ? "day" : "days"} left, ends ${formatDate(billing.trialEndsAt)}`;
+      return `Free trial, ${trialDays} ${trialDays === 1 ? "day" : "days"} left, ends ${formatDate(billing.trialEndsAt)}`;
     return "Your free trial has ended. Subscribe to keep logging sales.";
   })();
 
@@ -165,7 +165,7 @@ export default function BillingSection({ billing }: { billing: BillingInfo }) {
               <p className="rounded-[10px] bg-[var(--color-bg-canvas)] px-4 py-3 text-sm text-[var(--color-text-secondary)]">
                 You still have {trialDays} days of free trial left, until{" "}
                 {formatDate(billing.trialEndsAt)}. Paying now charges you today
-                and starts your subscription immediately — the remaining free
+                and starts your subscription immediately. The remaining free
                 days are not added on. You can wait and subscribe when the trial
                 ends.
               </p>

@@ -66,7 +66,7 @@ export default async function PausedPage() {
             {purgeOn ? (
               <>
                 Everything in <strong>{shop?.name}</strong> will be permanently
-                deleted on <strong>{formatDate(purgeOn)}</strong> — that is{" "}
+                deleted on <strong>{formatDate(purgeOn)}</strong>. That is{" "}
                 {daysUntil(purgeOn)} days away. Until then nothing has been
                 lost, and it can all be brought back.
               </>

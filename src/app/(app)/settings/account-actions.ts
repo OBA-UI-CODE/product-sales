@@ -164,7 +164,7 @@ export async function requestAccountDeletion(
   */
   if (!shop?.name || typed.toLowerCase() !== shop.name.trim().toLowerCase()) {
     return {
-      error: `Type your shop name exactly — ${shop?.name ?? ""} — to confirm.`,
+      error: `Type your shop name exactly as it appears (${shop?.name ?? ""}) to confirm.`,
     };
   }
 

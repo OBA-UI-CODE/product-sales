@@ -52,7 +52,7 @@ export function RemoveProductModal({
 
         <p className="mb-6 text-sm text-[var(--color-text-secondary)]">
           Remove &quot;{product.name}&quot;? Past sales referencing it are
-          kept — this just archives it from your catalog.
+          kept. This just archives it from your catalog.
         </p>
 
         {error && (

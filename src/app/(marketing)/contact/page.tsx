@@ -11,11 +11,11 @@ import type { Metadata } from "next";
 */
 export const metadata: Metadata = {
   title: "Contact Us",
-  description: "Questions, support or feedback — send the JOHTA team a message and we will get back to you.",
+  description: "Questions, support or feedback: send the JOHTA team a message and we will get back to you.",
   alternates: { canonical: "/contact" },
   openGraph: {
     title: "Contact Us · JOHTA",
-    description: "Questions, support or feedback — send the JOHTA team a message and we will get back to you.",
+    description: "Questions, support or feedback: send the JOHTA team a message and we will get back to you.",
     url: "/contact",
   },
 };

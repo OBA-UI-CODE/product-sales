@@ -86,18 +86,18 @@ function humanise(raw: string): string {
     return "Our payment provider would not accept that email address. Try signing up with a different one, or contact us and we will sort it out.";
   }
   if (m.includes("plan") && (m.includes("not found") || m.includes("invalid"))) {
-    return "That plan is not available right now. Please contact us — this is a problem on our side, not with your card.";
+    return "That plan is not available right now. Please contact us. This is a problem on our side, not with your card.";
   }
   if (m.includes("key") || m.includes("authorization") || m.includes("unauthorized")) {
-    return "Payments are not set up correctly. Please contact us — do not try again, and you have not been charged.";
+    return "Payments are not set up correctly. Please contact us. Do not try again, and you have not been charged.";
   }
   if (m.includes("amount") || m.includes("currency")) {
-    return "There was a problem with the amount for this plan. Please contact us — you have not been charged.";
+    return "There was a problem with the amount for this plan. Please contact us. You have not been charged.";
   }
   if (m.includes("declin") || m.includes("insufficient")) {
     return "Your bank declined the payment. Try another card, or check with your bank.";
   }
-  return "We could not start the payment. Please try again in a moment — you have not been charged.";
+  return "We could not start the payment. Please try again in a moment. You have not been charged.";
 }
 
 async function paystack<T>(

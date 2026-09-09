@@ -91,8 +91,8 @@ function PausePanel() {
   return (
     <Panel title="Pause this shop">
       <Note>
-        Stops your subscription and closes the shop, but keeps everything —
-        every sale, product and debt stays exactly as it is. You and your staff
+        Stops your subscription and closes the shop, but keeps everything.
+        Every sale, product and debt stays exactly as it is. You and your staff
         will be signed out, and you can reopen it whenever you like.
       </Note>
 
@@ -112,7 +112,7 @@ function PausePanel() {
             <strong className="text-[var(--color-text-primary)]">
               Sure? Your staff will not be able to sign in until you reopen it.
             </strong>{" "}
-            If you are on a paid plan, it will be cancelled now — you will not
+            If you are on a paid plan, it will be cancelled now, so you will not
             be charged again.
           </Note>
           <div className="flex flex-col gap-3 tab:flex-row">
@@ -158,7 +158,7 @@ function DeleteShopPanel({
     <Panel title="Delete this shop">
       <Note>
         Closes the shop and removes it for good, along with your staff&rsquo;s
-        logins. You have {graceDays} days to change your mind — sign back in
+        logins. You have {graceDays} days to change your mind. Sign back in
         within that time and everything comes back. After that it cannot be
         recovered by anyone, including us.
       </Note>
@@ -262,7 +262,7 @@ function LeaveShopPanel() {
       <Note>
         Removes your login from this shop. The sales you have already logged
         stay in the shop&rsquo;s records, so your boss&rsquo;s books are not
-        changed — but you will not be able to sign in again unless they add
+        changed, but you will not be able to sign in again unless they add
         you back.
       </Note>
 

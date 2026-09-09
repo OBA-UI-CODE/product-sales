@@ -52,7 +52,7 @@ const NOTICES: Record<string, { text: string; tone: "error" | "good" }> = {
 */
 const SIGNED_OUT_NOTICES: Record<string, string> = {
   paused:
-    "Your shop is paused and your subscription has stopped. Sign in whenever you want to open it again — nothing has been deleted.",
+    "Your shop is paused and your subscription has stopped. Sign in whenever you want to open it again. Nothing has been deleted.",
   deletion_scheduled:
     "Your shop is scheduled for deletion and your subscription has stopped. If you change your mind, sign in within 30 days and everything comes back.",
   account_deleted: "Your account has been deleted.",

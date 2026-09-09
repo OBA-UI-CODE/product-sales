@@ -150,7 +150,7 @@ export function AddSaleModal({ onClose }: { onClose: () => void }) {
 
   function selectOption(o: SaleOption) {
     setSelected(o);
-    setQuery(o.variantLabel ? `${o.productName} — ${o.variantLabel}` : o.productName);
+    setQuery(o.variantLabel ? `${o.productName} · ${o.variantLabel}` : o.productName);
     setPrice(String(o.price));
   }
 
@@ -276,7 +276,7 @@ export function AddSaleModal({ onClose }: { onClose: () => void }) {
                             {o.variantLabel && (
                               <span className="text-[var(--color-text-secondary)]">
                                 {" "}
-                                — {o.variantLabel}
+                                · {o.variantLabel}
                               </span>
                             )}
                           </span>
@@ -319,7 +319,7 @@ export function AddSaleModal({ onClose }: { onClose: () => void }) {
                 <div className="min-w-0">
                   <p className="truncate text-sm font-semibold">
                     {selected.productName}
-                    {selected.variantLabel && ` — ${selected.variantLabel}`}
+                    {selected.variantLabel && ` · ${selected.variantLabel}`}
                   </p>
                   <p className="text-xs text-[var(--color-text-muted)]">
                     {selected.category ?? "General"} &middot;{" "}

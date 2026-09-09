@@ -14,7 +14,7 @@ import { ImageResponse } from "next/og";
   thumbnail size in a chat. The system sans is fine at 1200x630.
 */
 
-export const alt = "JOHTA — Every sale, accounted for.";
+export const alt = "JOHTA. Every sale, accounted for.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -68,7 +68,7 @@ export default function OpengraphImage() {
             maxWidth: 900,
           }}
         >
-          Log daily sales, track stock and know who owes you — built for small
+          Log daily sales, track stock and know who owes you. Built for small
           shops.
         </div>
 
