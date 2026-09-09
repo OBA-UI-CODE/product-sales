@@ -37,7 +37,7 @@ export function RemoveProductModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 md:items-center">
-      <div className="w-full max-w-[400px] rounded-t-[24px] bg-[var(--color-bg-surface)] p-8 md:rounded-[24px]">
+      <div className="w-full max-w-[400px] rounded-t-md bg-[var(--color-bg-surface)] p-8 md:rounded-md">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="font-heading text-xl font-bold">Remove Product</h2>
           <button
@@ -56,7 +56,7 @@ export function RemoveProductModal({
         </p>
 
         {error && (
-          <p className="mb-4 rounded-[10px] bg-[var(--color-danger-bg)] px-3 py-2 text-sm text-[var(--color-danger)]">
+          <p className="mb-4 rounded-md bg-[var(--color-danger-bg)] px-3 py-2 text-sm text-[var(--color-danger)]">
             {error}
           </p>
         )}
@@ -65,7 +65,7 @@ export function RemoveProductModal({
           <button
             type="button"
             onClick={onClose}
-            className="flex-1 rounded-2xl border border-[var(--color-border)] py-3.5 text-sm font-semibold text-[var(--color-text-secondary)]"
+            className="flex-1 border border-[var(--color-border)] py-3.5 text-sm font-semibold text-[var(--color-text-secondary)]"
           >
             Cancel
           </button>
@@ -73,7 +73,7 @@ export function RemoveProductModal({
             type="button"
             onClick={handleConfirm}
             disabled={submitting}
-            className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-[var(--color-danger-bg)] py-3.5 text-sm font-semibold text-[var(--color-danger)] disabled:opacity-40"
+            className="flex flex-1 items-center justify-center gap-2 bg-[var(--color-danger-bg)] py-3.5 text-sm font-semibold text-[var(--color-danger)] disabled:opacity-40"
           >
             <Trash2 className="h-4 w-4" />
             {submitting ? "Removing..." : "Remove"}

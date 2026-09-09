@@ -108,7 +108,7 @@ export function EditSaleModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 md:items-center">
-      <div className="flex max-h-[92vh] w-full max-w-[480px] flex-col gap-6 overflow-y-auto rounded-t-[24px] bg-[var(--color-bg-surface)] p-8 md:rounded-[24px]">
+      <div className="flex max-h-[92vh] w-full max-w-[480px] flex-col gap-6 overflow-y-auto rounded-t-md bg-[var(--color-bg-surface)] p-8 md:rounded-md">
         <div className="flex items-center justify-between">
           <h2 className="font-heading text-xl font-bold">Edit Sale</h2>
           <button
@@ -130,7 +130,7 @@ export function EditSaleModal({
           <label className="text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
             Item
           </label>
-          <div className="rounded-[14px] bg-[var(--color-bg-canvas)] px-4 py-3 text-sm text-[var(--color-text-secondary)]">
+          <div className="rounded-md bg-[var(--color-bg-canvas)] px-4 py-3 text-sm text-[var(--color-text-secondary)]">
             {sale.itemName}
           </div>
         </div>
@@ -146,18 +146,18 @@ export function EditSaleModal({
               min={0}
               value={price}
               onChange={(e) => setPrice(e.target.value)}
-              className="w-full rounded-[14px] border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-4 py-3 text-lg font-semibold outline-none focus:border-[var(--color-primary-hover)]"
+              className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-4 py-3 text-lg font-semibold outline-none focus:border-[var(--color-primary-hover)]"
             />
           </div>
           <div className="w-[110px]">
             <label className="mb-2 block text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
               Quantity
             </label>
-            <div className="flex items-center justify-between rounded-[14px] border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-2 py-2">
+            <div className="flex items-center justify-between rounded-md border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-2 py-2">
               <button
                 type="button"
                 onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                className="flex h-6 w-6 items-center justify-center rounded-lg bg-[var(--color-bg-surface)]"
+                className="flex h-6 w-6 items-center justify-center bg-[var(--color-bg-surface)]"
                 aria-label="Decrease quantity"
               >
                 <Minus className="h-3.5 w-3.5" />
@@ -166,7 +166,7 @@ export function EditSaleModal({
               <button
                 type="button"
                 onClick={() => setQuantity((q) => q + 1)}
-                className="flex h-6 w-6 items-center justify-center rounded-lg bg-[var(--color-primary)] text-white"
+                className="flex h-6 w-6 items-center justify-center bg-[var(--color-primary)] text-white"
                 aria-label="Increase quantity"
               >
                 <Plus className="h-3.5 w-3.5" />
@@ -193,7 +193,7 @@ export function EditSaleModal({
         </div>
 
         {error && (
-          <p className="rounded-[10px] bg-[var(--color-danger-bg)] px-3 py-2 text-sm text-[var(--color-danger)]">
+          <p className="rounded-md bg-[var(--color-danger-bg)] px-3 py-2 text-sm text-[var(--color-danger)]">
             {error}
           </p>
         )}
@@ -207,7 +207,7 @@ export function EditSaleModal({
             type="button"
             disabled={!canSubmit}
             onClick={handleSubmit}
-            className="w-full rounded-2xl bg-[var(--color-primary)] py-4 text-sm font-semibold text-white transition hover:bg-[var(--color-primary-hover)] disabled:opacity-40"
+            className="w-full bg-[var(--color-primary)] py-4 text-sm font-semibold text-white transition hover:bg-[var(--color-primary-hover)] disabled:opacity-40"
           >
             {submitting ? "Saving..." : "Save Changes"}
           </button>
@@ -216,7 +216,7 @@ export function EditSaleModal({
             <button
               type="button"
               onClick={() => setConfirmingDelete(true)}
-              className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[var(--color-danger-bg)] py-3.5 text-sm font-semibold text-[var(--color-danger)]"
+              className="flex w-full items-center justify-center gap-2 bg-[var(--color-danger-bg)] py-3.5 text-sm font-semibold text-[var(--color-danger)]"
             >
               <Trash2 className="h-4 w-4" />
               Delete Sale
@@ -226,7 +226,7 @@ export function EditSaleModal({
               <button
                 type="button"
                 onClick={() => setConfirmingDelete(false)}
-                className="flex-1 rounded-2xl border border-[var(--color-border)] py-3.5 text-sm font-semibold text-[var(--color-text-secondary)]"
+                className="flex-1 border border-[var(--color-border)] py-3.5 text-sm font-semibold text-[var(--color-text-secondary)]"
               >
                 Cancel
               </button>
@@ -234,7 +234,7 @@ export function EditSaleModal({
                 type="button"
                 onClick={handleDelete}
                 disabled={deleting}
-                className="flex-1 rounded-2xl bg-[var(--color-danger-bg)] py-3.5 text-sm font-semibold text-[var(--color-danger)] disabled:opacity-40"
+                className="flex-1 bg-[var(--color-danger-bg)] py-3.5 text-sm font-semibold text-[var(--color-danger)] disabled:opacity-40"
               >
                 {deleting ? "Deleting..." : "Confirm Delete"}
               </button>

@@ -38,7 +38,7 @@ export default function SaleRow({
   seller: string;
 }) {
   return (
-    <div className="flex h-[90px] items-center justify-between overflow-hidden rounded-lg border border-border-strong bg-bg-surface px-2 tab:px-4">
+    <div className="flex h-[90px] items-center justify-between overflow-hidden rounded-md border border-border-strong bg-bg-surface px-2 tab:px-4">
       <div className="flex min-w-0 flex-1 items-center gap-2 tab:flex-none tab:gap-3">
         <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary-subtle tab:size-[46px]">
           <span className="font-body text-[12px] font-normal leading-[16px] text-text-primary tab:text-[14px] tab:leading-[20px]">

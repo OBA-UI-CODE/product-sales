@@ -33,7 +33,7 @@ export function SaleList({ sales }: { sales: SaleRowData[] }) {
           <button
             key={sale.id}
             onClick={() => setEditing(sale)}
-            className="flex items-center justify-between rounded-[14px] bg-[var(--color-bg-surface)] px-4 py-3 text-left transition hover:bg-[var(--color-bg-canvas)]"
+            className="flex items-center justify-between rounded-md bg-[var(--color-bg-surface)] px-4 py-3 text-left transition hover:bg-[var(--color-bg-canvas)]"
           >
             <div className="flex items-center gap-3">
               <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--color-border-strong)] text-sm">

@@ -33,13 +33,13 @@ export function PaymentFields({
       <label className="text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
         Payment
       </label>
-      <div className="flex rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-canvas)] p-1">
+      <div className="flex rounded-md border border-[var(--color-border)] bg-[var(--color-bg-canvas)] p-1">
         {OPTIONS.map(([value, label]) => (
           <button
             key={value}
             type="button"
             onClick={() => setMode(value)}
-            className={`flex-1 rounded-[9px] py-2 text-xs font-semibold transition ${
+            className={`flex-1 rounded-md py-2 text-xs font-semibold transition ${
               mode === value
                 ? "bg-[var(--color-primary)] text-white"
                 : "text-[var(--color-text-muted)]"
@@ -62,7 +62,7 @@ export function PaymentFields({
             value={amountPaid}
             onChange={(e) => setAmountPaid(e.target.value)}
             placeholder="0"
-            className="rounded-[14px] border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-4 py-3 text-sm outline-none focus:border-[var(--color-primary-hover)]"
+            className="rounded-md border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-4 py-3 text-sm outline-none focus:border-[var(--color-primary-hover)]"
           />
         </div>
       )}
@@ -76,7 +76,7 @@ export function PaymentFields({
             value={debtorName}
             onChange={(e) => setDebtorName(e.target.value)}
             placeholder="e.g. Chidi"
-            className="rounded-[14px] border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-4 py-3 text-sm outline-none focus:border-[var(--color-primary-hover)]"
+            className="rounded-md border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-4 py-3 text-sm outline-none focus:border-[var(--color-primary-hover)]"
           />
         </div>
       )}

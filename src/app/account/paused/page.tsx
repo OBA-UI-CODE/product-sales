@@ -102,7 +102,7 @@ export default async function PausedPage() {
           >
             <button
               type="submit"
-              className="h-12 w-full rounded-[10px] bg-[var(--color-primary)] px-6 font-semibold text-white"
+              className="h-12 w-full rounded-md bg-[var(--color-primary)] px-6 font-semibold text-white"
             >
               {pendingDeletion ? "Keep my shop" : "Reopen my shop"}
             </button>
@@ -118,13 +118,13 @@ export default async function PausedPage() {
               copy whether or not they choose to come back. */}
           <a
             href="/api/account/export"
-            className="flex h-12 items-center justify-center rounded-[10px] border border-[var(--color-border)] px-6 text-sm font-semibold"
+            className="flex h-12 items-center justify-center rounded-md border border-[var(--color-border)] px-6 text-sm font-semibold"
           >
             Download my records
           </a>
         </div>
       ) : (
-        <p className="rounded-[10px] bg-[var(--color-bg-surface)] px-4 py-3 text-sm text-[var(--color-text-secondary)]">
+        <p className="rounded-md bg-[var(--color-bg-surface)] px-4 py-3 text-sm text-[var(--color-text-secondary)]">
           Only the shop owner can open it again. Please speak to them.
         </p>
       )}

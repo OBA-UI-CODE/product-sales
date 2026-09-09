@@ -41,7 +41,7 @@ export default function ForgotPasswordPage() {
 
             <form action={formAction} className="flex flex-col gap-5">
               {state.error && (
-                <p className="rounded-xl bg-[var(--color-danger-bg)] px-4 py-3 text-sm text-[var(--color-danger)]">
+                <p className="rounded-md bg-[var(--color-danger-bg)] px-4 py-3 text-sm text-[var(--color-danger)]">
                   {state.error}
                 </p>
               )}
@@ -55,13 +55,13 @@ export default function ForgotPasswordPage() {
                   type="email"
                   required
                   placeholder="you@example.com"
-                  className="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-surface)] px-4 py-3 text-sm outline-none focus:border-[var(--color-primary)]"
+                  className="rounded-md border border-[var(--color-border)] bg-[var(--color-bg-surface)] px-4 py-3 text-sm outline-none focus:border-[var(--color-primary)]"
                 />
               </div>
               <button
                 type="submit"
                 disabled={pending}
-                className="rounded-xl bg-[var(--color-primary)] py-3 text-sm font-semibold text-white transition hover:bg-[var(--color-primary-hover)] disabled:opacity-50"
+                className="rounded-md bg-[var(--color-primary)] py-3 text-sm font-semibold text-white transition hover:bg-[var(--color-primary-hover)] disabled:opacity-50"
               >
                 {pending ? "Sending..." : "Send reset link"}
               </button>

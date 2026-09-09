@@ -72,7 +72,7 @@ export default function ReceiptButton({
         type="button"
         onClick={handle}
         disabled={busy}
-        className={`press flex h-11 items-center justify-center gap-2 rounded-[10px] border border-[var(--color-border)] px-4 text-sm font-semibold disabled:opacity-50 ${className}`}
+        className={`press flex h-11 items-center justify-center gap-2 rounded-md border border-[var(--color-border)] px-4 text-sm font-semibold disabled:opacity-50 ${className}`}
       >
         <Receipt size={16} aria-hidden />
         {busy ? "Preparing..." : label}

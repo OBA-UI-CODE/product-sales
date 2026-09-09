@@ -58,7 +58,7 @@ export default function Sidebar({
                   key={item.href}
                   href={item.href}
                   aria-current={active ? "page" : undefined}
-                  className={`flex w-full items-center gap-2.5 overflow-hidden rounded-[8px] px-3 py-2.5 ${
+                  className={`flex w-full items-center gap-2.5 overflow-hidden rounded-md px-3 py-2.5 ${
                     active ? "bg-primary-default" : ""
                   }`}
                 >
@@ -77,7 +77,7 @@ export default function Sidebar({
           <form action={onSignOut}>
             <button
               type="submit"
-              className="flex w-full items-center gap-2.5 overflow-hidden rounded-[8px] px-3 py-2.5"
+              className="flex w-full items-center gap-2.5 overflow-hidden rounded-md px-3 py-2.5"
             >
               <LogoutIcon className="text-text-primary" />
               <span className="whitespace-nowrap font-body text-[18px] font-medium leading-[28px] text-text-primary">

@@ -61,7 +61,7 @@ export default async function SalesHistoryPage({
         <DatePicker defaultValue={dateStr} />
       </div>
 
-      <div className="flex flex-col gap-1 rounded-[14px] bg-[var(--color-bg-surface)] p-6">
+      <div className="flex flex-col gap-1 rounded-md bg-[var(--color-bg-surface)] p-6">
         <span className="text-sm text-[var(--color-text-secondary)]">
           {selectedDate.toLocaleDateString("en-US", {
             weekday: "long",
@@ -79,7 +79,7 @@ export default async function SalesHistoryPage({
       </div>
 
       {sales.length === 0 ? (
-        <p className="rounded-[14px] border border-dashed border-[var(--color-border)] p-6 text-center text-[var(--color-text-secondary)]">
+        <p className="rounded-md border border-dashed border-[var(--color-border)] p-6 text-center text-[var(--color-text-secondary)]">
           No sales logged on this day.
         </p>
       ) : (

@@ -117,7 +117,7 @@ export default function IosInstallHint() {
     <div
       role="complementary"
       aria-label="Install JOHTA on your iPhone"
-      className="fixed inset-x-3 bottom-3 z-50 flex items-start gap-3 rounded-[14px] border border-border-strong bg-bg-surface p-4 shadow-lg tab:hidden"
+      className="fixed inset-x-3 bottom-3 z-50 flex items-start gap-3 rounded-md border border-border-strong bg-bg-surface p-4 shadow-lg tab:hidden"
     >
       <div className="flex min-w-0 flex-1 flex-col gap-1">
         <p className="font-heading text-[16px] font-semibold leading-[20px] text-text-primary">
@@ -130,7 +130,7 @@ export default function IosInstallHint() {
           </span>
           <span>below, then</span>
           <span className="text-text-primary">Add to Home Screen</span>
-          <span>&mdash; it opens like an app.</span>
+          <span>and it opens like an app.</span>
         </p>
       </div>
 

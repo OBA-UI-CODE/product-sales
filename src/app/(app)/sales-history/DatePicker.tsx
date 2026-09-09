@@ -10,7 +10,7 @@ export default function DatePicker({ defaultValue }: { defaultValue: string }) {
       type="date"
       defaultValue={defaultValue}
       onChange={(e) => router.push(`/sales-history?date=${e.target.value}`)}
-      className="h-11 rounded-[10px] border border-[var(--color-border)] bg-[var(--color-bg-surface)] px-4 text-sm"
+      className="h-11 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-surface)] px-4 text-sm"
     />
   );
 }

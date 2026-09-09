@@ -39,7 +39,7 @@ function Panel({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col gap-4 rounded-[14px] bg-[var(--color-bg-surface)] p-5 tab:p-6">
+    <div className="flex flex-col gap-4 rounded-md bg-[var(--color-bg-surface)] p-5 tab:p-6">
       <h3 className="font-semibold">{title}</h3>
       {children}
     </div>
@@ -101,7 +101,7 @@ function PausePanel() {
       {!confirming ? (
         <button
           onClick={() => setConfirming(true)}
-          className="flex h-11 w-full items-center justify-center gap-2 rounded-[10px] border border-[var(--color-border)] px-4 text-sm font-semibold tab:w-auto tab:self-start"
+          className="flex h-11 w-full items-center justify-center gap-2 rounded-md border border-[var(--color-border)] px-4 text-sm font-semibold tab:w-auto tab:self-start"
         >
           <PauseCircle size={16} />
           Pause my shop
@@ -121,14 +121,14 @@ function PausePanel() {
               onClick={() =>
                 start(async () => setResult(await deactivateShop()))
               }
-              className="h-11 shrink-0 rounded-[10px] bg-[var(--color-primary)] px-6 text-sm font-semibold text-white disabled:opacity-50"
+              className="h-11 shrink-0 rounded-md bg-[var(--color-primary)] px-6 text-sm font-semibold text-white disabled:opacity-50"
             >
               {pending ? "Pausing..." : "Yes, pause my shop"}
             </button>
             <button
               disabled={pending}
               onClick={() => setConfirming(false)}
-              className="h-11 shrink-0 rounded-[10px] border border-[var(--color-border)] px-6 text-sm font-semibold"
+              className="h-11 shrink-0 rounded-md border border-[var(--color-border)] px-6 text-sm font-semibold"
             >
               Keep it open
             </button>
@@ -166,7 +166,7 @@ function DeleteShopPanel({
       {!open ? (
         <button
           onClick={() => setOpen(true)}
-          className="flex h-11 w-full items-center justify-center gap-2 rounded-[10px] border border-[var(--color-danger)] px-4 text-sm font-semibold text-[var(--color-danger)] tab:w-auto tab:self-start"
+          className="flex h-11 w-full items-center justify-center gap-2 rounded-md border border-[var(--color-danger)] px-4 text-sm font-semibold text-[var(--color-danger)] tab:w-auto tab:self-start"
         >
           <Trash2 size={16} />
           Delete my shop
@@ -179,7 +179,7 @@ function DeleteShopPanel({
             years after they stop using JOHTA — so a copy is put within reach
             before the thing that destroys them.
           */}
-          <div className="flex flex-col gap-3 rounded-[10px] bg-[var(--color-bg-canvas)] p-4">
+          <div className="flex flex-col gap-3 rounded-md bg-[var(--color-bg-canvas)] p-4">
             <Note>
               <strong className="text-[var(--color-text-primary)]">
                 Take your records with you first.
@@ -189,7 +189,7 @@ function DeleteShopPanel({
             </Note>
             <a
               href="/api/account/export"
-              className="flex h-11 items-center justify-center gap-2 rounded-[10px] border border-[var(--color-border)] px-4 text-sm font-semibold tab:self-start tab:px-6"
+              className="flex h-11 items-center justify-center gap-2 rounded-md border border-[var(--color-border)] px-4 text-sm font-semibold tab:self-start tab:px-6"
             >
               <Download size={16} />
               Download my records
@@ -224,13 +224,13 @@ function DeleteShopPanel({
               required
               autoComplete="off"
               placeholder={shopName}
-              className="h-11 w-full rounded-[10px] border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-4 text-sm"
+              className="h-11 w-full rounded-md border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-4 text-sm"
             />
             <div className="flex flex-col gap-3 tab:flex-row">
               <button
                 type="submit"
                 disabled={pending}
-                className="h-11 shrink-0 rounded-[10px] bg-[var(--color-danger)] px-6 text-sm font-semibold text-white disabled:opacity-50"
+                className="h-11 shrink-0 rounded-md bg-[var(--color-danger)] px-6 text-sm font-semibold text-white disabled:opacity-50"
               >
                 {pending ? "Deleting..." : "Delete my shop"}
               </button>
@@ -238,7 +238,7 @@ function DeleteShopPanel({
                 type="button"
                 disabled={pending}
                 onClick={() => setOpen(false)}
-                className="h-11 shrink-0 rounded-[10px] border border-[var(--color-border)] px-6 text-sm font-semibold"
+                className="h-11 shrink-0 rounded-md border border-[var(--color-border)] px-6 text-sm font-semibold"
               >
                 Cancel
               </button>
@@ -271,7 +271,7 @@ function LeaveShopPanel() {
       {!confirming ? (
         <button
           onClick={() => setConfirming(true)}
-          className="flex h-11 w-full items-center justify-center gap-2 rounded-[10px] border border-[var(--color-danger)] px-4 text-sm font-semibold text-[var(--color-danger)] tab:w-auto tab:self-start"
+          className="flex h-11 w-full items-center justify-center gap-2 rounded-md border border-[var(--color-danger)] px-4 text-sm font-semibold text-[var(--color-danger)] tab:w-auto tab:self-start"
         >
           <Trash2 size={16} />
           Delete my account
@@ -283,14 +283,14 @@ function LeaveShopPanel() {
             onClick={() =>
               start(async () => setResult(await deleteOwnStaffAccount()))
             }
-            className="h-11 shrink-0 rounded-[10px] bg-[var(--color-danger)] px-6 text-sm font-semibold text-white disabled:opacity-50"
+            className="h-11 shrink-0 rounded-md bg-[var(--color-danger)] px-6 text-sm font-semibold text-white disabled:opacity-50"
           >
             {pending ? "Deleting..." : "Yes, delete my account"}
           </button>
           <button
             disabled={pending}
             onClick={() => setConfirming(false)}
-            className="h-11 shrink-0 rounded-[10px] border border-[var(--color-border)] px-6 text-sm font-semibold"
+            className="h-11 shrink-0 rounded-md border border-[var(--color-border)] px-6 text-sm font-semibold"
           >
             Cancel
           </button>
@@ -304,7 +304,7 @@ function ErrorNote({ children }: { children: React.ReactNode }) {
   return (
     <p
       role="alert"
-      className="rounded-[10px] bg-[var(--color-danger-bg)] px-4 py-3 text-sm text-[var(--color-danger)]"
+      className="rounded-md bg-[var(--color-danger-bg)] px-4 py-3 text-sm text-[var(--color-danger)]"
     >
       {children}
     </p>

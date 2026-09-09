@@ -14,7 +14,7 @@ import PasswordInput from "@/components/ui/PasswordInput";
 const initialState: ResetPasswordState = {};
 
 const FIELD =
-  "w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-surface)] py-3 pl-4 pr-12 text-sm outline-none focus:border-[var(--color-primary)]";
+  "w-full rounded-md border border-[var(--color-border)] bg-[var(--color-bg-surface)] py-3 pl-4 pr-12 text-sm outline-none focus:border-[var(--color-primary)]";
 
 export default function ResetPasswordPage() {
   const [state, formAction, pending] = useActionState(updatePassword, initialState);
@@ -34,7 +34,7 @@ export default function ResetPasswordPage() {
 
         <form action={formAction} className="flex flex-col gap-5">
           {state.error && (
-            <p className="rounded-xl bg-[var(--color-danger-bg)] px-4 py-3 text-sm text-[var(--color-danger)]">
+            <p className="rounded-md bg-[var(--color-danger-bg)] px-4 py-3 text-sm text-[var(--color-danger)]">
               {state.error}
             </p>
           )}
@@ -69,7 +69,7 @@ export default function ResetPasswordPage() {
           <button
             type="submit"
             disabled={pending}
-            className="rounded-xl bg-[var(--color-primary)] py-3 text-sm font-semibold text-white transition hover:bg-[var(--color-primary-hover)] disabled:opacity-50"
+            className="rounded-md bg-[var(--color-primary)] py-3 text-sm font-semibold text-white transition hover:bg-[var(--color-primary-hover)] disabled:opacity-50"
           >
             {pending ? "Updating..." : "Update password"}
           </button>

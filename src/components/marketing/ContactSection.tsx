@@ -75,7 +75,7 @@ export default function ContactSection() {
         {/* Form panel */}
         <form
           action={formAction}
-          className="flex w-[318px] max-w-full shrink-0 flex-col items-start justify-end overflow-hidden rounded-[24px] web:w-[416px]"
+          className="flex w-[318px] max-w-full shrink-0 flex-col items-start justify-end overflow-hidden rounded-md web:w-[416px]"
         >
           <div className="flex w-full flex-col items-center bg-bg-canvas p-6">
             <div className="flex w-full flex-col items-start gap-5">
@@ -127,7 +127,7 @@ export default function ContactSection() {
                   name="message"
                   placeholder="Message"
                   required
-                  className="min-h-px w-full flex-1 resize-none rounded-2xl border border-border-strong bg-bg-surface px-4 py-3 font-body text-[16px] leading-[24px] tracking-[0.32px] text-text-primary placeholder:text-text-muted focus:border-primary-border focus:outline-none"
+                  className="min-h-px w-full flex-1 resize-none rounded-md border border-border-strong bg-bg-surface px-4 py-3 font-body text-[16px] leading-[24px] tracking-[0.32px] text-text-primary placeholder:text-text-muted focus:border-primary-border focus:outline-none"
                 />
               </div>
             </div>

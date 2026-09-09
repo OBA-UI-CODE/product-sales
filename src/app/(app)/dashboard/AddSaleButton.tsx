@@ -28,7 +28,7 @@ export function AddSaleButton({ variant = "header" }: { variant?: "header" | "fa
       {variant === "header" ? (
         <button
           onClick={() => setOpen(true)}
-          className="hidden h-12 min-h-12 min-w-[131px] items-center justify-center whitespace-nowrap rounded-md bg-primary-default px-5 font-body text-[16px] font-semibold text-text-on-primary tab:flex web:min-w-[160px] web:px-6"
+          className="hidden h-12 min-h-12 min-w-[131px] items-center justify-center whitespace-nowrap bg-primary-default px-5 font-body text-[16px] font-semibold text-text-on-primary tab:flex web:min-w-[160px] web:px-6"
         >
           + Add Sale
         </button>

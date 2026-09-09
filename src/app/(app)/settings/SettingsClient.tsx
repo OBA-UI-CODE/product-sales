@@ -60,7 +60,7 @@ export default function SettingsClient({
             return (
               <div
                 key={s.id}
-                className="flex flex-col gap-3 rounded-[14px] bg-[var(--color-bg-surface)] px-4 py-3"
+                className="flex flex-col gap-3 rounded-md bg-[var(--color-bg-surface)] px-4 py-3"
               >
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex min-w-0 items-center gap-3">
@@ -120,7 +120,7 @@ export default function SettingsClient({
       </div>
 
       {isOwner && (
-        <div className="flex flex-col gap-4 rounded-[14px] bg-[var(--color-bg-surface)] p-6">
+        <div className="flex flex-col gap-4 rounded-md bg-[var(--color-bg-surface)] p-6">
           <h3 className="font-semibold">Add a staff account</h3>
           {state.error && <Alert tone="error">{state.error}</Alert>}
           {state.success && <Alert tone="good">{state.success}</Alert>}
@@ -135,14 +135,14 @@ export default function SettingsClient({
               name="name"
               required
               placeholder="e.g. Amaka Obi"
-              className="h-11 rounded-[10px] border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-4 text-sm"
+              className="h-11 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-4 text-sm"
             />
             <input
               name="email"
               type="email"
               required
               placeholder="Email"
-              className="h-11 rounded-[10px] border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-4 text-sm"
+              className="h-11 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-4 text-sm"
             />
             {/* Toggle via the shared PasswordInput; field styling unchanged. */}
             <PasswordInput
@@ -151,12 +151,12 @@ export default function SettingsClient({
               required
               autoComplete="new-password"
               placeholder="Temporary password"
-              className="h-11 w-full rounded-[10px] border border-[var(--color-border)] bg-[var(--color-bg-canvas)] pl-4 pr-12 text-sm"
+              className="h-11 w-full rounded-md border border-[var(--color-border)] bg-[var(--color-bg-canvas)] pl-4 pr-12 text-sm"
             />
             <button
               type="submit"
               disabled={pending}
-              className="h-11 rounded-[10px] bg-[var(--color-primary)] font-semibold text-white disabled:opacity-50"
+              className="h-11 rounded-md bg-[var(--color-primary)] font-semibold text-white disabled:opacity-50"
             >
               {pending ? "Adding..." : "Add staff account"}
             </button>
@@ -191,12 +191,12 @@ function ResetPasswordForm({
 
   if (state.success) {
     return (
-      <div className="flex flex-col gap-3 rounded-[10px] bg-[var(--color-bg-canvas)] p-4">
+      <div className="flex flex-col gap-3 rounded-md bg-[var(--color-bg-canvas)] p-4">
         <Alert tone="good">{state.success}</Alert>
         <button
           type="button"
           onClick={onDone}
-          className="h-10 self-start rounded-[10px] border border-[var(--color-border)] px-4 text-sm font-semibold"
+          className="h-10 self-start rounded-md border border-[var(--color-border)] px-4 text-sm font-semibold"
         >
           Done
         </button>
@@ -207,7 +207,7 @@ function ResetPasswordForm({
   return (
     <form
       action={formAction}
-      className="flex flex-col gap-3 rounded-[10px] bg-[var(--color-bg-canvas)] p-4"
+      className="flex flex-col gap-3 rounded-md bg-[var(--color-bg-canvas)] p-4"
     >
       <input type="hidden" name="staffId" value={staffId} />
       <p className="text-sm text-[var(--color-text-secondary)]">
@@ -221,13 +221,13 @@ function ResetPasswordForm({
         required
         autoComplete="new-password"
         placeholder="New password"
-        className="h-11 w-full rounded-[10px] border border-[var(--color-border)] bg-[var(--color-bg-surface)] pl-4 pr-12 text-sm"
+        className="h-11 w-full rounded-md border border-[var(--color-border)] bg-[var(--color-bg-surface)] pl-4 pr-12 text-sm"
       />
       <div className="flex flex-col gap-2 tab:flex-row">
         <button
           type="submit"
           disabled={pending}
-          className="h-11 shrink-0 rounded-[10px] bg-[var(--color-primary)] px-6 text-sm font-semibold text-white disabled:opacity-50"
+          className="h-11 shrink-0 rounded-md bg-[var(--color-primary)] px-6 text-sm font-semibold text-white disabled:opacity-50"
         >
           {pending ? "Saving..." : "Set password"}
         </button>
@@ -235,7 +235,7 @@ function ResetPasswordForm({
           type="button"
           onClick={onDone}
           disabled={pending}
-          className="h-11 shrink-0 rounded-[10px] border border-[var(--color-border)] px-6 text-sm font-semibold"
+          className="h-11 shrink-0 rounded-md border border-[var(--color-border)] px-6 text-sm font-semibold"
         >
           Cancel
         </button>
@@ -254,7 +254,7 @@ function Alert({
   return (
     <p
       role={tone === "error" ? "alert" : "status"}
-      className={`rounded-[10px] px-4 py-3 text-sm ${
+      className={`rounded-md px-4 py-3 text-sm ${
         tone === "error"
           ? "bg-[var(--color-danger-bg)] text-[var(--color-danger)]"
           : "bg-primary-subtle text-primary-text"

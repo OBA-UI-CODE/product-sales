@@ -33,7 +33,7 @@ export default function ShopDetailsSection({
 
       <form
         action={formAction}
-        className="flex flex-col gap-4 rounded-[14px] bg-[var(--color-bg-surface)] p-5 tab:p-6"
+        className="flex flex-col gap-4 rounded-md bg-[var(--color-bg-surface)] p-5 tab:p-6"
       >
         <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">
           These appear on the receipts you give customers.
@@ -42,7 +42,7 @@ export default function ShopDetailsSection({
         {state.error && (
           <p
             role="alert"
-            className="rounded-[10px] bg-[var(--color-danger-bg)] px-4 py-3 text-sm text-[var(--color-danger)]"
+            className="rounded-md bg-[var(--color-danger-bg)] px-4 py-3 text-sm text-[var(--color-danger)]"
           >
             {state.error}
           </p>
@@ -50,7 +50,7 @@ export default function ShopDetailsSection({
         {state.success && (
           <p
             role="status"
-            className="rounded-[10px] bg-primary-subtle px-4 py-3 text-sm text-primary-text"
+            className="rounded-md bg-primary-subtle px-4 py-3 text-sm text-primary-text"
           >
             {state.success}
           </p>
@@ -63,7 +63,7 @@ export default function ShopDetailsSection({
             required
             defaultValue={name}
             maxLength={80}
-            className="h-11 rounded-[10px] border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-4 text-sm text-[var(--color-text-primary)]"
+            className="h-11 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-4 text-sm text-[var(--color-text-primary)]"
           />
         </label>
 
@@ -76,14 +76,14 @@ export default function ShopDetailsSection({
             defaultValue={phone ?? ""}
             maxLength={30}
             placeholder="0803 123 4567"
-            className="h-11 rounded-[10px] border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-4 text-sm text-[var(--color-text-primary)]"
+            className="h-11 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-4 text-sm text-[var(--color-text-primary)]"
           />
         </label>
 
         <button
           type="submit"
           disabled={pending}
-          className="press h-11 rounded-[10px] bg-[var(--color-primary)] px-6 font-semibold text-white disabled:opacity-50 tab:self-start"
+          className="press h-11 rounded-md bg-[var(--color-primary)] px-6 font-semibold text-white disabled:opacity-50 tab:self-start"
         >
           {pending ? "Saving..." : "Save"}
         </button>

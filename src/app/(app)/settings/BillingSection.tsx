@@ -83,13 +83,13 @@ export default function BillingSection({ billing }: { billing: BillingInfo }) {
     <div className="flex flex-col gap-4">
       <h2 className="font-heading text-xl font-semibold">Billing</h2>
 
-      <div className="flex flex-col gap-4 rounded-[14px] bg-[var(--color-bg-surface)] p-6">
+      <div className="flex flex-col gap-4 rounded-md bg-[var(--color-bg-surface)] p-6">
         <p className="text-sm text-[var(--color-text-secondary)]">
           {statusLine}
         </p>
 
         {!billing.configured && (
-          <p className="rounded-[10px] bg-[var(--color-danger-bg)] px-4 py-3 text-sm text-[var(--color-danger)]">
+          <p className="rounded-md bg-[var(--color-danger-bg)] px-4 py-3 text-sm text-[var(--color-danger)]">
             Payments are not connected yet. Add your Paystack secret key and
             plan codes to the server environment to enable this.
           </p>
@@ -98,7 +98,7 @@ export default function BillingSection({ billing }: { billing: BillingInfo }) {
         {state.error && (
           <p
             role="alert"
-            className="rounded-[10px] bg-[var(--color-danger-bg)] px-4 py-3 text-sm text-[var(--color-danger)]"
+            className="rounded-md bg-[var(--color-danger-bg)] px-4 py-3 text-sm text-[var(--color-danger)]"
           >
             {state.error}
           </p>
@@ -106,7 +106,7 @@ export default function BillingSection({ billing }: { billing: BillingInfo }) {
         {cancelResult.error && (
           <p
             role="alert"
-            className="rounded-[10px] bg-[var(--color-danger-bg)] px-4 py-3 text-sm text-[var(--color-danger)]"
+            className="rounded-md bg-[var(--color-danger-bg)] px-4 py-3 text-sm text-[var(--color-danger)]"
           >
             {cancelResult.error}
           </p>
@@ -114,7 +114,7 @@ export default function BillingSection({ billing }: { billing: BillingInfo }) {
         {cancelResult.success && (
           <p
             role="status"
-            className="rounded-[10px] bg-primary-subtle px-4 py-3 text-sm text-primary-text"
+            className="rounded-md bg-primary-subtle px-4 py-3 text-sm text-primary-text"
           >
             {cancelResult.success}
           </p>
@@ -128,7 +128,7 @@ export default function BillingSection({ billing }: { billing: BillingInfo }) {
                 name="plan"
                 value="monthly"
                 disabled={pending || !billing.configured}
-                className="flex flex-1 flex-col items-start rounded-[10px] border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-4 py-3 text-left transition hover:border-primary-border disabled:opacity-50"
+                className="flex flex-1 flex-col items-start rounded-md border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-4 py-3 text-left transition hover:border-primary-border disabled:opacity-50"
               >
                 <span className="font-heading text-lg font-semibold">
                   ₦ 1,599
@@ -143,7 +143,7 @@ export default function BillingSection({ billing }: { billing: BillingInfo }) {
                 name="plan"
                 value="yearly"
                 disabled={pending || !billing.configured}
-                className="flex flex-1 flex-col items-start rounded-[10px] border border-primary-border bg-[var(--color-bg-canvas)] px-4 py-3 text-left transition hover:opacity-90 disabled:opacity-50"
+                className="flex flex-1 flex-col items-start rounded-md border border-primary-border bg-[var(--color-bg-canvas)] px-4 py-3 text-left transition hover:opacity-90 disabled:opacity-50"
               >
                 <span className="font-heading text-lg font-semibold">
                   ₦ 15,990
@@ -162,7 +162,7 @@ export default function BillingSection({ billing }: { billing: BillingInfo }) {
               what paying now costs, so nobody loses free days by surprise.
             */}
             {trialActive && trialDays > 1 && (
-              <p className="rounded-[10px] bg-[var(--color-bg-canvas)] px-4 py-3 text-sm text-[var(--color-text-secondary)]">
+              <p className="rounded-md bg-[var(--color-bg-canvas)] px-4 py-3 text-sm text-[var(--color-text-secondary)]">
                 You still have {trialDays} days of free trial left, until{" "}
                 {formatDate(billing.trialEndsAt)}. Paying now charges you today
                 and starts your subscription immediately. The remaining free
@@ -189,7 +189,7 @@ export default function BillingSection({ billing }: { billing: BillingInfo }) {
                 <button
                   type="button"
                   onClick={() => setConfirmingCancel(true)}
-                  className="self-start rounded-[10px] bg-[var(--color-danger-bg)] px-4 py-2.5 text-sm font-semibold text-[var(--color-danger)]"
+                  className="self-start rounded-md bg-[var(--color-danger-bg)] px-4 py-2.5 text-sm font-semibold text-[var(--color-danger)]"
                 >
                   Cancel subscription
                 </button>
@@ -203,7 +203,7 @@ export default function BillingSection({ billing }: { billing: BillingInfo }) {
                     <button
                       type="button"
                       onClick={() => setConfirmingCancel(false)}
-                      className="rounded-[10px] border border-[var(--color-border)] px-4 py-2.5 text-sm font-semibold text-[var(--color-text-secondary)]"
+                      className="rounded-md border border-[var(--color-border)] px-4 py-2.5 text-sm font-semibold text-[var(--color-text-secondary)]"
                     >
                       Keep it
                     </button>
@@ -216,7 +216,7 @@ export default function BillingSection({ billing }: { billing: BillingInfo }) {
                           setConfirmingCancel(false);
                         })
                       }
-                      className="rounded-[10px] bg-[var(--color-danger-bg)] px-4 py-2.5 text-sm font-semibold text-[var(--color-danger)] disabled:opacity-50"
+                      className="rounded-md bg-[var(--color-danger-bg)] px-4 py-2.5 text-sm font-semibold text-[var(--color-danger)] disabled:opacity-50"
                     >
                       {cancelling ? "Cancelling…" : "Yes, cancel"}
                     </button>

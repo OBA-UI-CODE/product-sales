@@ -17,7 +17,7 @@
 function Block({ className = "" }: { className?: string }) {
   return (
     <div
-      className={`animate-pulse rounded-[10px] bg-[var(--color-bg-surface)] ${className}`}
+      className={`animate-pulse rounded-md bg-[var(--color-bg-surface)] ${className}`}
     />
   );
 }

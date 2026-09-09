@@ -206,7 +206,7 @@ export function AddSaleModal({ onClose }: { onClose: () => void }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 md:items-center">
-      <div className="flex max-h-[92vh] w-full max-w-[480px] flex-col gap-6 overflow-y-auto rounded-t-[24px] bg-[var(--color-bg-surface)] p-8 md:rounded-[24px]">
+      <div className="flex max-h-[92vh] w-full max-w-[480px] flex-col gap-6 overflow-y-auto rounded-t-md bg-[var(--color-bg-surface)] p-8 md:rounded-md">
         <div className="flex items-center justify-between">
           <h2 className="font-heading text-xl font-bold">Add Sale</h2>
           <button
@@ -219,11 +219,11 @@ export function AddSaleModal({ onClose }: { onClose: () => void }) {
           </button>
         </div>
 
-        <div className="flex rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-canvas)] p-1">
+        <div className="flex rounded-md border border-[var(--color-border)] bg-[var(--color-bg-canvas)] p-1">
           <button
             type="button"
             onClick={() => switchMode("catalog")}
-            className={`flex-1 rounded-[9px] py-2 text-xs font-semibold transition ${
+            className={`flex-1 rounded-md py-2 text-xs font-semibold transition ${
               mode === "catalog"
                 ? "bg-[var(--color-primary)] text-white"
                 : "text-[var(--color-text-muted)]"
@@ -234,7 +234,7 @@ export function AddSaleModal({ onClose }: { onClose: () => void }) {
           <button
             type="button"
             onClick={() => switchMode("manual")}
-            className={`flex-1 rounded-[9px] py-2 text-xs font-semibold transition ${
+            className={`flex-1 rounded-md py-2 text-xs font-semibold transition ${
               mode === "manual"
                 ? "bg-[var(--color-primary)] text-white"
                 : "text-[var(--color-text-muted)]"
@@ -257,12 +257,12 @@ export function AddSaleModal({ onClose }: { onClose: () => void }) {
                   setSelected(null);
                 }}
                 placeholder="Search products by name or size"
-                className={`w-full rounded-[14px] border bg-[var(--color-bg-canvas)] px-4 py-3 text-sm outline-none ${
+                className={`w-full rounded-md border bg-[var(--color-bg-canvas)] px-4 py-3 text-sm outline-none ${
                   selected ? "border-[var(--color-primary-hover)]" : "border-[var(--color-border)]"
                 }`}
               />
               {matches.length > 0 && (
-                <ul className="absolute z-10 mt-1 w-full overflow-hidden rounded-[14px] border border-[var(--color-border)] bg-[var(--color-bg-surface)] shadow-lg">
+                <ul className="absolute z-10 mt-1 w-full overflow-hidden rounded-md border border-[var(--color-border)] bg-[var(--color-bg-surface)] shadow-lg">
                   {matches.map((o) => (
                     <li key={o.key}>
                       <button
@@ -314,8 +314,8 @@ export function AddSaleModal({ onClose }: { onClose: () => void }) {
             </div>
 
             {selected && (
-              <div className="flex items-center gap-3 rounded-[14px] bg-[var(--color-bg-canvas)] p-4">
-                <div className="h-10 w-10 shrink-0 rounded-[10px] bg-[var(--color-border-strong)]" />
+              <div className="flex items-center gap-3 rounded-md bg-[var(--color-bg-canvas)] p-4">
+                <div className="h-10 w-10 shrink-0 rounded-md bg-[var(--color-border-strong)]" />
                 <div className="min-w-0">
                   <p className="truncate text-sm font-semibold">
                     {selected.productName}
@@ -340,7 +340,7 @@ export function AddSaleModal({ onClose }: { onClose: () => void }) {
               value={customName}
               onChange={(e) => setCustomName(e.target.value)}
               placeholder="e.g. Ankara Fabric - 2 yards"
-              className="rounded-[14px] border border-[var(--color-primary-hover)] bg-[var(--color-bg-canvas)] px-4 py-3 text-sm outline-none"
+              className="rounded-md border border-[var(--color-primary-hover)] bg-[var(--color-bg-canvas)] px-4 py-3 text-sm outline-none"
             />
           </div>
         )}
@@ -357,18 +357,18 @@ export function AddSaleModal({ onClose }: { onClose: () => void }) {
               value={price}
               onChange={(e) => setPrice(e.target.value)}
               placeholder="0"
-              className="w-full rounded-[14px] border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-4 py-3 text-lg font-semibold outline-none focus:border-[var(--color-primary-hover)]"
+              className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-4 py-3 text-lg font-semibold outline-none focus:border-[var(--color-primary-hover)]"
             />
           </div>
           <div className="w-[110px]">
             <label className="mb-2 block text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
               Quantity
             </label>
-            <div className="flex items-center justify-between rounded-[14px] border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-2 py-2">
+            <div className="flex items-center justify-between rounded-md border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-2 py-2">
               <button
                 type="button"
                 onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                className="flex h-6 w-6 items-center justify-center rounded-lg bg-[var(--color-bg-surface)]"
+                className="flex h-6 w-6 items-center justify-center bg-[var(--color-bg-surface)]"
                 aria-label="Decrease quantity"
               >
                 <Minus className="h-3.5 w-3.5" />
@@ -377,7 +377,7 @@ export function AddSaleModal({ onClose }: { onClose: () => void }) {
               <button
                 type="button"
                 onClick={() => setQuantity((q) => q + 1)}
-                className="flex h-6 w-6 items-center justify-center rounded-lg bg-[var(--color-primary)] text-white"
+                className="flex h-6 w-6 items-center justify-center bg-[var(--color-primary)] text-white"
                 aria-label="Increase quantity"
               >
                 <Plus className="h-3.5 w-3.5" />
@@ -404,7 +404,7 @@ export function AddSaleModal({ onClose }: { onClose: () => void }) {
         </div>
 
         {error && (
-          <p className="rounded-[10px] bg-[var(--color-danger-bg)] px-3 py-2 text-sm text-[var(--color-danger)]">
+          <p className="rounded-md bg-[var(--color-danger-bg)] px-3 py-2 text-sm text-[var(--color-danger)]">
             {error}
           </p>
         )}
@@ -413,7 +413,7 @@ export function AddSaleModal({ onClose }: { onClose: () => void }) {
           type="button"
           disabled={!canSubmit}
           onClick={handleSubmit}
-          className="w-full rounded-2xl bg-[var(--color-primary)] py-4 text-sm font-semibold text-white transition hover:bg-[var(--color-primary-hover)] disabled:opacity-40"
+          className="w-full bg-[var(--color-primary)] py-4 text-sm font-semibold text-white transition hover:bg-[var(--color-primary-hover)] disabled:opacity-40"
         >
           {submitting ? "Saving..." : "Save Sale"}
         </button>

@@ -37,7 +37,7 @@ export default function SaleRowList({ sales }: { sales: DashboardSale[] }) {
 
   if (sales.length === 0) {
     return (
-      <p className="rounded-lg border border-dashed border-border-strong p-6 text-center font-body text-[16px] text-text-secondary">
+      <p className="rounded-md border border-dashed border-border-strong p-6 text-center font-body text-[16px] text-text-secondary">
         No sales logged yet today.
       </p>
     );
@@ -51,7 +51,7 @@ export default function SaleRowList({ sales }: { sales: DashboardSale[] }) {
           type="button"
           onClick={() => setEditing(sale)}
           aria-label={`Edit sale: ${sale.itemName}, ${sale.price}`}
-          className="block w-full rounded-lg text-left transition-opacity hover:opacity-90 focus:outline-none focus-visible:ring-1 focus-visible:ring-primary-border"
+          className="block w-full text-left transition-opacity hover:opacity-90 focus:outline-none focus-visible:ring-1 focus-visible:ring-primary-border"
         >
           <SaleRow
             initials={sale.initials}

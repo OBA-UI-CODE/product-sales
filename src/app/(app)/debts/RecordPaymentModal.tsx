@@ -44,7 +44,7 @@ export function RecordPaymentModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 md:items-center">
-      <div className="w-full max-w-[400px] rounded-t-[24px] bg-[var(--color-bg-surface)] p-8 md:rounded-[24px]">
+      <div className="w-full max-w-[400px] rounded-t-md bg-[var(--color-bg-surface)] p-8 md:rounded-md">
         <div className="mb-6 flex items-center justify-between">
           <h2 className="font-heading text-xl font-bold">Record Payment</h2>
           <button
@@ -75,11 +75,11 @@ export function RecordPaymentModal({
           onChange={(e) => setAmount(e.target.value)}
           placeholder="0"
           autoFocus
-          className="w-full rounded-[14px] border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-4 py-3 text-sm outline-none focus:border-[var(--color-primary-hover)]"
+          className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-4 py-3 text-sm outline-none focus:border-[var(--color-primary-hover)]"
         />
 
         {error && (
-          <p className="mt-4 rounded-[10px] bg-[var(--color-danger-bg)] px-3 py-2 text-sm text-[var(--color-danger)]">
+          <p className="mt-4 rounded-md bg-[var(--color-danger-bg)] px-3 py-2 text-sm text-[var(--color-danger)]">
             {error}
           </p>
         )}
@@ -88,7 +88,7 @@ export function RecordPaymentModal({
           type="button"
           disabled={!canSubmit}
           onClick={handleSubmit}
-          className="mt-6 w-full rounded-2xl bg-[var(--color-primary)] py-4 text-sm font-semibold text-white transition hover:bg-[var(--color-primary-hover)] disabled:opacity-40"
+          className="mt-6 w-full bg-[var(--color-primary)] py-4 text-sm font-semibold text-white transition hover:bg-[var(--color-primary-hover)] disabled:opacity-40"
         >
           {submitting ? "Saving..." : "Record Payment"}
         </button>

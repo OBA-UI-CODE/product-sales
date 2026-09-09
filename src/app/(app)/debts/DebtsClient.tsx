@@ -22,7 +22,7 @@ export default function DebtsClient({ debts }: { debts: Debt[] }) {
   return (
     <div className="flex flex-col gap-4">
       {debts.length === 0 && (
-        <p className="rounded-[14px] border border-dashed border-[var(--color-border)] p-6 text-center text-[var(--color-text-secondary)]">
+        <p className="rounded-md border border-dashed border-[var(--color-border)] p-6 text-center text-[var(--color-text-secondary)]">
           No outstanding debts. Everyone&apos;s paid up.
         </p>
       )}
@@ -38,7 +38,7 @@ export default function DebtsClient({ debts }: { debts: Debt[] }) {
         return (
           <div
             key={d.id}
-            className="flex flex-col gap-3 rounded-[14px] bg-[var(--color-bg-surface)] p-5 md:flex-row md:items-center md:justify-between"
+            className="flex flex-col gap-3 rounded-md bg-[var(--color-bg-surface)] p-5 md:flex-row md:items-center md:justify-between"
           >
             <div className="flex flex-col gap-1">
               <div className="flex items-center gap-2">
@@ -61,7 +61,7 @@ export default function DebtsClient({ debts }: { debts: Debt[] }) {
               <ReceiptButton saleId={d.id} label="Receipt" />
               <button
                 onClick={() => setPayTarget(d)}
-                className="press h-11 shrink-0 rounded-[10px] border border-[var(--color-border)] px-5 font-semibold transition hover:bg-[var(--color-bg-canvas)]"
+                className="press h-11 shrink-0 rounded-md border border-[var(--color-border)] px-5 font-semibold transition hover:bg-[var(--color-bg-canvas)]"
               >
                 Record payment
               </button>

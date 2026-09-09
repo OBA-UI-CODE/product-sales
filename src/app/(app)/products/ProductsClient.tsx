@@ -81,7 +81,7 @@ export default function ProductsClient({
         <h1 className="font-heading text-[32px] font-semibold">Products</h1>
         <button
           onClick={() => setShowForm((v) => !v)}
-          className="flex h-11 items-center gap-2 rounded-[10px] bg-[var(--color-primary)] px-5 font-semibold text-white transition hover:bg-[var(--color-primary-hover)]"
+          className="flex h-11 items-center gap-2 rounded-md bg-[var(--color-primary)] px-5 font-semibold text-white transition hover:bg-[var(--color-primary-hover)]"
         >
           <Plus size={18} /> Add Product
         </button>
@@ -97,7 +97,7 @@ export default function ProductsClient({
               setDrafts([{ ...EMPTY_DRAFT }]);
             })
           }
-          className="flex flex-col gap-5 rounded-[14px] bg-[var(--color-bg-surface)] p-5 tab:gap-4 tab:p-6"
+          className="flex flex-col gap-5 rounded-md bg-[var(--color-bg-surface)] p-5 tab:gap-4 tab:p-6"
         >
           <input
             type="hidden"
@@ -110,12 +110,12 @@ export default function ProductsClient({
               name="name"
               required
               placeholder="Product name (e.g. Relaxer)"
-              className="h-11 w-full min-w-0 shrink-0 rounded-[10px] border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-4 text-sm tab:flex-1"
+              className="h-11 w-full min-w-0 shrink-0 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-4 text-sm tab:flex-1"
             />
             <input
               name="category"
               placeholder="Category"
-              className="h-11 w-full min-w-0 shrink-0 rounded-[10px] border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-4 text-sm tab:flex-1"
+              className="h-11 w-full min-w-0 shrink-0 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-4 text-sm tab:flex-1"
             />
             {/* Only meaningful when the product has no sizes — otherwise each
                 size carries its own price and stock. */}
@@ -126,14 +126,14 @@ export default function ProductsClient({
                   type="number"
                   required
                   placeholder="Price"
-                  className="h-11 w-full min-w-0 shrink-0 rounded-[10px] border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-4 text-sm tab:w-32"
+                  className="h-11 w-full min-w-0 shrink-0 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-4 text-sm tab:w-32"
                 />
                 <input
                   name="stock"
                   type="number"
                   required
                   placeholder="Stock"
-                  className="h-11 w-full min-w-0 shrink-0 rounded-[10px] border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-4 text-sm tab:w-28"
+                  className="h-11 w-full min-w-0 shrink-0 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-4 text-sm tab:w-28"
                 />
               </>
             )}
@@ -150,7 +150,7 @@ export default function ProductsClient({
           </label>
 
           {hasSizes && (
-            <div className="flex flex-col gap-4 overflow-hidden rounded-[10px] bg-[var(--color-bg-canvas)] p-4 tab:gap-3">
+            <div className="flex flex-col gap-4 overflow-hidden rounded-md bg-[var(--color-bg-canvas)] p-4 tab:gap-3">
               <p className="text-xs text-[var(--color-text-muted)]">
                 Give each size its own price and stock. They are counted
                 separately, so selling a 12-pack does not touch the singles.
@@ -167,7 +167,7 @@ export default function ProductsClient({
                       )
                     }
                     placeholder="Size (e.g. Small, Big 12-pack)"
-                    className="h-11 w-full min-w-0 shrink-0 rounded-[10px] border border-[var(--color-border)] bg-[var(--color-bg-surface)] px-4 text-sm tab:flex-1"
+                    className="h-11 w-full min-w-0 shrink-0 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-surface)] px-4 text-sm tab:flex-1"
                   />
                   <input
                     value={d.price}
@@ -181,7 +181,7 @@ export default function ProductsClient({
                     type="number"
                     inputMode="numeric"
                     placeholder="Price"
-                    className="h-11 w-full min-w-0 rounded-[10px] border border-[var(--color-border)] bg-[var(--color-bg-surface)] px-4 text-sm shrink-0 tab:w-28 web:w-32"
+                    className="h-11 w-full min-w-0 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-surface)] px-4 text-sm shrink-0 tab:w-28 web:w-32"
                   />
                   <input
                     value={d.stock}
@@ -195,7 +195,7 @@ export default function ProductsClient({
                     type="number"
                     inputMode="numeric"
                     placeholder="Stock"
-                    className="h-11 w-full min-w-0 rounded-[10px] border border-[var(--color-border)] bg-[var(--color-bg-surface)] px-4 text-sm shrink-0 tab:w-24 web:w-28"
+                    className="h-11 w-full min-w-0 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-surface)] px-4 text-sm shrink-0 tab:w-24 web:w-28"
                   />
                   {drafts.length > 1 && (
                     <button
@@ -204,7 +204,7 @@ export default function ProductsClient({
                         setDrafts((rows) => rows.filter((_, j) => j !== i))
                       }
                       aria-label="Remove this size"
-                      className="flex h-11 w-11 shrink-0 items-center justify-center self-end rounded-[10px] bg-[var(--color-border-strong)] tab:self-auto"
+                      className="flex h-11 w-11 shrink-0 items-center justify-center self-end rounded-md bg-[var(--color-border-strong)] tab:self-auto"
                     >
                       <X size={16} />
                     </button>
@@ -224,7 +224,7 @@ export default function ProductsClient({
           <button
             type="submit"
             disabled={pending}
-            className="h-11 self-start rounded-[10px] bg-[var(--color-primary)] px-5 font-semibold text-white disabled:opacity-50"
+            className="h-11 self-start rounded-md bg-[var(--color-primary)] px-5 font-semibold text-white disabled:opacity-50"
           >
             {pending ? "Saving..." : "Save"}
           </button>
@@ -257,7 +257,7 @@ export default function ProductsClient({
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search your products"
               aria-label="Search your products"
-              className="h-12 w-full rounded-[10px] border border-[var(--color-border)] bg-[var(--color-bg-surface)] pl-11 pr-11 text-sm"
+              className="h-12 w-full rounded-md border border-[var(--color-border)] bg-[var(--color-bg-surface)] pl-11 pr-11 text-sm"
             />
             {query && (
               <button
@@ -282,12 +282,12 @@ export default function ProductsClient({
 
       <div className="flex flex-col gap-3">
         {products.length === 0 && (
-          <p className="rounded-[14px] border border-dashed border-[var(--color-border)] p-6 text-center text-[var(--color-text-secondary)]">
+          <p className="rounded-md border border-dashed border-[var(--color-border)] p-6 text-center text-[var(--color-text-secondary)]">
             No products yet. Add your first one above.
           </p>
         )}
         {products.length > 0 && visible.length === 0 && (
-          <p className="rounded-[14px] border border-dashed border-[var(--color-border)] p-6 text-center text-[var(--color-text-secondary)]">
+          <p className="rounded-md border border-dashed border-[var(--color-border)] p-6 text-center text-[var(--color-text-secondary)]">
             Nothing matches &ldquo;{query.trim()}&rdquo;. Try a shorter word, or
             the size you are looking for.
           </p>
@@ -304,11 +304,11 @@ export default function ProductsClient({
           return (
             <div
               key={p.id}
-              className="flex flex-col rounded-[14px] bg-[var(--color-bg-surface)]"
+              className="flex flex-col rounded-md bg-[var(--color-bg-surface)]"
             >
             <div className="flex items-center justify-between gap-3 px-4 py-4 tab:py-3">
               <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-[10px] bg-[var(--color-border-strong)]" />
+                <div className="h-10 w-10 rounded-md bg-[var(--color-border-strong)]" />
                 <div className="flex flex-col">
                   <span className="text-lg">{p.name}</span>
                   <span className="text-sm text-[var(--color-text-secondary)]">
@@ -408,7 +408,7 @@ export default function ProductsClient({
                         setNewSize((n) => ({ ...n, label: e.target.value }))
                       }
                       placeholder="Size"
-                      className="h-10 w-full min-w-0 shrink-0 rounded-[10px] border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-3 text-sm tab:flex-1"
+                      className="h-10 w-full min-w-0 shrink-0 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-3 text-sm tab:flex-1"
                     />
                     <input
                       value={newSize.price}
@@ -417,7 +417,7 @@ export default function ProductsClient({
                       }
                       type="number"
                       placeholder="Price"
-                      className="h-10 w-full min-w-0 rounded-[10px] border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-3 text-sm shrink-0 tab:w-24 web:w-28"
+                      className="h-10 w-full min-w-0 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-3 text-sm shrink-0 tab:w-24 web:w-28"
                     />
                     <input
                       value={newSize.stock}
@@ -426,7 +426,7 @@ export default function ProductsClient({
                       }
                       type="number"
                       placeholder="Stock"
-                      className="h-10 w-full min-w-0 rounded-[10px] border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-3 text-sm shrink-0 tab:w-20 web:w-24"
+                      className="h-10 w-full min-w-0 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-3 text-sm shrink-0 tab:w-20 web:w-24"
                     />
                     <button
                       onClick={() =>
@@ -441,7 +441,7 @@ export default function ProductsClient({
                         })
                       }
                       disabled={pending || !newSize.label.trim()}
-                      className="h-10 shrink-0 whitespace-nowrap rounded-[10px] bg-[var(--color-primary)] px-4 text-sm font-semibold text-white disabled:opacity-50"
+                      className="h-10 shrink-0 whitespace-nowrap rounded-md bg-[var(--color-primary)] px-4 text-sm font-semibold text-white disabled:opacity-50"
                     >
                       Add
                     </button>
