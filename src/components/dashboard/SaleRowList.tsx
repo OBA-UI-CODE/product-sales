@@ -51,7 +51,7 @@ export default function SaleRowList({ sales }: { sales: DashboardSale[] }) {
           type="button"
           onClick={() => setEditing(sale)}
           aria-label={`Edit sale: ${sale.itemName}, ${sale.price}`}
-          className="block w-full text-left transition-opacity hover:opacity-90 focus:outline-none focus-visible:ring-1 focus-visible:ring-primary-border"
+          className="rounded-md block w-full text-left transition-opacity hover:opacity-90 focus:outline-none focus-visible:ring-1 focus-visible:ring-primary-border"
         >
           <SaleRow
             initials={sale.initials}

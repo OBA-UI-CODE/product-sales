@@ -268,7 +268,7 @@ export function AddSaleModal({ onClose }: { onClose: () => void }) {
                       <button
                         type="button"
                         onClick={() => selectOption(o)}
-                        className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left text-sm hover:bg-[var(--color-bg-canvas)]"
+                        className="rounded-md flex w-full items-center justify-between gap-3 px-4 py-3 text-left text-sm hover:bg-[var(--color-bg-canvas)]"
                       >
                         <span className="min-w-0">
                           <span className="block truncate">
@@ -368,7 +368,7 @@ export function AddSaleModal({ onClose }: { onClose: () => void }) {
               <button
                 type="button"
                 onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                className="flex h-6 w-6 items-center justify-center bg-[var(--color-bg-surface)]"
+                className="rounded-md flex h-6 w-6 items-center justify-center bg-[var(--color-bg-surface)]"
                 aria-label="Decrease quantity"
               >
                 <Minus className="h-3.5 w-3.5" />
@@ -377,7 +377,7 @@ export function AddSaleModal({ onClose }: { onClose: () => void }) {
               <button
                 type="button"
                 onClick={() => setQuantity((q) => q + 1)}
-                className="flex h-6 w-6 items-center justify-center bg-[var(--color-primary)] text-white"
+                className="rounded-md flex h-6 w-6 items-center justify-center bg-[var(--color-primary)] text-white"
                 aria-label="Increase quantity"
               >
                 <Plus className="h-3.5 w-3.5" />
@@ -413,7 +413,7 @@ export function AddSaleModal({ onClose }: { onClose: () => void }) {
           type="button"
           disabled={!canSubmit}
           onClick={handleSubmit}
-          className="w-full bg-[var(--color-primary)] py-4 text-sm font-semibold text-white transition hover:bg-[var(--color-primary-hover)] disabled:opacity-40"
+          className="rounded-md w-full bg-[var(--color-primary)] py-4 text-sm font-semibold text-white transition hover:bg-[var(--color-primary-hover)] disabled:opacity-40"
         >
           {submitting ? "Saving..." : "Save Sale"}
         </button>

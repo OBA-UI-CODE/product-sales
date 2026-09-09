@@ -91,7 +91,7 @@ export function RestockModal({
           type="button"
           disabled={!canSubmit}
           onClick={handleSubmit}
-          className="mt-6 w-full bg-[var(--color-primary)] py-4 text-sm font-semibold text-white transition hover:bg-[var(--color-primary-hover)] disabled:opacity-40"
+          className="rounded-md mt-6 w-full bg-[var(--color-primary)] py-4 text-sm font-semibold text-white transition hover:bg-[var(--color-primary-hover)] disabled:opacity-40"
         >
           {submitting ? "Saving..." : "Add Stock"}
         </button>

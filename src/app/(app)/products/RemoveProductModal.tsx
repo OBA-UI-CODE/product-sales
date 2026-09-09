@@ -65,7 +65,7 @@ export function RemoveProductModal({
           <button
             type="button"
             onClick={onClose}
-            className="flex-1 border border-[var(--color-border)] py-3.5 text-sm font-semibold text-[var(--color-text-secondary)]"
+            className="rounded-md flex-1 border border-[var(--color-border)] py-3.5 text-sm font-semibold text-[var(--color-text-secondary)]"
           >
             Cancel
           </button>
@@ -73,7 +73,7 @@ export function RemoveProductModal({
             type="button"
             onClick={handleConfirm}
             disabled={submitting}
-            className="flex flex-1 items-center justify-center gap-2 bg-[var(--color-danger-bg)] py-3.5 text-sm font-semibold text-[var(--color-danger)] disabled:opacity-40"
+            className="rounded-md flex flex-1 items-center justify-center gap-2 bg-[var(--color-danger-bg)] py-3.5 text-sm font-semibold text-[var(--color-danger)] disabled:opacity-40"
           >
             <Trash2 className="h-4 w-4" />
             {submitting ? "Removing..." : "Remove"}

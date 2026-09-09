@@ -157,7 +157,7 @@ export function EditSaleModal({
               <button
                 type="button"
                 onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                className="flex h-6 w-6 items-center justify-center bg-[var(--color-bg-surface)]"
+                className="rounded-md flex h-6 w-6 items-center justify-center bg-[var(--color-bg-surface)]"
                 aria-label="Decrease quantity"
               >
                 <Minus className="h-3.5 w-3.5" />
@@ -166,7 +166,7 @@ export function EditSaleModal({
               <button
                 type="button"
                 onClick={() => setQuantity((q) => q + 1)}
-                className="flex h-6 w-6 items-center justify-center bg-[var(--color-primary)] text-white"
+                className="rounded-md flex h-6 w-6 items-center justify-center bg-[var(--color-primary)] text-white"
                 aria-label="Increase quantity"
               >
                 <Plus className="h-3.5 w-3.5" />
@@ -207,7 +207,7 @@ export function EditSaleModal({
             type="button"
             disabled={!canSubmit}
             onClick={handleSubmit}
-            className="w-full bg-[var(--color-primary)] py-4 text-sm font-semibold text-white transition hover:bg-[var(--color-primary-hover)] disabled:opacity-40"
+            className="rounded-md w-full bg-[var(--color-primary)] py-4 text-sm font-semibold text-white transition hover:bg-[var(--color-primary-hover)] disabled:opacity-40"
           >
             {submitting ? "Saving..." : "Save Changes"}
           </button>
@@ -216,7 +216,7 @@ export function EditSaleModal({
             <button
               type="button"
               onClick={() => setConfirmingDelete(true)}
-              className="flex w-full items-center justify-center gap-2 bg-[var(--color-danger-bg)] py-3.5 text-sm font-semibold text-[var(--color-danger)]"
+              className="rounded-md flex w-full items-center justify-center gap-2 bg-[var(--color-danger-bg)] py-3.5 text-sm font-semibold text-[var(--color-danger)]"
             >
               <Trash2 className="h-4 w-4" />
               Delete Sale
@@ -226,7 +226,7 @@ export function EditSaleModal({
               <button
                 type="button"
                 onClick={() => setConfirmingDelete(false)}
-                className="flex-1 border border-[var(--color-border)] py-3.5 text-sm font-semibold text-[var(--color-text-secondary)]"
+                className="rounded-md flex-1 border border-[var(--color-border)] py-3.5 text-sm font-semibold text-[var(--color-text-secondary)]"
               >
                 Cancel
               </button>
@@ -234,7 +234,7 @@ export function EditSaleModal({
                 type="button"
                 onClick={handleDelete}
                 disabled={deleting}
-                className="flex-1 bg-[var(--color-danger-bg)] py-3.5 text-sm font-semibold text-[var(--color-danger)] disabled:opacity-40"
+                className="rounded-md flex-1 bg-[var(--color-danger-bg)] py-3.5 text-sm font-semibold text-[var(--color-danger)] disabled:opacity-40"
               >
                 {deleting ? "Deleting..." : "Confirm Delete"}
               </button>
