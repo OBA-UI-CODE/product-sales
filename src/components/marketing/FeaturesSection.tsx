@@ -55,36 +55,31 @@ export default function FeaturesSection() {
 
       {/* Cards */}
       <div className="flex w-full flex-col gap-6 tab:gap-16">
-        {/* 1 — Fast sale entry + Automatic stock tracking (shared dashboard) */}
+        {/* 1 — Fast sale entry &amp; automatic stock tracking, one block */}
         <div className={`${CARD} min-h-[733px] w-full tab:min-h-[842px] web:min-h-[657px]`}>
-          <div className="absolute left-4 top-10 flex flex-col items-start gap-6 tab:left-16 tab:top-16 tab:gap-12 web:w-[470px] web:gap-[220px]">
-            <div className="flex flex-col items-start gap-6">
-              <p className={`${TITLE} whitespace-nowrap`}>Fast sale entry</p>
-              <div className={BODY}>
-                <p>Log a sale in under ten seconds.</p>
-                <p>Built for busy counters, not spreadsheets</p>
-              </div>
-            </div>
-            <div className="flex w-[312px] flex-col items-start gap-6 tab:w-auto">
-              {/*
-                No whitespace-nowrap here. At 48px this title is wider than the
-                470px column it sits in, so it ran out of its box and the
-                dashboard image — painted after it — covered the end of the
-                word. It read as "Automatic stock trackin".
-              */}
-              <p className={TITLE}>Automatic stock tracking</p>
-              <div className={`${BODY} w-[303px] tab:w-auto`}>
-                <p className="tab:hidden">
-                  Every sale updates your stock in real time. Every restock does
-                  too. No manual counting.
-                </p>
-                <p className="hidden tab:block">
-                  Every sale updates your stock in real time.
-                </p>
-                <p className="hidden tab:block">
-                  Every restock does too. No manual counting.
-                </p>
-              </div>
+          {/*
+            One feature, not two.
+
+            This was "Fast sale entry" and "Automatic stock tracking" as
+            separate blocks with a 220px gap between them. The design file now
+            has a single heading and a single paragraph — mobile 43:543,
+            web 35:447 — because they describe one thing: you log a sale and
+            the stock looks after itself.
+
+            Widths come from the file: 267 on mobile (heading wraps to two
+            lines at 24/29, giving the 58 the frame records), 435 from tablet
+            up (three lines at 48/58, giving 174).
+          */}
+          <div className="absolute left-4 top-10 flex w-[267px] flex-col items-start gap-6 tab:left-16 tab:top-16 tab:w-[435px]">
+            <p className={TITLE}>
+              Fast sale entry &amp; automatic stock tracking
+            </p>
+            <div className={BODY}>
+              <p>
+                Log a sale in under ten seconds. Built for busy counters, not
+                spreadsheets. Every sale updates your stock in real time. Every
+                restock does too. No manual counting.
+              </p>
             </div>
           </div>
 

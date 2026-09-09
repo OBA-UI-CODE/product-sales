@@ -40,7 +40,7 @@ const INQUIRY_TYPES = [
 const LABEL =
   "w-full font-heading text-[14px] font-semibold leading-[17px] tracking-[-1px] text-text-secondary";
 const FIELD =
-  "h-11 w-full rounded-full border border-border-strong bg-bg-surface px-4 py-2 font-body text-[16px] leading-[24px] tracking-[0.32px] text-text-primary placeholder:text-text-muted focus:border-primary-border focus:outline-none";
+  "h-11 w-full rounded-md border border-border-strong bg-bg-surface px-4 py-2 font-body text-[16px] leading-[24px] tracking-[0.32px] text-text-primary placeholder:text-text-muted focus:border-primary-border focus:outline-none";
 
 export default function ContactSection() {
   const [state, formAction, pending] = useActionState<ContactFormState, FormData>(

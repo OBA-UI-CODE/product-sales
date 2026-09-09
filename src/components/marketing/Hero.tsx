@@ -29,11 +29,11 @@ export default function Hero() {
 
           {/* Headline + subtext */}
           <div className="flex w-full flex-col items-start gap-6 text-center tab:text-left">
-            <h1 className="w-full font-heading text-[64px] font-semibold tracking-[-1px] text-primary-text web:text-[72px]">
-              <span className="leading-[77px] text-green-100 web:leading-[87px]">
+            <h1 className="w-full font-heading text-[56px] font-semibold leading-[68px] tracking-[-1px] text-primary-text tab:text-[64px] tab:leading-[77px] web:text-[72px] web:leading-[87px]">
+              <span className="leading-[68px] text-green-100 tab:leading-[77px] web:leading-[87px]">
                 Every Sale,
               </span>
-              <span className="leading-[77px] web:leading-[87px]"> Accounted For.</span>
+              <span className="leading-[68px] tab:leading-[77px] web:leading-[87px]"> Accounted For.</span>
             </h1>
 
             {/*

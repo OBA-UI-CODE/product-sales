@@ -68,7 +68,7 @@ function PlanCard({ plan }: { plan: Plan }) {
     // The file's tablet cards are 339 and 351; an equal (738 - 48) / 2 = 345
     // split is used instead, since two side-by-side plan cards differing by
     // 12px reads as a slip rather than a decision.
-    <div className="flex w-full min-w-0 items-center justify-center overflow-hidden rounded-[24px] bg-bg-canvas px-6 py-[15px] tab:flex-1 web:w-[411px] web:flex-none web:py-10">
+    <div className="flex w-full min-w-0 items-center justify-center overflow-hidden rounded-md bg-bg-canvas px-6 py-[15px] tab:flex-1 web:w-[411px] web:flex-none web:py-10">
       <div className="flex w-full max-w-[363px] flex-col items-center gap-6">
         <div className="flex w-full flex-col items-start">
           {/* Name + description */}

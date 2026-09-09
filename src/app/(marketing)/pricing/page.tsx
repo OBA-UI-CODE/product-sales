@@ -41,8 +41,8 @@ export default function PricingPage() {
     <div className="pb-[42px] tab:pb-[49px] web:pb-[75px]">
       <PricingHero />
       <PricingPlans />
-      <FAQSection />
       <TestimonialsSection />
+      <FAQSection />
     </div>
   );
 }

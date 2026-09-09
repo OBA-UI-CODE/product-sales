@@ -10,8 +10,8 @@ import FinalCTASection from "@/components/marketing/FinalCTASection";
   Landing Page — Figma 19:4 (web) / 19:6 (tablet) / 19:7 (mobile)
 
   Section order per the file:
-    Nav (in layout) -> Hero -> Trust strip -> About -> Features -> FAQ ->
-    Testimonials -> Final CTA -> Footer (in layout)
+    Nav (in layout) -> Hero -> Trust strip -> About -> Features -> Testimonials ->
+    FAQ -> Final CTA -> Footer (in layout)
 */
 export default function LandingPage() {
   return (
@@ -22,8 +22,8 @@ export default function LandingPage() {
       <TrustStrip />
       <AboutSection />
       <FeaturesSection />
-      <FAQSection />
       <TestimonialsSection />
+      <FAQSection />
       <FinalCTASection />
     </div>
   );
