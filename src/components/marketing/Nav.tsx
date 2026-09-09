@@ -37,7 +37,16 @@ export default function Nav() {
 
   return (
     <>
-      <header className="mx-auto w-full max-w-[1440px] px-6 pt-6 tab:px-12 tab:pt-11 web:px-16">
+      {/*
+        relative z-50 so the header stays ABOVE the mobile menu overlay, which
+        is z-40. Without it the overlay covered the header, and the close "X"
+        — which is the same button as the hamburger — was rendered underneath
+        it: present in the DOM, invisible, and impossible to tap. The only way
+        out of the menu was to pick a link.
+
+        Harmless above mobile, where the overlay is hidden entirely.
+      */}
+      <header className="relative z-50 mx-auto w-full max-w-[1440px] px-6 pt-6 tab:px-12 tab:pt-11 web:px-16">
         {/* mobile: space-between · tablet: packed w/ 24px gaps · web: space-between */}
         <nav className="flex items-center justify-between gap-6 tab:justify-start web:justify-between">
           <Link

@@ -52,11 +52,20 @@ export default function ContactSection() {
     <section className="w-full bg-bg-surface px-4 py-6 tab:px-12 tab:py-[25px] web:px-[120px] web:py-[72px]">
       <div className="flex flex-col items-center gap-6 tab:flex-row tab:items-center tab:gap-[59px] web:items-start web:gap-12">
         {/* Copy */}
-        <div className="flex shrink-0 flex-col items-start gap-6 py-20 tab:gap-7 web:min-w-px web:flex-1">
+        {/*
+          shrink-0 only from tablet up. On mobile it stopped this column
+          shrinking below its content, so on a 360px phone the copy stayed
+          361px wide, overflowed the section's 16px padding, and both the
+          heading and the paragraph ended up flush against the screen edges.
+          Allowed to shrink, the heading wraps and everything keeps its
+          margin. Figma's mobile frame (146:9595) is 361 wide inside 16px
+          padding, which is exactly what this now produces at 393.
+        */}
+        <div className="flex flex-col items-start gap-6 py-20 tab:shrink-0 tab:gap-7 web:min-w-px web:flex-1">
           <h1 className="font-heading text-[64px] font-semibold leading-[77px] tracking-[-1px] text-text-strong web:w-[560px] web:text-[72px] web:leading-[87px]">
             Get in Touch
           </h1>
-          <p className="w-[361px] max-w-full font-heading text-[18px] font-semibold leading-[22px] tracking-[-1px] text-text-sub web:w-full">
+          <p className="w-full font-heading text-[18px] font-semibold leading-[22px] tracking-[-1px] text-text-sub tab:w-[361px] web:w-full">
             We’re here to help! Whether you have questions, need support, or want
             to share feedback, drop us a message and our team will respond
             promptly
