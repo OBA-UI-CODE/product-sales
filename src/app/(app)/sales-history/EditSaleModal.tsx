@@ -62,13 +62,18 @@ export function EditSaleModal({
     const debtorNameValue = paymentMode === "paid" ? null : debtorName.trim() || null;
 
     try {
-      await updateSale({
+      const result = await updateSale({
         saleId: sale.id,
         quantity,
         totalPrice: total,
         amountPaid: amountPaidValue,
         debtorName: debtorNameValue,
       });
+      if (result?.error) {
+        setError(result.error);
+        setSubmitting(false);
+        return;
+      }
       router.refresh();
       onClose();
     } catch {
@@ -81,7 +86,12 @@ export function EditSaleModal({
     setDeleting(true);
     setError(null);
     try {
-      await deleteSale(sale.id);
+      const result = await deleteSale(sale.id);
+      if (result?.error) {
+        setError(result.error);
+        setDeleting(false);
+        return;
+      }
       router.refresh();
       onClose();
     } catch {

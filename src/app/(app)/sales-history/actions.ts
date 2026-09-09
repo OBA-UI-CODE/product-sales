@@ -11,7 +11,23 @@ export interface UpdateSaleInput {
   debtorName: string | null;
 }
 
-export async function updateSale(input: UpdateSaleInput) {
+export interface SaleActionResult {
+  error?: string;
+}
+
+/*
+  These RETURN their error rather than throwing it.
+
+  Next sanitises the message of an error thrown inside a server action before
+  it reaches the browser, which is right for an unexpected crash and wrong
+  here: "You can only edit sales you logged yourself" is the whole point of
+  the message, and the modal was showing "Couldn't save those changes. Try
+  again." instead — advice that would have a staff member retrying forever
+  against a rule that will never let them through.
+*/
+export async function updateSale(
+  input: UpdateSaleInput
+): Promise<SaleActionResult> {
   const supabase = await createClient();
   const { error } = await supabase.rpc("update_sale", {
     p_sale_id: input.saleId,
@@ -20,17 +36,21 @@ export async function updateSale(input: UpdateSaleInput) {
     p_amount_paid: input.amountPaid,
     p_debtor_name: input.debtorName,
   });
-  if (error) throw new Error(error.message);
+  if (error) return { error: error.message };
   revalidatePath("/dashboard");
   revalidatePath("/sales-history");
   revalidatePath("/debts");
+  return {};
 }
 
-export async function deleteSale(saleId: string) {
+export async function deleteSale(
+  saleId: string
+): Promise<SaleActionResult> {
   const supabase = await createClient();
   const { error } = await supabase.rpc("delete_sale", { p_sale_id: saleId });
-  if (error) throw new Error(error.message);
+  if (error) return { error: error.message };
   revalidatePath("/dashboard");
   revalidatePath("/sales-history");
   revalidatePath("/debts");
+  return {};
 }
