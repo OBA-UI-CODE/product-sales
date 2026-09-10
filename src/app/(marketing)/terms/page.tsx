@@ -37,20 +37,20 @@ const SECTIONS: LegalSection[] = [
     body: "You must give accurate details when you sign up and keep your password to yourself. You are responsible for everything done under your shop account, including by staff accounts you create. Staff accounts are administered entirely by the owner: the owner sets and changes staff passwords and can remove a staff member at any time. Staff may log sales, and may edit or delete only the sales they logged themselves; the owner can edit or delete any sale in the shop. Tell us promptly at johtahelp@gmail.com if you believe someone has gained access to your account.",
   },
   {
-    heading: "3. Free trial, subscription and renewal",
-    body: "Every new shop gets one month free. No card is required to start, and we do not ask for one until you choose to subscribe. After the trial, JOHTA costs ₦1,599 per month or ₦15,990 per year. Subscriptions renew automatically at the end of each period at the price then shown on our pricing page, and continue until you cancel. You can cancel at any time from Settings, and cancelling stops the next renewal rather than ending your access immediately, so you keep full use until the period you have already paid for runs out. Because payment is taken when a subscription starts, choosing to subscribe while you still have free trial left ends the remaining trial; the billing screen says so before you confirm.",
+    heading: "3. Plans, free trial, subscription and renewal",
+    body: "JOHTA has a Free plan and a paid plan. The Free plan costs nothing and has no time limit; it covers logging sales, products and stock, sizes and packs, low-stock warnings, debts, one staff account, and the last 30 days of sales history. The paid plan adds receipts, unlimited staff accounts, your full sales history and downloading your records, and costs ₦1,599 per month or ₦15,990 per year; both give the same features. Every new shop gets the paid plan free for its first month. No card is required to start, and we do not ask for one until you choose to subscribe. When the trial ends without a subscription, the shop moves to the Free plan. Subscriptions renew automatically at the end of each period at the price then shown on our pricing page, and continue until you cancel. You can cancel at any time from Settings, and cancelling stops the next renewal rather than ending your access immediately, so you keep full use until the period you have already paid for runs out. Because payment is taken when a subscription starts, choosing to subscribe while you still have free trial left ends the remaining trial; the billing screen says so before you confirm.",
   },
   {
     heading: "4. Payments and refunds",
-    body: "Payments are processed by Paystack. Your card details are entered on Paystack’s own checkout and are never seen or stored by JOHTA. Prices are in Nigerian Naira and include any tax we are required to charge. If a payment fails we may retry it and may limit your account to read-only until it succeeds. We do not generally give refunds for time already paid for, but if you were charged in error, or something on our side stopped you using the service, write to us at johtahelp@gmail.com and we will put it right. Nothing here removes rights you have under Nigerian consumer law.",
+    body: "Payments are processed by Paystack. Your card details are entered on Paystack’s own checkout and are never seen or stored by JOHTA. Prices are in Nigerian Naira and include any tax we are required to charge. If a payment fails we may retry it, and your shop is on the Free plan until it succeeds. We do not generally give refunds for time already paid for, but if you were charged in error, or something on our side stopped you using the service, write to us at johtahelp@gmail.com and we will put it right. Nothing here removes rights you have under Nigerian consumer law.",
   },
   {
     heading: "5. If you stop paying",
-    body: "When a trial ends without a subscription, or a subscription lapses, your shop becomes read-only. You keep your account and can still sign in, see every record and download your data. You simply cannot log new sales until you subscribe. We do this deliberately: your records are yours, and losing access to them should never be the penalty for not paying.",
+    body: "When a trial ends without a subscription, or a subscription lapses, your shop moves to the Free plan. You keep your account and keep logging sales. The paid features switch off: receipts stop, sales older than 30 days are hidden, only one staff member keeps access, and your records can no longer be downloaded. Nothing is deleted. Hidden sales, paused staff and every other record come back the moment you subscribe again. Sales that are still owed stay visible however old they are.",
   },
   {
     heading: "6. Your data belongs to you",
-    body: "The sales, products, stock counts and customer details you enter remain yours. We claim no ownership of them and we do not sell them or use them to advertise to you. You can download everything as a spreadsheet at any time from Settings. We use your data only to run the service for you, to keep it secure, and as described in our Privacy Policy.",
+    body: "The sales, products, stock counts and customer details you enter remain yours. We claim no ownership of them and we do not sell them or use them to advertise to you. On the paid plan you can download everything as a spreadsheet from Settings. On any plan you can ask us for a copy of the personal data we hold about you, free of charge, as described in our Privacy Policy. We use your data only to run the service for you, to keep it secure, and as described in our Privacy Policy.",
   },
   {
     heading: "7. Acceptable use",
@@ -66,7 +66,7 @@ const SECTIONS: LegalSection[] = [
   },
   {
     heading: "10. Ending your account",
-    body: "You can pause or delete your shop at any time from Settings. Pausing stops billing and keeps everything. Deleting closes the shop and removes your staff’s logins, and we keep your records for thirty days before destroying them permanently, so that a decision made in haste can be undone. Sign back in within that time and everything returns. We may suspend or close an account that breaks these terms, is used unlawfully, or is used abusively towards our team or other users; where it is reasonable to do so we will warn you first and give you a chance to download your data.",
+    body: "You can pause or delete your shop at any time from Settings. Pausing stops billing and keeps everything. Deleting closes the shop and removes your staff’s logins, and we keep your records for thirty days before destroying them permanently, so that a decision made in haste can be undone. Sign back in within that time and everything returns. We may suspend or close an account that breaks these terms, is used unlawfully, or is used abusively towards our team or other users; where it is reasonable to do so we will warn you first.",
   },
   {
     heading: "11. Changes to the service and to these terms",
@@ -87,7 +87,7 @@ export default function TermsPage() {
     <div className="pb-[67px] tab:pb-[98px] web:pb-[69px]">
       <LegalPage
         title="Terms of Service"
-        intro="Last updated 9 September 2026. These terms explain what you can expect from JOHTA and what we ask of you. We have written them in plain English on purpose. They are a real agreement, and you should be able to read them without a lawyer."
+        intro="Last updated 10 September 2026. These terms explain what you can expect from JOHTA and what we ask of you. We have written them in plain English on purpose. They are a real agreement, and you should be able to read them without a lawyer."
         sections={SECTIONS}
       />
     </div>

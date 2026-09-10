@@ -113,6 +113,14 @@ export async function GET(
   const { saleId } = await params;
   const { supabase, profile } = await getCurrentShopContext();
 
+  /* Receipts are a paid feature. Asked of the database, which is the
+     authority on the plan, so a Free shop cannot get one by calling this
+     url directly. 402 tells the button to explain rather than fail. */
+  const { data: shopIsPaid } = await supabase.rpc("current_shop_is_paid");
+  if (shopIsPaid !== true) {
+    return new Response("Receipts are on the paid plan.", { status: 402 });
+  }
+
   const { data: sale } = await supabase
     .from("sales")
     .select(

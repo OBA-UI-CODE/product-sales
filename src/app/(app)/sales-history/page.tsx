@@ -1,4 +1,6 @@
-import { getCurrentShopContext } from "@/lib/shop-context";
+import Link from "next/link";
+import { getCurrentShopContext, shopOf } from "@/lib/shop-context";
+import { FREE_HISTORY_DAYS, freeHistoryStart, isPaidShop } from "@/lib/plan";
 import { formatNaira } from "@/lib/format";
 import DatePicker from "./DatePicker";
 import { SaleList, type SaleRowData } from "./SaleList";
@@ -17,7 +19,22 @@ export default async function SalesHistoryPage({
   const end = new Date(selectedDate);
   end.setHours(23, 59, 59, 999);
 
-  const { data: salesData } = await supabase
+  /*
+    Free shops see the last 30 days. The database hides older sales anyway
+    (except ones still owed), so a day before the window would come back
+    empty or showing only its debts, which reads as "nothing was sold".
+    It is said plainly instead, without querying.
+  */
+  const paid = isPaidShop(shopOf(profile));
+  const windowStart = freeHistoryStart();
+  windowStart.setHours(0, 0, 0, 0);
+  const locked = !paid && end < windowStart;
+  /* Billing is the owner's; staff are not sent to a page they cannot use. */
+  const isOwner = profile.role === "owner";
+
+  const { data: salesData } = locked
+    ? { data: [] }
+    : await supabase
     .from("sales")
     .select(
       "id, custom_item_name, category, quantity, total_price, amount_paid, debtor_name, sold_at, edited_at, seller_id, products(name)"
@@ -58,8 +75,22 @@ export default async function SalesHistoryPage({
         <h1 className="font-heading text-[32px] font-semibold">
           Sales History
         </h1>
-        <DatePicker defaultValue={dateStr} />
+        <DatePicker
+          defaultValue={dateStr}
+          min={paid ? undefined : windowStart.toISOString().split("T")[0]}
+        />
       </div>
+
+      {!paid && !locked && (
+        <p className="-mt-4 text-sm text-[var(--color-text-secondary)]">
+          The Free plan shows the last {FREE_HISTORY_DAYS} days.{" "}
+          {isOwner && (
+            <Link href="/settings#billing" className="font-semibold text-primary-text underline">
+              See your full history
+            </Link>
+          )}
+        </p>
+      )}
 
       <div className="flex flex-col gap-1 rounded-md bg-[var(--color-bg-surface)] p-6">
         <span className="text-sm text-[var(--color-text-secondary)]">
@@ -78,7 +109,22 @@ export default async function SalesHistoryPage({
         </span>
       </div>
 
-      {sales.length === 0 ? (
+      {locked ? (
+        <div className="flex flex-col items-center gap-3 rounded-md border border-dashed border-[var(--color-border)] p-6 text-center">
+          <p className="text-[var(--color-text-secondary)]">
+            Sales older than {FREE_HISTORY_DAYS} days are on the paid plan.
+            They are all still here and come back the moment you subscribe.
+          </p>
+          {isOwner && (
+            <Link
+              href="/settings#billing"
+              className="press flex h-11 items-center justify-center rounded-md bg-[var(--color-primary)] px-6 font-semibold text-white"
+            >
+              See plans
+            </Link>
+          )}
+        </div>
+      ) : sales.length === 0 ? (
         <p className="rounded-md border border-dashed border-[var(--color-border)] p-6 text-center text-[var(--color-text-secondary)]">
           No sales logged on this day.
         </p>

@@ -5,6 +5,8 @@ import { signOut } from "./actions";
 import Sidebar from "@/components/dashboard/Sidebar";
 import BottomNav from "@/components/dashboard/BottomNav";
 import { themeVars } from "@/lib/theme";
+import { isPaidShop } from "@/lib/plan";
+import { PlanProvider } from "@/components/PlanContext";
 
 /*
   App shell — Figma 201:3069 (web) / 201:3077 (tablet) / 201:3085 (mobile).
@@ -19,7 +21,7 @@ export default async function AppLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { profile } = await getCurrentShopContext();
+  const { supabase, profile } = await getCurrentShopContext();
 
   /*
     A paused shop, or one queued for deletion, has no working screens — so
@@ -46,8 +48,22 @@ export default async function AppLayout({
     and keeps the brand green.
   */
   const shop = shopOf(profile);
+  const paid = isPaidShop(shop);
+
+  /*
+    On Free only one staff member keeps working. Anyone else is sent to a page
+    that explains why, rather than into screens whose every save would be
+    refused. Only asked when it can matter (staff, on Free), so owners and
+    paid shops pay nothing for the check. The database refuses their writes
+    either way.
+  */
+  if (profile.role === "staff" && !paid) {
+    const { data: hasSeat } = await supabase.rpc("current_user_has_seat");
+    if (hasSeat === false) redirect("/account/no-access");
+  }
 
   return (
+    <PlanProvider paid={paid} isOwner={profile.role === "owner"}>
     <div className="flex min-h-screen bg-bg-canvas" style={themeVars(shop?.theme_color)}>
       <Sidebar
         name={profile.name}
@@ -62,5 +78,6 @@ export default async function AppLayout({
 
       <BottomNav />
     </div>
+    </PlanProvider>
   );
 }

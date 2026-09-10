@@ -14,11 +14,11 @@ import type { Metadata } from "next";
 */
 export const metadata: Metadata = {
   title: "Pricing",
-  description: "₦1,599 a month or ₦15,990 a year, with the first month free. No card needed to start, cancel any time.",
+  description: "Free for as long as you like, or ₦1,599 a month or ₦15,990 a year for receipts, unlimited staff and your full sales history. First month of paid features free, no card needed.",
   alternates: { canonical: "/pricing" },
   openGraph: {
     title: "Pricing · JOHTA",
-    description: "₦1,599 a month or ₦15,990 a year, with the first month free. No card needed to start, cancel any time.",
+    description: "Free for as long as you like, or ₦1,599 a month or ₦15,990 a year for receipts, unlimited staff and your full sales history. First month of paid features free, no card needed.",
     url: "/pricing",
   },
 };

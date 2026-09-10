@@ -56,10 +56,12 @@ function Note({ children }: { children: React.ReactNode }) {
 
 export default function AccountSection({
   isOwner,
+  paid,
   shopName,
   graceDays,
 }: {
   isOwner: boolean;
+  paid: boolean;
   shopName: string;
   graceDays: number;
 }) {
@@ -71,7 +73,11 @@ export default function AccountSection({
         {isOwner ? (
           <>
             <PausePanel />
-            <DeleteShopPanel shopName={shopName} graceDays={graceDays} />
+            <DeleteShopPanel
+              shopName={shopName}
+              graceDays={graceDays}
+              paid={paid}
+            />
           </>
         ) : (
           <LeaveShopPanel />
@@ -144,9 +150,11 @@ function PausePanel() {
 function DeleteShopPanel({
   shopName,
   graceDays,
+  paid,
 }: {
   shopName: string;
   graceDays: number;
+  paid: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const [state, formAction, pending] = useActionState(
@@ -178,22 +186,38 @@ function DeleteShopPanel({
             records are business records — someone may need them for tax
             years after they stop using JOHTA — so a copy is put within reach
             before the thing that destroys them.
+
+            Downloading is a paid feature. On Free the owner is told so
+            plainly here, before deleting, rather than finding out after.
           */}
           <div className="flex flex-col gap-3 rounded-md bg-[var(--color-bg-canvas)] p-4">
-            <Note>
-              <strong className="text-[var(--color-text-primary)]">
-                Take your records with you first.
-              </strong>{" "}
-              A spreadsheet of every sale, debt and product. You may need it
-              for your accounts later.
-            </Note>
-            <a
-              href="/api/account/export"
-              className="flex h-11 items-center justify-center gap-2 rounded-md border border-[var(--color-border)] px-4 text-sm font-semibold tab:self-start tab:px-6"
-            >
-              <Download size={16} />
-              Download my records
-            </a>
+            {paid ? (
+              <>
+                <Note>
+                  <strong className="text-[var(--color-text-primary)]">
+                    Take your records with you first.
+                  </strong>{" "}
+                  A spreadsheet of every sale, debt and product. You may need
+                  it for your accounts later.
+                </Note>
+                <a
+                  href="/api/account/export"
+                  className="flex h-11 items-center justify-center gap-2 rounded-md border border-[var(--color-border)] px-4 text-sm font-semibold tab:self-start tab:px-6"
+                >
+                  <Download size={16} />
+                  Download my records
+                </a>
+              </>
+            ) : (
+              <Note>
+                <strong className="text-[var(--color-text-primary)]">
+                  Your records will not be downloadable after this.
+                </strong>{" "}
+                Downloading a spreadsheet of your sales is on the paid plan.
+                If you may need them for your accounts later, subscribe and
+                download them before deleting.
+              </Note>
+            )}
           </div>
 
           <div className="flex flex-col gap-1">

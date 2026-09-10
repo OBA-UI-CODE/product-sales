@@ -7,6 +7,7 @@ import {
 } from "@/app/(app)/settings/account-actions";
 import { GRACE_DAYS } from "@/lib/account";
 import { Wordmark } from "@/components/Brand";
+import { isPaidShop } from "@/lib/plan";
 
 /*
   Where somebody lands when their shop is paused or waiting to be deleted.
@@ -110,18 +111,22 @@ export default async function PausedPage() {
 
           <p className="text-sm text-[var(--color-text-secondary)]">
             {pendingDeletion
-              ? "Reopening cancels the deletion. You will need to subscribe again to log new sales, but your records come back untouched."
-              : "You will need to subscribe again to log new sales, unless you still have free trial left."}
+              ? "Reopening cancels the deletion, and your records come back untouched."
+              : "Your shop reopens with every record exactly where you left it."}
           </p>
 
-          {/* Their records are still here, and they should be able to take a
-              copy whether or not they choose to come back. */}
-          <a
-            href="/api/account/export"
-            className="flex h-12 items-center justify-center rounded-md border border-[var(--color-border)] px-6 text-sm font-semibold"
-          >
-            Download my records
-          </a>
+          {/* Their records are still here. Downloading them is a paid
+              feature, so it is offered while the shop still has a paid
+              period running (pausing cancels renewal, not the time already
+              paid for). */}
+          {isPaidShop(shop) && (
+            <a
+              href="/api/account/export"
+              className="flex h-12 items-center justify-center rounded-md border border-[var(--color-border)] px-6 text-sm font-semibold"
+            >
+              Download my records
+            </a>
+          )}
         </div>
       ) : (
         <p className="rounded-md bg-[var(--color-bg-surface)] px-4 py-3 text-sm text-[var(--color-text-secondary)]">

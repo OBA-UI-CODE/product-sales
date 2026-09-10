@@ -7,6 +7,7 @@ import {
   checkPasswordPwned,
   pwnedPasswordMessage,
 } from "@/lib/password-check";
+import { FREE_STAFF_LIMIT } from "@/lib/plan";
 
 export interface AddStaffState {
   error?: string;
@@ -75,6 +76,27 @@ export async function addStaffAccount(
   const pwned = await checkPasswordPwned(password);
   if (pwned?.pwned) {
     return { error: pwnedPasswordMessage(pwned.count) };
+  }
+
+  /*
+    The Free plan's one-staff limit. The database enforces it on the profile
+    insert below; asking first means a login is not created and then thrown
+    away, and the owner gets a clear answer instead of a database error.
+  */
+  const { data: paid } = await supabase.rpc("current_shop_is_paid");
+  if (paid !== true) {
+    const { count } = await supabase
+      .from("profiles")
+      .select("id", { count: "exact", head: true })
+      .eq("shop_id", profile.shop_id)
+      .eq("role", "staff")
+      .is("removed_at", null);
+    if ((count ?? 0) >= FREE_STAFF_LIMIT) {
+      return {
+        error:
+          "The Free plan includes one staff account. Subscribe to add more.",
+      };
+    }
   }
 
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -276,4 +298,25 @@ export async function resetStaffPassword(
 
   revalidatePath("/settings");
   return { success: `${target.name} can now sign in with the new password.` };
+}
+
+/*
+  On Free, choosing which staff member keeps access. The database function
+  checks that the caller owns the shop and that the person is staff in it; a
+  paused staff member is let back in on their next page load, and whoever
+  they replace is sent to the "access paused" page on theirs.
+*/
+export async function setFreeStaffSeat(staffId: string): Promise<StaffState> {
+  const { supabase, profile } = await getCurrentShopContext();
+  if (profile.role !== "owner") {
+    return { error: "Only the owner can choose who keeps access." };
+  }
+
+  const { error } = await supabase.rpc("set_free_staff_seat", {
+    p_staff: staffId,
+  });
+  if (error) return { error: error.message };
+
+  revalidatePath("/settings");
+  return { success: "Done. They can use JOHTA again." };
 }

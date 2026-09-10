@@ -34,7 +34,7 @@ type Faq = {
 const FAQS: Faq[] = [
   {
     q: "How does the free trial work?",
-    a: "You get one month of full access, no card required. Subscribe anytime to keep going after the trial ends.",
+    a: "You get one month with every paid feature, no card required. When it ends your shop moves to the Free plan and keeps working. Subscribe any time for receipts, unlimited staff and your full history.",
   },
   {
     q: (
@@ -47,11 +47,11 @@ const FAQS: Faq[] = [
   },
   {
     q: "What happens after my free trial ends?",
-    a: "You’ll be asked to subscribe to keep using JOHTA. Your data stays safe either way, nothing is deleted ",
+    a: "Your shop moves to the Free plan. You keep logging sales, stock and debts, with the last 30 days of history and one staff account. Nothing is deleted.",
   },
   {
     q: "Can my staff/workers use it too?",
-    a: "Yes. Add as many staff accounts as you need. Every sale is logged under the person who made it.",
+    a: "Yes. The Free plan includes one staff account, and the paid plan has as many as you need. Every sale is logged under the person who made it.",
   },
 ];
 

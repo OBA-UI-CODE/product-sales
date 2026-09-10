@@ -31,7 +31,7 @@ export const getCurrentShopContext = cache(async function getCurrentShopContext(
   const { data: profile, error } = await supabase
     .from("profiles")
     .select(
-      "id, name, role, shop_id, shops!profiles_shop_id_fkey(name, category, theme_color, deactivated_at, deletion_requested_at, purge_after)"
+      "id, name, role, shop_id, shops!profiles_shop_id_fkey(name, category, theme_color, deactivated_at, deletion_requested_at, purge_after, subscription_status, trial_ends_at, current_period_end)"
     )
     .eq("id", user.id)
     .maybeSingle();
@@ -65,6 +65,10 @@ export interface EmbeddedShop {
   deactivated_at: string | null;
   deletion_requested_at: string | null;
   purge_after: string | null;
+  /* Billing state, so any screen can tell Free from Paid (see lib/plan.ts). */
+  subscription_status: string;
+  trial_ends_at: string | null;
+  current_period_end: string | null;
 }
 
 export function shopOf(profile: { shops: unknown }): EmbeddedShop | null {

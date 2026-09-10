@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Receipt } from "lucide-react";
+import { UpgradeDialog, usePlan } from "@/components/PlanContext";
 
 /*
   Gets the receipt for a sale and hands it to the customer.
@@ -21,6 +22,10 @@ import { Receipt } from "lucide-react";
   · navigator.share is checked with canShare({ files }) rather than just
     "share" in navigator. Several browsers expose share but refuse files, and
     calling it then throws after the user has already tapped.
+
+  Receipts are a paid feature. On Free the button is still there, and tapping
+  it explains that, instead of the button vanishing and nobody knowing it
+  exists. The route refuses Free shops too, so this is not the lock.
 */
 export default function ReceiptButton({
   saleId,
@@ -31,14 +36,25 @@ export default function ReceiptButton({
   label?: string;
   className?: string;
 }) {
+  const { paid } = usePlan();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [upgrade, setUpgrade] = useState(false);
 
   async function handle() {
+    if (!paid) {
+      setUpgrade(true);
+      return;
+    }
     setBusy(true);
     setError(null);
     try {
       const res = await fetch(`/api/receipt/${saleId}`, { cache: "no-store" });
+      /* The plan changed since the page loaded (a trial ran out, say). */
+      if (res.status === 402) {
+        setUpgrade(true);
+        return;
+      }
       if (!res.ok) throw new Error(String(res.status));
       const blob = await res.blob();
       const file = new File([blob], `receipt-${saleId.slice(0, 8)}.png`, {
@@ -81,6 +97,13 @@ export default function ReceiptButton({
         <p role="alert" className="text-sm text-[var(--color-danger)]">
           {error}
         </p>
+      )}
+      {upgrade && (
+        <UpgradeDialog
+          title="Receipts are on the paid plan"
+          body="Send your customers a receipt for any sale or debt, straight to WhatsApp. Subscribe to turn on receipts, unlimited staff, your full sales history and downloading your records."
+          onClose={() => setUpgrade(false)}
+        />
       )}
     </div>
   );

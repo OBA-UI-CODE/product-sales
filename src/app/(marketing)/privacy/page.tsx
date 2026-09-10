@@ -11,11 +11,11 @@ import type { Metadata } from "next";
 */
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "What JOHTA collects, how your shop's data is protected, and how to download or delete it.",
+  description: "What JOHTA collects, how your shop's data is protected, and how to get a copy of it or delete it.",
   alternates: { canonical: "/privacy" },
   openGraph: {
     title: "Privacy Policy · JOHTA",
-    description: "What JOHTA collects, how your shop's data is protected, and how to download or delete it.",
+    description: "What JOHTA collects, how your shop's data is protected, and how to get a copy of it or delete it.",
     url: "/privacy",
   },
 };
@@ -62,7 +62,7 @@ const SECTIONS: LegalSection[] = [
   },
   {
     heading: "9. Your rights over your data",
-    body: "You can ask us to show you what we hold, correct anything wrong, delete it, restrict or object to how we use it, or hand it to you in a portable form. Most of this you can do yourself, immediately, without asking: Settings lets you download every sale, debt and product as a spreadsheet, edit your records, pause your shop or delete it outright. For anything else write to johtahelp@gmail.com and we will respond within 30 days. If you are not satisfied with how we have handled it, you may complain to the Nigeria Data Protection Commission.",
+    body: "You can ask us to show you what we hold, correct anything wrong, delete it, restrict or object to how we use it, or hand it to you in a portable form. Much of this you can do yourself, immediately, without asking: you can edit your records, pause your shop or delete it outright from Settings, and on the paid plan you can download every sale, debt and product as a spreadsheet. Whatever plan you are on, you can ask for a copy of the personal data we hold about you, in a portable form, by writing to johtahelp@gmail.com. That is free, and we will respond within 30 days, as we will to any other request. If you are not satisfied with how we have handled it, you may complain to the Nigeria Data Protection Commission.",
   },
   {
     heading: "10. Children",
@@ -87,7 +87,7 @@ export default function PrivacyPage() {
     <div className="pb-[54px] tab:pb-[44px] web:pb-[105px]">
       <LegalPage
         title="Privacy Policy"
-        intro="Last updated 9 September 2026. This policy explains what JOHTA collects, why, who else sees it, and what you can do about it. Your shop’s records are yours. We do not sell them, and you can download or delete them yourself at any time."
+        intro="Last updated 10 September 2026. This policy explains what JOHTA collects, why, who else sees it, and what you can do about it. Your shop’s records are yours. We do not sell them, and you can delete them yourself at any time."
         sections={SECTIONS}
       />
     </div>

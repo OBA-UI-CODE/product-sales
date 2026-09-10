@@ -29,12 +29,28 @@ import Link from "next/link";
   identically-named plans side by side. The web title is used throughout.
 */
 
-const FEATURES = [
+/*
+  FREE AND PAID (not in the Figma file, which shows the two paid cards only).
+  The Free card is built from the same card component, so it inherits every
+  measurement above; only its content differs. Monthly and yearly carry the
+  same features: yearly is the same plan paid upfront. The lists mirror
+  src/lib/plan.ts.
+*/
+const FREE_FEATURES = [
   "Unlimited sales logging",
   "Automatic stock tracking",
-  "Unlimited staff accounts",
-  "Sales history & search",
+  "Sizes and packs",
+  "Low-stock warnings",
+  "Debts and part payments",
+  "1 staff account",
+  "Last 30 days of sales history",
+];
+
+const PAID_FEATURES = [
   "WhatsApp receipts",
+  "Unlimited staff accounts",
+  "Full sales history & search",
+  "Download your records",
 ];
 
 type Plan = {
@@ -42,34 +58,59 @@ type Plan = {
   desc: string;
   price: string;
   period: string;
+  lead?: string;
+  features: string[];
+  cta: string;
+  note: string;
 };
 
 const PLANS: Plan[] = [
+  {
+    name: "JOHTA Free",
+    desc: "For running your shop, free for as long as you like",
+    price: "₦ 0",
+    period: "/forever",
+    features: FREE_FEATURES,
+    cta: "Start for free",
+    note: "No card needed, ever",
+  },
   {
     name: "JOHTA Starter Plan",
     desc: "1 month free trial, no card required to start",
     price: "₦ 1,599",
     period: "/monthly",
+    lead: "Everything in Free, plus:",
+    features: PAID_FEATURES,
+    cta: "Start free trial",
+    note: "Cancel anytime, then carry on free",
   },
   {
     name: "JOHTA Starter/ Best Value",
     desc: "2 months free.",
     price: "₦ 15,990",
     period: "/yearly",
+    lead: "Everything in Free, plus:",
+    features: PAID_FEATURES,
+    cta: "Start free trial",
+    note: "Cancel anytime, then carry on free",
   },
 ];
 
-function PlanCard({ plan }: { plan: Plan }) {
+function PlanCard({ plan, wide }: { plan: Plan; wide?: boolean }) {
   return (
-    // Card width: full on mobile, an equal share of the tablet band on tablet,
-    // and the file's fixed 411 on web. It was previously 411 at BOTH tablet and
-    // web — but the tablet band is only 738 wide inside its 48px padding, so
-    // 411 + 48 + 411 = 870 overflowed by 132px and the cards bled off the frame.
-    // The file's tablet cards are 339 and 351; an equal (738 - 48) / 2 = 345
-    // split is used instead, since two side-by-side plan cards differing by
-    // 12px reads as a slip rather than a decision.
-    <div className="flex w-full min-w-0 items-center justify-center overflow-hidden rounded-md bg-bg-canvas px-6 py-[15px] tab:flex-1 web:w-[411px] web:flex-none web:py-10">
-      <div className="flex w-full max-w-[363px] flex-col items-center gap-6">
+    // Card width: full on mobile, an equal share of the band from tablet up,
+    // capped at the file's 411 on web. With three cards the file's fixed 411
+    // no longer fits the 1200 breakpoint, so web shares the row instead.
+    // `wide`: on tablet the Free card takes the whole first row, and the two
+    // paid cards share the second, rather than three cramped 214px columns.
+    // Cards stretch to the tallest in the row and the button sits at the
+    // bottom of each, so the three buttons line up.
+    <div
+      className={`flex w-full min-w-0 justify-center overflow-hidden rounded-md bg-bg-canvas px-6 py-[15px] web:flex-1 web:max-w-[411px] web:py-10 ${
+        wide ? "tab:col-span-2" : ""
+      }`}
+    >
+      <div className="flex h-full w-full max-w-[363px] flex-col items-center justify-between gap-6">
         <div className="flex w-full flex-col items-start">
           {/* Name + description */}
           <div className="flex w-full flex-col items-start gap-2 border-b border-primary-border pb-6">
@@ -93,7 +134,12 @@ function PlanCard({ plan }: { plan: Plan }) {
 
           {/* Features */}
           <div className="flex w-full flex-col items-start gap-6 py-6">
-            {FEATURES.map((f) => (
+            {plan.lead && (
+              <p className="w-full font-body text-[16px] font-semibold leading-[24px] text-text-primary">
+                {plan.lead}
+              </p>
+            )}
+            {plan.features.map((f) => (
               <div key={f} className="flex w-full items-center gap-4">
                 <img
                   src="/figma/icon-tick-circle.svg"
@@ -110,16 +156,18 @@ function PlanCard({ plan }: { plan: Plan }) {
           </div>
         </div>
 
-        <Link
-          href="/signup"
-          className="press flex h-12 min-h-12 w-full items-center justify-center whitespace-nowrap rounded-md bg-primary-default px-6 font-heading text-[18px] font-semibold leading-[22px] tracking-[-1px] text-text-on-primary"
-        >
-          Start free trial
-        </Link>
+        <div className="flex w-full flex-col items-center gap-6">
+          <Link
+            href="/signup"
+            className="press flex h-12 min-h-12 w-full items-center justify-center whitespace-nowrap rounded-md bg-primary-default px-6 font-heading text-[18px] font-semibold leading-[22px] tracking-[-1px] text-text-on-primary"
+          >
+            {plan.cta}
+          </Link>
 
-        <p className="w-full text-center font-body text-[16px] font-normal leading-[24px] text-text-secondary">
-          Cancel anytime, your data stays yours
-        </p>
+          <p className="w-full text-center font-body text-[16px] font-normal leading-[24px] text-text-secondary">
+            {plan.note}
+          </p>
+        </div>
       </div>
     </div>
   );
@@ -134,9 +182,9 @@ export default function PricingPlans() {
     // (1326 - 1285 stacked cards)/2 ≈ 20, tablet pt 30 / pb 37,
     // web (680 - 584)/2 = 48.
     <section className="mt-6 w-full bg-info-subtle px-6 py-5 tab:mt-12 tab:px-12 tab:pb-[37px] tab:pt-[30px] web:mt-16 web:py-12">
-      <div className="mx-auto flex w-full max-w-[1440px] flex-col items-center gap-6 tab:flex-row tab:items-stretch tab:justify-center tab:gap-12 web:gap-16">
-        {PLANS.map((p) => (
-          <PlanCard key={p.name} plan={p} />
+      <div className="mx-auto grid w-full max-w-[1440px] grid-cols-1 justify-items-center gap-6 tab:grid-cols-2 tab:gap-12 web:flex web:items-stretch web:justify-center web:gap-8">
+        {PLANS.map((p, i) => (
+          <PlanCard key={p.name} plan={p} wide={i === 0} />
         ))}
       </div>
     </section>

@@ -95,19 +95,47 @@ plainly rather than surprising anyone.
 
 ---
 
-## 4. Free trial and the paywall
+## 4. Free and paid plans
 
-The trial is **one month** (was 14 days), and it is enforced **in the database**,
-not just the interface.
+There are two plans. An expired trial now lands on **Free**, not read-only.
 
-`shop_can_write()` is called at the top of every write function. A shop can
-write while its trial is running, while its subscription is active, or while a
-cancelled subscription still has time left. Otherwise it is **read-only**: the
-owner keeps full sight of their records and can still sign in, but cannot log
-new sales until they subscribe.
+| | Free | Paid (₦1,599/month or ₦15,990/year) |
+|---|---|---|
+| Sales, products, stock, dashboard, debts | yes | yes |
+| Sizes and packs, low-stock warnings | yes | yes |
+| Staff | 1 | unlimited |
+| Sales history | last 30 days | all of it |
+| Receipts | no | yes |
+| Download records (CSV) | no | yes |
+| Pause, delete | yes | yes |
 
-This is in the database deliberately. An app-level check could be bypassed by
-calling the REST API directly with a valid token.
+Monthly and yearly are the same plan. The one-month trial counts as Paid.
+
+**Enforced in the database** (`20260910152135_free_and_paid_plans.sql`), not
+just the interface:
+
+- `shop_is_paid(shop)` is the single definition of paid (active, trialing
+  inside the trial, or cancelled with paid time left). `src/lib/plan.ts`
+  mirrors it for display only.
+- `shop_can_write()` no longer depends on paying. It refuses only paused or
+  deleted shops, and staff without a seat.
+- One staff on Free: a trigger on `profiles` refuses a second. When a paid
+  shop drops to Free with several staff, the earliest-added (or whoever the
+  owner picks with `set_free_staff_seat`) keeps access; the rest are sent to
+  `/account/no-access` and their writes are refused. Nothing is deleted.
+- 30 days on Free: the sales SELECT policy hides older sales, except ones
+  still owed, so debts never disappear.
+- The sales INSERT policy now also checks `shop_can_write()`; direct table
+  inserts used to skip every check.
+- Receipts (`/api/receipt`) and the CSV (`/api/account/export`) ask
+  `current_shop_is_paid()` and return 402 on Free. The Receipt button opens
+  an upgrade prompt instead.
+
+Verified with a throwaway shop (35 checks: limits, seat swap, history window,
+402s, helper functions not callable by users, paused shop), then deleted.
+
+Terms, Privacy, FAQ and the pricing page were rewritten to match. Personal
+data requests stay free on every plan (Nigeria Data Protection Act), by email.
 
 ---
 

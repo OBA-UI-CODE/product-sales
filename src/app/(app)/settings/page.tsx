@@ -6,6 +6,7 @@ import AccountSection from "./AccountSection";
 import ShopDetailsSection from "./ShopDetailsSection";
 import { GRACE_DAYS } from "@/lib/account";
 import InstallApp from "@/components/InstallApp";
+import { FREE_STAFF_LIMIT, isPaidShop } from "@/lib/plan";
 
 export default async function SettingsPage() {
   const { supabase, profile } = await getCurrentShopContext();
@@ -19,10 +20,11 @@ export default async function SettingsPage() {
   */
   const { data: staff } = await supabase
     .from("profiles")
-    .select("id, name, role")
+    .select("id, name, role, created_at")
     .eq("shop_id", profile.shop_id)
     .is("removed_at", null)
-    .order("role", { ascending: false });
+    .order("role", { ascending: false })
+    .order("created_at", { ascending: true });
 
   /*
     Billing state is read straight from the shop. It is only ever written by
@@ -31,7 +33,7 @@ export default async function SettingsPage() {
   const { data: shop } = await supabase
     .from("shops")
     .select(
-      "name, phone, subscription_status, trial_ends_at, current_period_end, billing_plan"
+      "name, phone, subscription_status, trial_ends_at, current_period_end, billing_plan, free_staff_seat"
     )
     .eq("id", profile.shop_id)
     .maybeSingle();
@@ -46,12 +48,27 @@ export default async function SettingsPage() {
       }
     : null;
 
+  /*
+    On Free, which staff member keeps working. Mirrors staff_seat_holder() in
+    the database: the one the owner chose, if they are still here, otherwise
+    whoever was added first. The query above is already in that order.
+  */
+  const paid = isPaidShop(shop);
+  const staffOnly = (staff ?? []).filter((s) => s.role === "staff");
+  const seatHolder = paid
+    ? null
+    : (staffOnly.find((s) => s.id === shop?.free_staff_seat) ?? staffOnly[0])
+        ?.id ?? null;
+
   return (
     <div className="flex flex-col gap-8">
       <SettingsClient
-        staff={staff ?? []}
+        staff={(staff ?? []).map(({ id, name, role }) => ({ id, name, role }))}
         currentUserId={profile.id}
         isOwner={profile.role === "owner"}
+        paid={paid}
+        seatHolder={seatHolder}
+        canAddStaff={paid || staffOnly.length < FREE_STAFF_LIMIT}
       />
 
       {profile.role === "owner" && shop && (
@@ -60,7 +77,7 @@ export default async function SettingsPage() {
 
       {/* Billing is the owner's business only. */}
       {profile.role === "owner" && billing && (
-        <BillingSection billing={billing} />
+        <BillingSection billing={billing} paid={paid} />
       )}
 
       {/* Always here, even after the banner has been dismissed, so there is
@@ -77,6 +94,7 @@ export default async function SettingsPage() {
       */}
       <AccountSection
         isOwner={profile.role === "owner"}
+        paid={paid}
         shopName={shop?.name ?? ""}
         graceDays={GRACE_DAYS}
       />

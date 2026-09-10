@@ -1,11 +1,13 @@
 "use client";
 
 import { useActionState, useState, useTransition } from "react";
+import Link from "next/link";
 import { KeyRound, X } from "lucide-react";
 import {
   addStaffAccount,
   removeStaffAccount,
   resetStaffPassword,
+  setFreeStaffSeat,
   type AddStaffState,
   type StaffState,
 } from "./actions";
@@ -24,10 +26,17 @@ export default function SettingsClient({
   staff,
   currentUserId,
   isOwner,
+  paid,
+  seatHolder,
+  canAddStaff,
 }: {
   staff: Staff[];
   currentUserId: string;
   isOwner: boolean;
+  paid: boolean;
+  /* On Free, the staff member who keeps access. Null on a paid plan. */
+  seatHolder: string | null;
+  canAddStaff: boolean;
 }) {
   const [state, formAction, pending] = useActionState(addStaffAccount, initialState);
 
@@ -56,6 +65,9 @@ export default function SettingsClient({
           {staff.map((s) => {
             const isSelf = s.id === currentUserId;
             const canManage = isOwner && !isSelf;
+            /* Staff beyond the one Free seat keep their account but cannot
+               work until the shop subscribes or the owner picks them. */
+            const paused = !paid && s.role === "staff" && s.id !== seatHolder;
 
             return (
               <div
@@ -71,6 +83,11 @@ export default function SettingsClient({
                       <span className="truncate">{s.name}</span>
                       <span className="text-sm text-[var(--color-text-secondary)]">
                         {s.role}
+                        {paused && (
+                          <span className="ml-2 rounded-full bg-[var(--color-danger-bg)] px-2 py-0.5 text-xs font-medium text-[var(--color-danger)]">
+                            Paused on Free
+                          </span>
+                        )}
                       </span>
                     </div>
                   </div>
@@ -106,6 +123,27 @@ export default function SettingsClient({
                   )}
                 </div>
 
+                {paused && isOwner && (
+                  <div className="flex flex-col gap-2 rounded-md bg-[var(--color-bg-canvas)] p-4 text-sm text-[var(--color-text-secondary)] tab:flex-row tab:items-center tab:justify-between">
+                    <span>
+                      The Free plan keeps one staff member working. Subscribe
+                      to bring everyone back, or swap who has access.
+                    </span>
+                    <button
+                      type="button"
+                      disabled={removing}
+                      onClick={() =>
+                        startRemove(async () =>
+                          setRemoveResult(await setFreeStaffSeat(s.id))
+                        )
+                      }
+                      className="press h-10 shrink-0 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-surface)] px-4 font-semibold text-[var(--color-text-primary)] disabled:opacity-50"
+                    >
+                      Give {s.name.split(" ")[0]} access
+                    </button>
+                  </div>
+                )}
+
                 {resetting === s.id && (
                   <ResetPasswordForm
                     staffId={s.id}
@@ -119,9 +157,33 @@ export default function SettingsClient({
         </div>
       </div>
 
-      {isOwner && (
+      {isOwner && !canAddStaff && (
+        <div className="flex flex-col gap-3 rounded-md bg-[var(--color-bg-surface)] p-6">
+          <h3 className="font-semibold">Add a staff account</h3>
+          {/* The add that just used up the Free seat reports here, since the
+              form it came from is gone. */}
+          {state.success && <Alert tone="good">{state.success}</Alert>}
+          <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">
+            The Free plan includes one staff account. Subscribe to add as many
+            as you need, each with their own login.
+          </p>
+          <Link
+            href="#billing"
+            className="press flex h-11 items-center justify-center rounded-md bg-[var(--color-primary)] px-6 font-semibold text-white tab:self-start"
+          >
+            See plans
+          </Link>
+        </div>
+      )}
+
+      {isOwner && canAddStaff && (
         <div className="flex flex-col gap-4 rounded-md bg-[var(--color-bg-surface)] p-6">
           <h3 className="font-semibold">Add a staff account</h3>
+          {!paid && (
+            <p className="-mt-2 text-sm text-[var(--color-text-secondary)]">
+              The Free plan includes one staff account.
+            </p>
+          )}
           {state.error && <Alert tone="error">{state.error}</Alert>}
           {state.success && <Alert tone="good">{state.success}</Alert>}
           {/* key resets the fields after a successful add, so the owner is not

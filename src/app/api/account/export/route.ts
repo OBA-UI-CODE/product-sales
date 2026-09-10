@@ -47,6 +47,20 @@ function csvRows(rows: unknown[][]): string {
 export async function GET() {
   const { supabase, profile } = await getCurrentShopContext();
 
+  /*
+    Downloading the records is a paid feature. Checked against the database,
+    which is the authority on the plan, so it holds for anyone typing this
+    url in. Personal data requests are separate and free: the Privacy Policy
+    sends those to the support email.
+  */
+  const { data: paid } = await supabase.rpc("current_shop_is_paid");
+  if (paid !== true) {
+    return new NextResponse(
+      "Downloading your records is on the paid plan. Subscribe from Settings to download them.",
+      { status: 402, headers: { "Content-Type": "text/plain; charset=utf-8" } }
+    );
+  }
+
   const [{ data: sales }, { data: staff }, { data: products }] =
     await Promise.all([
       supabase

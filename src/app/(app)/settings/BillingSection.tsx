@@ -40,7 +40,21 @@ function daysLeft(value: string) {
   NOT IN FIGMA. There is no billing screen in the design file, so this follows
   the Settings page's existing styling rather than inventing new visual rules.
 */
-export default function BillingSection({ billing }: { billing: BillingInfo }) {
+/* What subscribing adds on top of Free. Kept in step with lib/plan.ts. */
+const PAID_EXTRAS = [
+  "Receipts for customers, straight to WhatsApp",
+  "Unlimited staff accounts",
+  "Your full sales history, not just the last 30 days",
+  "Download all your records as a spreadsheet",
+];
+
+export default function BillingSection({
+  billing,
+  paid,
+}: {
+  billing: BillingInfo;
+  paid: boolean;
+}) {
   const [state, formAction, pending] = useActionState(
     startSubscription,
     initialState
@@ -55,20 +69,22 @@ export default function BillingSection({ billing }: { billing: BillingInfo }) {
     ? formatDate(billing.currentPeriodEnd)
     : null;
 
+  const planName = trialActive ? "Free trial" : paid ? "Paid" : "Free";
+
   const statusLine = (() => {
     if (billing.status === "active")
       return paidUntil
-        ? `Subscribed, renews ${paidUntil}`
-        : "Subscribed";
+        ? `Subscribed, renews ${paidUntil}.`
+        : "Subscribed.";
     if (billing.status === "past_due")
-      return "Your last payment failed. Update your card to keep logging sales.";
+      return "Your last payment did not go through, so the shop is on the Free plan for now. Subscribe again below to get the paid features back.";
     if (billing.status === "canceled")
       return paidUntil && new Date(billing.currentPeriodEnd!) > new Date()
-        ? `Cancelled. You keep full access until ${paidUntil}`
-        : "Cancelled. Your shop is read-only until you subscribe again";
+        ? `Cancelled. You keep the paid plan until ${paidUntil}, then the shop moves to Free.`
+        : "Your shop is on the Free plan. You can keep logging sales. Subscribe to get the paid features back.";
     if (trialActive)
-      return `Free trial, ${trialDays} ${trialDays === 1 ? "day" : "days"} left, ends ${formatDate(billing.trialEndsAt)}`;
-    return "Your free trial has ended. Subscribe to keep logging sales.";
+      return `Every paid feature, ${trialDays} ${trialDays === 1 ? "day" : "days"} left. On ${formatDate(billing.trialEndsAt)} your shop moves to the Free plan and keeps working, unless you subscribe.`;
+    return "Your shop is on the Free plan. You can keep logging sales, products, stock and debts for as long as you like.";
   })();
 
   const needsPlan =
@@ -80,13 +96,32 @@ export default function BillingSection({ billing }: { billing: BillingInfo }) {
     );
 
   return (
-    <div className="flex flex-col gap-4">
+    /* id: the upgrade prompts elsewhere in the app link to #billing. */
+    <div id="billing" className="flex scroll-mt-6 flex-col gap-4">
       <h2 className="font-heading text-xl font-semibold">Billing</h2>
 
       <div className="flex flex-col gap-4 rounded-md bg-[var(--color-bg-surface)] p-6">
-        <p className="text-sm text-[var(--color-text-secondary)]">
-          {statusLine}
-        </p>
+        <div className="flex flex-col gap-1">
+          <p className="font-heading text-lg font-semibold">
+            Your plan: {planName}
+          </p>
+          <p className="text-sm text-[var(--color-text-secondary)]">
+            {statusLine}
+          </p>
+        </div>
+
+        {needsPlan && (
+          <div className="flex flex-col gap-2 rounded-md bg-[var(--color-bg-canvas)] px-4 py-3">
+            <p className="text-sm font-semibold">
+              {trialActive ? "Subscribe to keep these after your trial:" : "Subscribing adds:"}
+            </p>
+            <ul className="flex list-disc flex-col gap-1 pl-5 text-sm text-[var(--color-text-secondary)]">
+              {PAID_EXTRAS.map((f) => (
+                <li key={f}>{f}</li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         {!billing.configured && (
           <p className="rounded-md bg-[var(--color-danger-bg)] px-4 py-3 text-sm text-[var(--color-danger)]">
@@ -196,8 +231,9 @@ export default function BillingSection({ billing }: { billing: BillingInfo }) {
               ) : (
                 <div className="flex flex-col gap-2">
                   <p className="text-sm text-[var(--color-text-secondary)]">
-                    You&apos;ll keep full access until the end of the period
-                    you&apos;ve paid for. Cancel anyway?
+                    You&apos;ll keep the paid plan until the end of the period
+                    you&apos;ve paid for, then your shop moves to Free. Nothing
+                    is deleted. Cancel anyway?
                   </p>
                   <div className="flex gap-3">
                     <button
