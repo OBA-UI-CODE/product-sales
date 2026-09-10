@@ -2,7 +2,7 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { headers } from "next/headers";
+import { startGoogleSignIn } from "@/lib/google-auth";
 
 export interface LoginFormState {
   error?: string;
@@ -30,20 +30,7 @@ export async function signInWithEmail(
   redirect("/dashboard");
 }
 
+/* Shared with the other auth page; see lib/google-auth.ts. */
 export async function signInWithGoogle() {
-  const supabase = await createClient();
-  const origin = (await headers()).get("origin");
-
-  const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: "google",
-    options: {
-      redirectTo: `${origin}/auth/callback?next=/dashboard`,
-    },
-  });
-
-  if (error || !data.url) {
-    redirect("/login?error=google_oauth_failed");
-  }
-
-  redirect(data.url);
+  await startGoogleSignIn({ next: "/dashboard", errorPage: "/login" });
 }

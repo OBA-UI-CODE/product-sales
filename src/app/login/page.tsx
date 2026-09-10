@@ -42,6 +42,14 @@ const NOTICES: Record<string, { text: string; tone: "error" | "good" }> = {
     text: "Google sign-in didn't complete. Try again, or use your email and password.",
     tone: "error",
   },
+  google_unavailable: {
+    text: "Google sign-in isn't available right now. Please use your email and password.",
+    tone: "error",
+  },
+  staff_use_password: {
+    text: "Staff accounts sign in with the email and password your shop owner gave you, not with Google.",
+    tone: "error",
+  },
 };
 
 /*

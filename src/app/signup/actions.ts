@@ -2,6 +2,8 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import { startGoogleSignIn } from "@/lib/google-auth";
+import { SITE_URL } from "@/lib/site";
 import { headers } from "next/headers";
 import {
   checkPasswordPwned,
@@ -35,7 +37,9 @@ export async function signUpWithEmail(
   }
 
   const supabase = await createClient();
-  const origin = (await headers()).get("origin");
+  /* Falls back to the live address if a browser sends no Origin, rather
+     than producing a confirmation link to "null/auth/callback". */
+  const origin = (await headers()).get("origin") ?? SITE_URL;
 
   // NOTE: this only creates the auth.users row and stashes the name in
   // user metadata. The `shops` + `profiles` rows are created at the end
@@ -57,20 +61,7 @@ export async function signUpWithEmail(
   redirect("/signup/check-email");
 }
 
+/* Shared with the other auth page; see lib/google-auth.ts. */
 export async function signInWithGoogle() {
-  const supabase = await createClient();
-  const origin = (await headers()).get("origin");
-
-  const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: "google",
-    options: {
-      redirectTo: `${origin}/auth/callback?next=/onboarding`,
-    },
-  });
-
-  if (error || !data.url) {
-    redirect("/signup?error=google_oauth_failed");
-  }
-
-  redirect(data.url);
+  await startGoogleSignIn({ next: "/onboarding", errorPage: "/signup" });
 }

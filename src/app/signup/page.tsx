@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState } from "react";
+import { Suspense, useActionState } from "react";
+import { useSearchParams } from "next/navigation";
 import { signUpWithEmail, signInWithGoogle, type SignupFormState } from "./actions";
 import AuthShell, { AuthPanel } from "@/components/auth/AuthShell";
 import { BRAND } from "@/components/Brand";
@@ -46,6 +47,24 @@ const PANEL_BOX =
   "absolute top-[100px] left-[calc(50%+102px)] h-[297px] w-[189px] -translate-x-1/2 overflow-hidden rounded-xl " +
   "tab:top-[27px] tab:left-[calc(50%+262.5px)] tab:h-[375px] tab:w-[213px] " +
   "web:top-[318px] web:left-[calc(50%+156.5px)] web:h-[544px] web:w-[433px]";
+
+/*
+  Why a "Continue with Google" from this page came back. Sign In has had
+  these all along; here a failed attempt used to reload the form with no
+  word of explanation. Behind Suspense because useSearchParams would otherwise
+  opt the whole route into client rendering.
+*/
+const GOOGLE_ERRORS: Record<string, string> = {
+  google_oauth_failed:
+    "Google sign-up didn't complete. Try again, or sign up with your email.",
+  google_unavailable:
+    "Google sign-up isn't available right now. Please sign up with your email.",
+};
+
+function GoogleNotice() {
+  const message = GOOGLE_ERRORS[useSearchParams().get("error") ?? ""];
+  return message ? <FormError message={message} /> : null;
+}
 
 export default function SignupPage() {
   const [state, formAction, pending] = useActionState<SignupFormState, FormData>(
@@ -95,6 +114,9 @@ export default function SignupPage() {
 
           <div className="flex w-full flex-col items-start gap-6">
             <OrDivider />
+            <Suspense>
+              <GoogleNotice />
+            </Suspense>
             <GoogleButton action={signInWithGoogle} />
             <AltActionRow
               prompt="Already have an account?"

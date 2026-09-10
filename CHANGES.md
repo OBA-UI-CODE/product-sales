@@ -364,6 +364,26 @@ read variable fonts or WOFF2.
 
 ---
 
+## 6f. Google sign-in
+
+The button and code were there, but Google was never switched on in Supabase,
+so tapping it opened a raw error page on supabase.co. Now:
+
+- `src/lib/google-auth.ts` is shared by sign-in and sign-up. It checks
+  Supabase's public auth settings first; while Google is off, people come
+  back to the page with a plain message. Once Google is switched on in the
+  dashboard it works with no deploy.
+- `/auth/callback` only redirects to paths on this site. `?next=@evil.com`
+  used to produce `https://johta.click@evil.com`, an open redirect.
+- Staff cannot sign in with Google (they are signed out with a message), so
+  an owner changing a staff password still locks the old route out. Removing
+  a staff member (ban) remains the complete lock.
+
+Still to do by the owner: create the OAuth client in Google Cloud and paste
+its id and secret into Supabase (Authentication > Sign In / Providers).
+
+---
+
 ## 7. Database changes
 
 All applied to the live Supabase project (`ktpqywmtgswjmvdyvvlg`) as migrations.
