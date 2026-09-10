@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import PasswordInput from "@/components/ui/PasswordInput";
 import Link from "next/link";
 import { BRAND, HomeLink } from "@/components/Brand";
@@ -139,7 +140,93 @@ export function OrDivider() {
   );
 }
 
+/*
+  Apps that open links in their own built-in browser. Google refuses to sign
+  anyone in from these ("403: disallowed_useragent") because the app could
+  read what is typed into Google's page. Safari, Chrome, and the in-app views
+  WhatsApp uses on iPhone and Android (SFSafariViewController, Chrome Custom
+  Tabs) are real browsers and are allowed, so they are NOT listed.
+
+  Matched on the user agent, which is the only signal there is. A miss just
+  means the old behaviour: Google shows its own error page.
+*/
+const IN_APP_BROWSERS: [RegExp, string][] = [
+  [/Instagram/i, "Instagram"],
+  [/FBAN|FBAV|FB_IAB|FBIOS|FB4A/i, "Facebook"],
+  [/Messenger/i, "Messenger"],
+  [/musical_ly|Bytedance|TikTok/i, "TikTok"],
+  [/Snapchat/i, "Snapchat"],
+  [/\bLine\//i, "LINE"],
+  [/MicroMessenger/i, "WeChat"],
+  [/WhatsApp/i, "WhatsApp"],
+];
+
+function useInAppBrowser() {
+  const [app, setApp] = useState<string | null>(null);
+  const [android, setAndroid] = useState(false);
+  useEffect(() => {
+    const ua = navigator.userAgent;
+    setApp(IN_APP_BROWSERS.find(([re]) => re.test(ua))?.[1] ?? null);
+    setAndroid(/Android/i.test(ua));
+  }, []);
+  return { app, android };
+}
+
+/*
+  In an app's built-in browser, the Google button would only lead to Google's
+  error page, so it is replaced by what to do instead. On Android there is a
+  one-tap way out: an intent link that opens this same page in Chrome. iPhone
+  has no equivalent, so it says where the "open in browser" option lives and
+  offers to copy the link. Email sign-in, above this, works everywhere.
+*/
+function InAppBrowserNotice({ app, android }: { app: string; android: boolean }) {
+  const [copied, setCopied] = useState(false);
+  const here =
+    typeof window === "undefined"
+      ? ""
+      : window.location.host + window.location.pathname;
+
+  return (
+    <div className="flex w-full flex-col gap-3 rounded-md border border-border-default bg-bg-surface p-4">
+      <p className="font-body text-[14px] leading-[20px] text-text-secondary">
+        Google sign-in doesn&rsquo;t work inside {app}&rsquo;s browser.{" "}
+        {android
+          ? "Open this page in Chrome to continue with Google."
+          : "Tap the … or share menu and choose “Open in browser” (or Safari) to continue with Google."}{" "}
+        Your email and password work here as normal.
+      </p>
+      {android ? (
+        <a
+          href={`intent://${here}#Intent;scheme=https;package=com.android.chrome;end`}
+          className="press flex min-h-12 w-full items-center justify-center rounded-md bg-primary-default px-4 font-body text-[16px] font-semibold text-text-on-primary"
+        >
+          Open in Chrome
+        </a>
+      ) : (
+        <button
+          type="button"
+          onClick={async () => {
+            try {
+              await navigator.clipboard.writeText(window.location.href);
+              setCopied(true);
+            } catch {
+              /* Some in-app browsers block the clipboard; the menu route
+                 in the text still works. */
+            }
+          }}
+          className="press flex min-h-12 w-full items-center justify-center rounded-md border border-border-default bg-bg-canvas px-4 font-body text-[16px] font-semibold text-text-primary"
+        >
+          {copied ? "Link copied. Paste it into Safari" : "Copy link"}
+        </button>
+      )}
+    </div>
+  );
+}
+
 export function GoogleButton({ action }: { action: () => Promise<void> }) {
+  const { app, android } = useInAppBrowser();
+  if (app) return <InAppBrowserNotice app={app} android={android} />;
+
   return (
     <form action={action} className="w-full">
       <button
