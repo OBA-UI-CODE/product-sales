@@ -44,7 +44,7 @@ const GET_STARTED = [
 ];
 const SOCIAL: { name: string; href?: string }[] = [
   { name: "LinkedIn" },
-  { name: "Facebook" },
+  { name: "Facebook", href: "https://www.facebook.com/share/1DimmNNQAn/" },
   { name: "X", href: "https://x.com/JOHTA_NG" },
   { name: "Instagram" },
 ];

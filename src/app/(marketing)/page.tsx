@@ -50,7 +50,10 @@ const STRUCTURED_DATA = {
       email: "johtahelp@gmail.com",
       areaServed: "NG",
       /* Official profiles, so Google can tie them to the brand. */
-      sameAs: ["https://x.com/JOHTA_NG"],
+      sameAs: [
+        "https://x.com/JOHTA_NG",
+        "https://www.facebook.com/share/1DimmNNQAn/",
+      ],
     },
   ],
 };
