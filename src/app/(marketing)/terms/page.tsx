@@ -30,11 +30,11 @@ export const metadata: Metadata = {
 const SECTIONS: LegalSection[] = [
   {
     heading: "1. Who we are and who these terms cover",
-    body: "JOHTA is a record-keeping service for small shops, operated from Nigeria and reachable at johtahelp@gmail.com. These terms are an agreement between JOHTA and the person who opens a shop account (“the owner”). They also cover anyone the owner adds as staff, and the owner is responsible for making sure their staff know them. By creating an account or using JOHTA you accept these terms; if you do not accept them, please do not use the service.",
+    body: "JOHTA is a record-keeping service for small shops, operated from Nigeria and reachable at johtaclick@gmail.com. These terms are an agreement between JOHTA and the person who opens a shop account (“the owner”). They also cover anyone the owner adds as staff, and the owner is responsible for making sure their staff know them. By creating an account or using JOHTA you accept these terms; if you do not accept them, please do not use the service.",
   },
   {
     heading: "2. Your account and your staff",
-    body: "You must give accurate details when you sign up and keep your password to yourself. You are responsible for everything done under your shop account, including by staff accounts you create. Staff accounts are administered entirely by the owner: the owner sets and changes staff passwords and can remove a staff member at any time. Staff may log sales, and may edit or delete only the sales they logged themselves; the owner can edit or delete any sale in the shop. Tell us promptly at johtahelp@gmail.com if you believe someone has gained access to your account.",
+    body: "You must give accurate details when you sign up and keep your password to yourself. You are responsible for everything done under your shop account, including by staff accounts you create. Staff accounts are administered entirely by the owner: the owner sets and changes staff passwords and can remove a staff member at any time. Staff may log sales, and may edit or delete only the sales they logged themselves; the owner can edit or delete any sale in the shop. Tell us promptly at johtaclick@gmail.com if you believe someone has gained access to your account.",
   },
   {
     heading: "3. Plans, free trial, subscription and renewal",
@@ -42,7 +42,7 @@ const SECTIONS: LegalSection[] = [
   },
   {
     heading: "4. Payments and refunds",
-    body: "Payments are processed by Paystack. Your card details are entered on Paystack’s own checkout and are never seen or stored by JOHTA. Prices are in Nigerian Naira and include any tax we are required to charge. If a payment fails we may retry it, and your shop is on the Free plan until it succeeds. We do not generally give refunds for time already paid for, but if you were charged in error, or something on our side stopped you using the service, write to us at johtahelp@gmail.com and we will put it right. Nothing here removes rights you have under Nigerian consumer law.",
+    body: "Payments are processed by Paystack. Your card details are entered on Paystack’s own checkout and are never seen or stored by JOHTA. Prices are in Nigerian Naira and include any tax we are required to charge. If a payment fails we may retry it, and your shop is on the Free plan until it succeeds. We do not generally give refunds for time already paid for, but if you were charged in error, or something on our side stopped you using the service, write to us at johtaclick@gmail.com and we will put it right. Nothing here removes rights you have under Nigerian consumer law.",
   },
   {
     heading: "5. If you stop paying",
@@ -74,11 +74,11 @@ const SECTIONS: LegalSection[] = [
   },
   {
     heading: "12. Governing law and disputes",
-    body: "These terms are governed by the laws of the Federal Republic of Nigeria, and the Nigerian courts have jurisdiction over any dispute. Please write to us first at johtahelp@gmail.com, because nearly everything can be sorted out that way, and we would much rather fix a problem than argue about it.",
+    body: "These terms are governed by the laws of the Federal Republic of Nigeria, and the Nigerian courts have jurisdiction over any dispute. Please write to us first at johtaclick@gmail.com, because nearly everything can be sorted out that way, and we would much rather fix a problem than argue about it.",
   },
   {
     heading: "13. Contact us",
-    body: "Questions about these Terms of Service can be sent to johtahelp@gmail.com and we will reply as soon as we can.",
+    body: "Questions about these Terms of Service can be sent to johtaclick@gmail.com and we will reply as soon as we can.",
   },
 ];
 

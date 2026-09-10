@@ -63,7 +63,7 @@ The footer gained a logo mark and a new JOHTA watermark, both from the file.
 reads `JOhTA` while everything else reads `JOHTA`. `JOHTA` was confirmed as
 correct; the Nav frame should be corrected in Figma.
 
-Contact addresses in Terms and Privacy are now **johtahelp@gmail.com**,
+Contact addresses in Terms and Privacy are now **johtaclick@gmail.com**,
 replacing the `@reko.app` placeholders.
 
 ---
@@ -390,7 +390,7 @@ Known limits: Google's screen names `ktpqywmtgswjmvdyvvlg.supabase.co` (a
 Supabase custom domain fixes that, paid add-on), and Google refuses sign-in
 inside WhatsApp/Instagram/Facebook in-app browsers (403 disallowed_useragent).
 The support email on the consent screen is still the owner's personal Gmail;
-switch it to johtahelp@gmail.com in Branding once that account is a project
+switch it to johtaclick@gmail.com in Branding once that account is a project
 owner.
 
 ---
@@ -412,7 +412,7 @@ Crashes are recorded instead of only being seen by the person they happen to.
 - **Storage:** `public.error_events` (migration `20260910192400`), service
   role only; `public.error_summary` groups them by problem. No user or shop
   id is stored. Deleted after 90 days by the `purge-old-error-events` cron job.
-- **Alerts:** an email to `ALERT_EMAIL` (default johtahelp@gmail.com) the
+- **Alerts:** an email to `ALERT_EMAIL` (default johtaclick@gmail.com) the
   first time a problem appears, and again if it is still happening six hours
   later, capped at 10 an hour. Needs `RESEND_API_KEY` in Vercel; without it
   errors are recorded but not emailed. Sender defaults to

@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+import { SUPPORT_EMAIL } from "@/lib/site";
 
 /*
   Recording errors, and telling someone about them.
@@ -21,7 +22,7 @@ import { createHash } from "node:crypto";
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const RESEND_KEY = process.env.RESEND_API_KEY;
-const ALERT_EMAIL = process.env.ALERT_EMAIL ?? "johtahelp@gmail.com";
+const ALERT_EMAIL = process.env.ALERT_EMAIL ?? SUPPORT_EMAIL;
 const ALERT_FROM = process.env.ALERT_FROM ?? "JOHTA Alerts <alerts@johta.click>";
 
 /* A flood (a loop, or someone hammering /api/errors) must not fill the table

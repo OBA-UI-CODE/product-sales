@@ -30,7 +30,7 @@ export const metadata: Metadata = {
 const SECTIONS: LegalSection[] = [
   {
     heading: "1. Who is responsible for your data",
-    body: "JOHTA is the data controller for the information described here. We are based in Nigeria and you can reach us about anything in this policy at johtahelp@gmail.com. This policy is written to meet the Nigeria Data Protection Act 2023, and we have kept it in plain English so it is actually readable.",
+    body: "JOHTA is the data controller for the information described here. We are based in Nigeria and you can reach us about anything in this policy at johtaclick@gmail.com. This policy is written to meet the Nigeria Data Protection Act 2023, and we have kept it in plain English so it is actually readable.",
   },
   {
     heading: "2. What we collect",
@@ -62,7 +62,7 @@ const SECTIONS: LegalSection[] = [
   },
   {
     heading: "9. Your rights over your data",
-    body: "You can ask us to show you what we hold, correct anything wrong, delete it, restrict or object to how we use it, or hand it to you in a portable form. Much of this you can do yourself, immediately, without asking: you can edit your records, pause your shop or delete it outright from Settings, and on the paid plan you can download every sale, debt and product as a spreadsheet. Whatever plan you are on, you can ask for a copy of the personal data we hold about you, in a portable form, by writing to johtahelp@gmail.com. That is free, and we will respond within 30 days, as we will to any other request. If you are not satisfied with how we have handled it, you may complain to the Nigeria Data Protection Commission.",
+    body: "You can ask us to show you what we hold, correct anything wrong, delete it, restrict or object to how we use it, or hand it to you in a portable form. Much of this you can do yourself, immediately, without asking: you can edit your records, pause your shop or delete it outright from Settings, and on the paid plan you can download every sale, debt and product as a spreadsheet. Whatever plan you are on, you can ask for a copy of the personal data we hold about you, in a portable form, by writing to johtaclick@gmail.com. That is free, and we will respond within 30 days, as we will to any other request. If you are not satisfied with how we have handled it, you may complain to the Nigeria Data Protection Commission.",
   },
   {
     heading: "10. Children",
@@ -78,7 +78,7 @@ const SECTIONS: LegalSection[] = [
   },
   {
     heading: "13. Contact us",
-    body: "Any question about this policy, or any request about your data, can go to johtahelp@gmail.com and a person will read it.",
+    body: "Any question about this policy, or any request about your data, can go to johtaclick@gmail.com and a person will read it.",
   },
 ];
 

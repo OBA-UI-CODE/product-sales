@@ -5,7 +5,7 @@ import FeaturesSection from "@/components/marketing/FeaturesSection";
 import FAQSection from "@/components/marketing/FAQSection";
 import TestimonialsSection from "@/components/marketing/TestimonialsSection";
 import FinalCTASection from "@/components/marketing/FinalCTASection";
-import { SITE_URL } from "@/lib/site";
+import { SITE_URL, SUPPORT_EMAIL } from "@/lib/site";
 
 /*
   Tells Google, in its own vocabulary, what this site is called and what its
@@ -47,7 +47,7 @@ const STRUCTURED_DATA = {
         width: 512,
         height: 512,
       },
-      email: "johtahelp@gmail.com",
+      email: SUPPORT_EMAIL,
       areaServed: "NG",
       /* Official profiles, so Google can tie them to the brand. */
       sameAs: [

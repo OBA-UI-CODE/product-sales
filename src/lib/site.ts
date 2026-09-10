@@ -13,3 +13,11 @@
 export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://johta.click"
 ).replace(/\/$/, "");
+
+/*
+  JOHTA's public contact address: shown in the Terms, the Privacy Policy and
+  the structured data Google reads, and where contact-form messages and error
+  alerts are sent. Changed from johtahelp@gmail.com on 10 September 2026,
+  when that inbox stopped working.
+*/
+export const SUPPORT_EMAIL = "johtaclick@gmail.com";
