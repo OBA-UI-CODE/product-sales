@@ -314,6 +314,26 @@ so going back and forward again shows what was already entered. Step 1 has
 nothing to return to and step 5 is past the point of no return, so neither
 has one.
 
+## 6e. Customer receipts follow the Figma receipt design
+
+`/api/receipt/[saleId]` now draws Figma's "receipt design" section (frame
+`444:6548`, 595 x 842): the dark green band with the JOhTA wordmark, shop
+name, RECEIPT and a short reference, date in Lagos time, item and quantity,
+Total and Paid, Status, and "served by" pinned to the bottom. Rendered at 2x
+so it stays sharp on WhatsApp.
+
+Additions the frame does not show, because it only draws a paid sale: a debt
+adds a red Balance line and the Customer's name, turns Status red ("Not fully
+paid"), and makes the image taller by those rows rather than squeezing them
+in. Product and shop names wrap to two lines at most; a size, when there is
+one, sits beside the quantity. The shop phone number is no longer printed,
+since the design leaves it out.
+
+Fonts are bundled in `assets/receipt-fonts` (all Open Font License) and named
+in `next.config.ts` so Vercel ships them. DM Sans and Inter were cut from the
+variable fonts at the settings Figma uses, because the image renderer cannot
+read variable fonts or WOFF2.
+
 ---
 
 ## 7. Database changes
