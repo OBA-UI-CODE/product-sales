@@ -22,9 +22,10 @@ import { BRAND, LogoMark } from "@/components/Brand";
   Rules and the 1px separators are drawn with borders rather than the exported
   1px line SVGs; identical result, far less markup.
 
-  The social entries are NOT links: no real accounts exist yet, and the file has
-  no URLs. Rendered as plain text so there are no dead href="#" links that jump
-  the page. Needs real URLs before launch.
+  A social entry is a link only once the account really exists; the rest stay
+  plain text so there are no dead href="#" links that jump the page. Add the
+  href below as each account is set up. Real profiles open in a new tab so the
+  visitor does not lose the site.
 */
 
 const PRODUCT = [
@@ -41,7 +42,12 @@ const GET_STARTED = [
   { label: "Sign In", href: "/login" },
   { label: "Contact Us", href: "/contact" },
 ];
-const SOCIAL = ["LinkedIn", "Facebook", "X", "Instagram"];
+const SOCIAL: { name: string; href?: string }[] = [
+  { name: "LinkedIn" },
+  { name: "Facebook" },
+  { name: "X", href: "https://x.com/JOHTA_NG" },
+  { name: "Instagram" },
+];
 
 const HEAD =
   "font-heading font-semibold tracking-[-1px] text-text-secondary text-[24px] leading-[29px] tab:text-[32px] tab:leading-[39px] web:text-[48px] web:leading-[58px]";
@@ -140,14 +146,26 @@ export default function Footer() {
             <div className="flex flex-col items-start gap-6 tab:col-span-3">
               <p className={`${HEAD} whitespace-nowrap`}>Social Media</p>
               <div className="flex w-full flex-col items-start gap-4 tab:w-auto tab:flex-row tab:items-center tab:gap-0">
-                {SOCIAL.map((name, i) => (
+                {SOCIAL.map(({ name, href }, i) => (
                   <div
                     key={name}
                     className="flex w-full flex-col items-start gap-4 tab:w-auto tab:flex-row tab:items-center tab:gap-0"
                   >
-                    <span className={`${LINK} whitespace-nowrap tab:px-4`}>
-                      {name}
-                    </span>
+                    {href ? (
+                      <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`JOHTA on ${name} (opens in a new tab)`}
+                        className={`${LINK} whitespace-nowrap tab:px-4`}
+                      >
+                        {name}
+                      </a>
+                    ) : (
+                      <span className={`${LINK} whitespace-nowrap tab:px-4`}>
+                        {name}
+                      </span>
+                    )}
                     {i < SOCIAL.length - 1 && (
                       <span
                         aria-hidden

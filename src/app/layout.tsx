@@ -41,6 +41,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
+    /* Credits shared links to the brand's account on X. */
+    site: "@JOHTA_NG",
     title: "JOHTA. Every sale, accounted for.",
     description:
       "Log daily sales, track stock and know who owes you. Built for small shops.",
