@@ -20,7 +20,31 @@
   correct in Figma.
 */
 
+import Link from "next/link";
+
 export const BRAND = "JOHTA";
+
+/*
+  The wordmark as a way back to the website. Used on the screens that sit
+  outside the site's own navigation (sign in, sign up, password reset,
+  onboarding), where the logo was the only brand on the page and led nowhere,
+  so leaving meant searching for JOHTA again.
+
+  Wraps just the word, not the row it sits in, so only the logo is a target.
+  It looks exactly as before; the visible text stays "JOHTA" and the label says
+  where it goes.
+*/
+export function HomeLink({ children }: { children: React.ReactNode }) {
+  return (
+    <Link
+      href="/"
+      aria-label={`${BRAND} home page`}
+      className="rounded-md transition-opacity hover:opacity-80"
+    >
+      {children}
+    </Link>
+  );
+}
 
 /* Size and colour vary per placement, so both are left to the caller rather
    than baked in — the nav is 56px/-1.5, the footer 48px/-1, onboarding 64px. */

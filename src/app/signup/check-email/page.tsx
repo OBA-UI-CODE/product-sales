@@ -1,9 +1,11 @@
+import { HomeLink } from "@/components/Brand";
+
 export default function CheckEmailPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-[var(--color-bg-canvas)] px-4">
       <div className="flex w-full max-w-[420px] flex-col items-center gap-4 text-center">
         <span className="font-brand text-3xl text-[var(--color-accent-light)]">
-          JOHTA
+          <HomeLink>JOHTA</HomeLink>
         </span>
         <h1 className="font-heading text-2xl font-bold">Check your email</h1>
         <p className="text-sm text-[var(--color-text-secondary)]">

@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { updatePassword, type ResetPasswordState } from "./actions";
 import PasswordInput from "@/components/ui/PasswordInput";
+import { HomeLink } from "@/components/Brand";
 
 /*
   NOT IN FIGMA — there is no reset-password screen in the design file, so this
@@ -23,7 +24,7 @@ export default function ResetPasswordPage() {
     <div className="flex min-h-screen items-center justify-center bg-[var(--color-bg-canvas)] px-4">
       <div className="flex w-full max-w-[420px] flex-col gap-5">
         <span className="font-brand text-3xl text-[var(--color-accent-light)]">
-          JOHTA
+          <HomeLink>JOHTA</HomeLink>
         </span>
         <div>
           <h1 className="font-heading text-2xl font-bold">Set a new password</h1>

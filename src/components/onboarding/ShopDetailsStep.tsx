@@ -4,6 +4,7 @@ import OnboardingButton from "./OnboardingButton";
 import OnboardingField from "./OnboardingField";
 import OnboardingProgress from "./OnboardingProgress";
 import OnboardingBack from "./OnboardingBack";
+import { HomeLink } from "@/components/Brand";
 
 /*
   Onboarding step 3 — "What's the name of your shop?"
@@ -75,7 +76,7 @@ export default function ShopDetailsStep({
           <div className="flex w-[316px] flex-col items-start gap-6 tab:w-[515px] tab:gap-16">
             <OnboardingBack onBack={onBack} />
             <p className="w-full font-brand text-[40px] leading-[48px] tracking-[-1px] text-primary-text tab:text-[64px] tab:leading-[68px]">
-              JOHTA
+              <HomeLink>JOHTA</HomeLink>
             </p>
 
             <div className="flex w-full flex-col items-start gap-6">

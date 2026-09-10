@@ -5,6 +5,7 @@ import { themeVars } from "@/lib/theme";
 import OnboardingButton from "./OnboardingButton";
 import OnboardingProgress from "./OnboardingProgress";
 import OnboardingBack from "./OnboardingBack";
+import { HomeLink } from "@/components/Brand";
 
 /*
   Onboarding step 4 — "Make it yours"
@@ -76,7 +77,7 @@ export default function ThemeStep({
           <div className="flex w-[316px] flex-col items-start gap-6 tab:w-full tab:gap-16">
             <OnboardingBack onBack={onBack} />
             <p className="w-full font-brand text-[40px] leading-[48px] tracking-[-1px] text-primary-text tab:text-[64px] tab:leading-[68px]">
-              JOHTA
+              <HomeLink>JOHTA</HomeLink>
             </p>
 
             <div className="flex w-full flex-col items-start gap-6">

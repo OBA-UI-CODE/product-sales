@@ -2,7 +2,7 @@
 
 import PasswordInput from "@/components/ui/PasswordInput";
 import Link from "next/link";
-import { BRAND } from "@/components/Brand";
+import { BRAND, HomeLink } from "@/components/Brand";
 
 /*
   Shared form pieces for Sign In / Sign Up, from the Figma Input (9:22) and
@@ -23,7 +23,7 @@ import { BRAND } from "@/components/Brand";
 export function AuthLogo() {
   return (
     <p className="w-full font-brand text-[40px] leading-[48px] tracking-[-1px] text-primary-text tab:text-[56px] tab:leading-none tab:tracking-[-1.5px]">
-      {BRAND}
+      <HomeLink>{BRAND}</HomeLink>
     </p>
   );
 }

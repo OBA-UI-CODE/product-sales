@@ -1,7 +1,7 @@
 "use client";
 
 import OnboardingButton from "./OnboardingButton";
-import { BRAND } from "@/components/Brand";
+import { BRAND, HomeLink } from "@/components/Brand";
 
 /*
   Onboarding step 1 — welcome.
@@ -32,7 +32,7 @@ export default function WelcomeStep({
     <div className="flex min-h-screen w-full items-center justify-center bg-bg-canvas px-6">
       <div className="flex w-[341px] flex-col items-center gap-6 text-center tab:w-[553px]">
         <p className="w-full font-brand text-[48px] leading-[58px] tracking-[-1px] text-primary-text tab:text-[64px] tab:leading-[68px]">
-          JOHTA
+          <HomeLink>JOHTA</HomeLink>
         </p>
 
         <div className="flex w-full flex-col items-center gap-6">

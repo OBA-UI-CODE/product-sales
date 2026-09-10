@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import Link from "next/link";
 import { requestPasswordReset, type ForgotPasswordState } from "./actions";
+import { HomeLink } from "@/components/Brand";
 
 const initialState: ForgotPasswordState = {};
 
@@ -16,7 +17,7 @@ export default function ForgotPasswordPage() {
     <div className="flex min-h-screen items-center justify-center bg-[var(--color-bg-canvas)] px-4">
       <div className="flex w-full max-w-[420px] flex-col gap-5">
         <span className="font-brand text-3xl text-[var(--color-accent-light)]">
-          JOHTA
+          <HomeLink>JOHTA</HomeLink>
         </span>
 
         {state.success ? (
