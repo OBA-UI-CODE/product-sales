@@ -379,8 +379,19 @@ so tapping it opened a raw error page on supabase.co. Now:
   an owner changing a staff password still locks the old route out. Removing
   a staff member (ban) remains the complete lock.
 
-Still to do by the owner: create the OAuth client in Google Cloud and paste
-its id and secret into Supabase (Authentication > Sign In / Providers).
+**Live since 10 September 2026.** Google Cloud project "JOHTA", OAuth client
+"JOHTA" (web), consent screen published (in production, no logo so no
+verification needed). Redirect URI is Supabase's
+`https://ktpqywmtgswjmvdyvvlg.supabase.co/auth/v1/callback`; the client id
+and secret live only in the Supabase dashboard. Tested by the owner: Google
+linked to the existing email account rather than creating a second one.
+
+Known limits: Google's screen names `ktpqywmtgswjmvdyvvlg.supabase.co` (a
+Supabase custom domain fixes that, paid add-on), and Google refuses sign-in
+inside WhatsApp/Instagram/Facebook in-app browsers (403 disallowed_useragent).
+The support email on the consent screen is still the owner's personal Gmail;
+switch it to johtahelp@gmail.com in Branding once that account is a project
+owner.
 
 ---
 
