@@ -1,6 +1,6 @@
 import { getCurrentShopContext } from "@/lib/shop-context";
 import { initials, formatNaira } from "@/lib/format";
-import { getGreetingHeadline, getGreetingPrefix } from "@/lib/greeting";
+import { getGreetingHeadline, getGreetingPrefix, HEADLINE_EM } from "@/lib/greeting";
 import { AddSaleButton } from "./AddSaleButton";
 import StatCard, {
   AvatarStack,
@@ -142,6 +142,18 @@ export default async function DashboardPage() {
         " owed"
       : formatNaira(collectedToday) + " collected - all paid";
 
+  /*
+    One line on mobile too. The line is shrunk only as far as the phone needs:
+    the width it must fit is the screen less the page's 24px margins (and 2px
+    to spare), letter-spacing of -1px per character is given back, and the
+    result is divided by the headline's width in ems. Capped at the design's
+    40px, so the short morning line is untouched on an ordinary phone.
+  */
+  const headline = getGreetingHeadline();
+  const headlineFit = `calc((100vw - 50px + ${headline.length}px) / ${
+    HEADLINE_EM[headline] ?? 13.25
+  })`;
+
   return (
     <div className="flex flex-col gap-6 web:gap-12">
       {/* Where most installs happen: people install after signing up, not
@@ -156,15 +168,19 @@ export default async function DashboardPage() {
           tablet and is centred on web, per the two frames. */}
           <div className="flex items-end justify-between web:items-center">
         {/* 316 is the file's box, drawn around "How Market Today.". The
-            afternoon and evening lines are longer and wrapped inside it, so
-            on web, where there is room beside Add Sale, the box fits the
-            line instead and the headline stays on one line. */}
-        <div className="flex w-[316px] flex-col gap-2 web:w-auto">
+            afternoon and evening lines are longer and wrapped inside it. On
+            web the box fits the line instead; on mobile it takes the full
+            width and the line is sized to fit it (see headlineFit). Tablet
+            keeps the file's box. */}
+        <div className="flex w-full flex-col gap-2 tab:w-[316px] web:w-auto">
           <p className="w-full font-body text-[18px] font-medium leading-[28px] text-text-secondary">
             {getGreetingPrefix()}, {profile.name.split(" ")[0]}
           </p>
-          <p className="w-full font-heading text-[40px] font-semibold leading-[48px] tracking-[-1px] text-text-primary tab:text-[32px] tab:leading-[39px] web:whitespace-nowrap">
-            {getGreetingHeadline()}
+          <p
+            style={{ "--greet-fit": headlineFit } as React.CSSProperties}
+            className="w-full whitespace-nowrap font-heading text-[length:min(40px,var(--greet-fit))] font-semibold leading-[1.2] tracking-[-1px] text-text-primary tab:whitespace-normal tab:text-[32px] tab:leading-[39px] web:whitespace-nowrap"
+          >
+            {headline}
           </p>
         </div>
         <AddSaleButton />
