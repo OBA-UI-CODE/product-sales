@@ -10,6 +10,7 @@ import StatCard, {
 import SaleRowList, {
   type DashboardSale,
 } from "@/components/dashboard/SaleRowList";
+import InstallApp from "@/components/InstallApp";
 
 /*
   Dashboard — Figma 201:3069 (web) / 201:3077 (tablet) / 201:3085 (mobile)
@@ -143,6 +144,10 @@ export default async function DashboardPage() {
 
   return (
     <div className="flex flex-col gap-6 web:gap-12">
+      {/* Where most installs happen: people install after signing up, not
+          while reading the marketing site. Renders nothing once installed
+          or dismissed. */}
+      <InstallApp variant="inline" />
       {/* Header and cards share a group: the gap between them is 32 on
           mobile, 24 on tablet and 48 on web, while the gap down to the sales
           list is 24 / 24 / 48. */}

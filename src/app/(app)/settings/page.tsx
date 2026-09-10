@@ -5,6 +5,7 @@ import { isConfigured } from "@/lib/paystack";
 import AccountSection from "./AccountSection";
 import ShopDetailsSection from "./ShopDetailsSection";
 import { GRACE_DAYS } from "@/lib/account";
+import InstallApp from "@/components/InstallApp";
 
 export default async function SettingsPage() {
   const { supabase, profile } = await getCurrentShopContext();
@@ -61,6 +62,13 @@ export default async function SettingsPage() {
       {profile.role === "owner" && billing && (
         <BillingSection billing={billing} />
       )}
+
+      {/* Always here, even after the banner has been dismissed, so there is
+          always a way to install. Renders nothing once installed. */}
+      <div className="flex flex-col gap-4">
+        <h2 className="font-heading text-xl font-semibold">Install the app</h2>
+        <InstallApp variant="settings" />
+      </div>
 
       {/*
         Last on the page, and after billing, on purpose. Nobody arrives at

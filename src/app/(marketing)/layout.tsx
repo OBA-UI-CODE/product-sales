@@ -1,6 +1,6 @@
 import Nav from "@/components/marketing/Nav";
 import Footer from "@/components/marketing/Footer";
-import IosInstallHint from "@/components/marketing/IosInstallHint";
+import InstallApp from "@/components/InstallApp";
 
 export default function MarketingLayout({
   children,
@@ -12,9 +12,9 @@ export default function MarketingLayout({
       <Nav />
       <main>{children}</main>
       <Footer />
-      {/* Renders only on iPhone/iPad Safari, and only once. See the component
-          for why the detection has to be this specific. */}
-      <IosInstallHint />
+      {/* A real "Install JOHTA" button: installs in one tap on Android, opens
+          a step-by-step guide on iPhone. Hidden once installed. */}
+      <InstallApp variant="floating" />
     </div>
   );
 }

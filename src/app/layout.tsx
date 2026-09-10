@@ -73,6 +73,29 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        {/*
+          Catches Android's install offer before it is lost.
+
+          Chrome fires beforeinstallprompt once, very early, often before
+          React has hydrated anything. A listener registered inside a
+          component would usually miss it, and the "Install JOHTA" button
+          would then have nothing to trigger. So it is caught here, in the
+          head, and parked on window for InstallApp to pick up.
+
+          preventDefault stops Chrome showing its own mini-infobar, so the
+          install offer is the same JOHTA button on every platform rather
+          than a different surface on each. iOS never fires this event at
+          all; InstallApp handles that case separately.
+        */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.__johtaInstall=e;window.dispatchEvent(new Event('johta:installable'))});" +
+              "window.addEventListener('appinstalled',function(){window.__johtaInstall=null;window.dispatchEvent(new Event('johta:installed'))});",
+          }}
+        />
+      </head>
       <body>{children}</body>
     </html>
   );
