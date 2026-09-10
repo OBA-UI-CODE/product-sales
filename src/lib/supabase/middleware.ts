@@ -14,6 +14,24 @@ const PROTECTED_PREFIXES = [
 ];
 
 export async function updateSession(request: NextRequest) {
+  /*
+    A sign-in that arrived at the home page. When Supabase cannot use the
+    return address it was given, it sends people to the site's home page
+    with the ?code= still attached, and nothing there finishes the sign-in:
+    they saw the website and had to start again. Passing it on to the
+    callback completes it instead. Owners land on the dashboard; someone new
+    is moved on to onboarding from there.
+  */
+  const code = request.nextUrl.searchParams.get("code");
+  if (request.nextUrl.pathname === "/" && code) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/auth/callback";
+    url.search = "";
+    url.searchParams.set("code", code);
+    url.searchParams.set("next", "/dashboard");
+    return NextResponse.redirect(url);
+  }
+
   let supabaseResponse = NextResponse.next({ request });
 
   const supabase = createServerClient(

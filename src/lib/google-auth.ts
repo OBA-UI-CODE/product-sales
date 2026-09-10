@@ -36,13 +36,18 @@ async function googleEnabled(): Promise<boolean> {
 }
 
 /*
-  Where Google sends people back to. The request's own origin, so local
-  development returns to localhost; the live address when a browser does not
-  send one. Supabase only honours addresses on its redirect allow list, so a
-  forged Origin header cannot send anyone elsewhere.
+  Where Google sends people back to: only ever an address Supabase has on its
+  redirect allow list. Anything else, Supabase silently swaps for the site's
+  home page, which is how people on the old johta.vercel.app address landed
+  on the johta.click homepage with their sign-in lost (see next.config.ts).
+
+  Local development returns to localhost; everything else to the live site.
 */
+const RETURN_ORIGINS = new Set([SITE_URL, "http://localhost:3000"]);
+
 async function siteOrigin(): Promise<string> {
-  return (await headers()).get("origin") ?? SITE_URL;
+  const origin = (await headers()).get("origin");
+  return origin && RETURN_ORIGINS.has(origin) ? origin : SITE_URL;
 }
 
 export async function startGoogleSignIn({
