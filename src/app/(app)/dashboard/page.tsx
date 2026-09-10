@@ -155,11 +155,15 @@ export default async function DashboardPage() {
       {/* The Add Sale button sits on the bottom edge of the 75-tall header on
           tablet and is centred on web, per the two frames. */}
           <div className="flex items-end justify-between web:items-center">
-        <div className="flex w-[316px] flex-col gap-2">
+        {/* 316 is the file's box, drawn around "How Market Today.". The
+            afternoon and evening lines are longer and wrapped inside it, so
+            on web, where there is room beside Add Sale, the box fits the
+            line instead and the headline stays on one line. */}
+        <div className="flex w-[316px] flex-col gap-2 web:w-auto">
           <p className="w-full font-body text-[18px] font-medium leading-[28px] text-text-secondary">
             {getGreetingPrefix()}, {profile.name.split(" ")[0]}
           </p>
-          <p className="w-full font-heading text-[40px] font-semibold leading-[48px] tracking-[-1px] text-text-primary tab:text-[32px] tab:leading-[39px]">
+          <p className="w-full font-heading text-[40px] font-semibold leading-[48px] tracking-[-1px] text-text-primary tab:text-[32px] tab:leading-[39px] web:whitespace-nowrap">
             {getGreetingHeadline()}
           </p>
         </div>
