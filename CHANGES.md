@@ -395,6 +395,36 @@ owner.
 
 ---
 
+## 6g. Error monitoring
+
+Crashes are recorded instead of only being seen by the person they happen to.
+
+- **Server:** `src/instrumentation.ts` (`onRequestError`) records every error
+  thrown while rendering a page, running a server action or handling a route.
+- **Browser:** `components/ErrorReporter.tsx` (in the root layout) sends
+  uncaught errors and promise rejections to `/api/errors`, which only accepts
+  posts from johta.click itself and caps the body. Extension errors,
+  "Script error." and ResizeObserver noise are dropped.
+- **Error pages:** `app/error.tsx`, `app/(app)/error.tsx` and
+  `app/global-error.tsx` replace Next's bare default with "Something went
+  wrong", Try again, a way home, and a reference number that matches the
+  `digest` stored with the error.
+- **Storage:** `public.error_events` (migration `20260910192400`), service
+  role only; `public.error_summary` groups them by problem. No user or shop
+  id is stored. Deleted after 90 days by the `purge-old-error-events` cron job.
+- **Alerts:** an email to `ALERT_EMAIL` (default johtahelp@gmail.com) the
+  first time a problem appears, and again if it is still happening six hours
+  later, capped at 10 an hour. Needs `RESEND_API_KEY` in Vercel; without it
+  errors are recorded but not emailed. Sender defaults to
+  `alerts@johta.click` (`ALERT_FROM`), which must be on the domain verified in
+  Resend.
+
+Chosen over Sentry so that no new company receives users' data (the Privacy
+Policy's list of suppliers is unchanged) and it costs nothing. Sentry is the
+upgrade if this outgrows a table and an inbox.
+
+---
+
 ## 7. Database changes
 
 All applied to the live Supabase project (`ktpqywmtgswjmvdyvvlg`) as migrations.

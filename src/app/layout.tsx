@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { SITE_URL } from "@/lib/site";
 import "./globals.css";
+import ErrorReporter from "@/components/ErrorReporter";
 
 export const metadata: Metadata = {
   /*
@@ -98,7 +99,11 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {/* Reports crashes in the visitor's browser; renders nothing. */}
+        <ErrorReporter />
+        {children}
+      </body>
     </html>
   );
 }
