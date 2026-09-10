@@ -157,7 +157,8 @@ export async function POST(request: Request) {
 
     /*
       Cancelled, by us or by them in the Paystack dashboard. Access continues
-      until current_period_end, which shop_can_write() honours.
+      until current_period_end, which shop_is_paid() honours;
+      after that the shop is on Free.
     */
     case "subscription.disable":
     case "subscription.not_renew":
