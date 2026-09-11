@@ -5,6 +5,7 @@ import { isConfigured } from "@/lib/paystack";
 import AccountSection from "./AccountSection";
 import ShopDetailsSection from "./ShopDetailsSection";
 import RecordsSection from "./RecordsSection";
+import RemindersSection from "./RemindersSection";
 import { GRACE_DAYS } from "@/lib/account";
 import InstallApp from "@/components/InstallApp";
 import { FREE_STAFF_LIMIT, isPaidShop } from "@/lib/plan";
@@ -26,6 +27,18 @@ export default async function SettingsPage() {
     .is("removed_at", null)
     .order("role", { ascending: false })
     .order("created_at", { ascending: true });
+
+  /* This person's reminder choices; no row yet means all three on. */
+  const { data: prefRow } = await supabase
+    .from("notification_prefs")
+    .select("morning, afternoon, evening")
+    .eq("user_id", profile.id)
+    .maybeSingle();
+  const prefs = {
+    morning: prefRow?.morning ?? true,
+    afternoon: prefRow?.afternoon ?? true,
+    evening: prefRow?.evening ?? true,
+  };
 
   /*
     Billing state is read straight from the shop. It is only ever written by
@@ -80,6 +93,9 @@ export default async function SettingsPage() {
       {profile.role === "owner" && billing && (
         <BillingSection billing={billing} paid={paid} />
       )}
+
+      {/* Sales reminders on this phone: owners and staff, every plan. */}
+      <RemindersSection initialPrefs={prefs} />
 
       {/* The owner's copy of everything. Staff are not shown it. */}
       {profile.role === "owner" && <RecordsSection paid={paid} />}

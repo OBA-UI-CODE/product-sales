@@ -488,6 +488,33 @@ only way to it was the delete-my-shop flow. Now:
 
 ---
 
+## 6k. Sales reminders on the phone (Web Push)
+
+Free for everyone, owners and staff (agreed 12 September 2026). Settings >
+Reminders: "Turn on reminders", a switch for each, a test, and "Turn off on
+this phone".
+
+- **08:00 Lagos** good morning; **14:00** only if the shop has logged
+  nothing yet today; **20:00** today's total, or a nudge if nothing logged.
+- `public/sw.js`: shows the notification, opens JOHTA when tapped. No fetch
+  handler and no caching, on purpose.
+- `push_subscriptions` (one row per device, RLS: own rows only) and
+  `notification_prefs` (no row = all on). `reminder_targets(slot)` decides
+  who gets what and skips paused shops, removed staff and staff paused on
+  Free. Migration `20260911221844`.
+- Sent by `/api/cron/reminders?slot=`, called by **pg_cron + pg_net** in the
+  database (Vercel's free plan only runs crons daily). The key the jobs send
+  is generated inside the Supabase vault (`reminders_token`) and checked by
+  `reminder_token_ok()`; it is never typed or shown anywhere.
+- VAPID keys: `NEXT_PUBLIC_VAPID_PUBLIC_KEY` (all environments) and
+  `VAPID_PRIVATE_KEY` (production, and `.env.local`).
+- iPhone: only works once JOHTA is installed to the home screen (Apple's
+  rule); the section says so. Devices that are gone are deleted after a
+  404/410.
+- Privacy Policy: one sentence on what is kept for reminders.
+
+---
+
 ## 7. Database changes
 
 All applied to the live Supabase project (`ktpqywmtgswjmvdyvvlg`) as migrations.

@@ -34,7 +34,7 @@ const SECTIONS: LegalSection[] = [
   },
   {
     heading: "2. What we collect",
-    body: "When you sign up we collect your name, email address and a password, which is stored only in scrambled form that nobody at JOHTA can read. When you set up your shop we collect its name, what you sell and the colour you pick. As you use JOHTA we hold the records you enter: sales, prices, quantities, products, stock counts, and the names you type against unpaid debts. If you add staff we hold their name, email and role. If you subscribe we hold your plan and payment status, but never your card number, which only Paystack ever sees. We also keep ordinary technical records such as sign-in times, and anything you write to us through the contact form.",
+    body: "When you sign up we collect your name, email address and a password, which is stored only in scrambled form that nobody at JOHTA can read. When you set up your shop we collect its name, what you sell and the colour you pick. As you use JOHTA we hold the records you enter: sales, prices, quantities, products, stock counts, and the names you type against unpaid debts. If you add staff we hold their name, email and role. If you subscribe we hold your plan and payment status, but never your card number, which only Paystack ever sees. If you turn on sales reminders, we keep the notification address your phone gives us for JOHTA and which reminders you chose, only to send those reminders; turning them off in Settings deletes it. We also keep ordinary technical records such as sign-in times, and anything you write to us through the contact form.",
   },
   {
     heading: "3. Information about your customers",
@@ -87,7 +87,7 @@ export default function PrivacyPage() {
     <div className="pb-[54px] tab:pb-[44px] web:pb-[105px]">
       <LegalPage
         title="Privacy Policy"
-        intro="Last updated 10 September 2026. This policy explains what JOHTA collects, why, who else sees it, and what you can do about it. Your shop’s records are yours. We do not sell them, and you can delete them yourself at any time."
+        intro="Last updated 12 September 2026. This policy explains what JOHTA collects, why, who else sees it, and what you can do about it. Your shop’s records are yours. We do not sell them, and you can delete them yourself at any time."
         sections={SECTIONS}
       />
     </div>
