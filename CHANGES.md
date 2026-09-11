@@ -449,6 +449,30 @@ a failed send is released and retried the next day. From
 
 ---
 
+## 6i. Weekly and monthly totals
+
+Sales History has **Day / Week / Month** tabs (owner's idea, 11 September
+2026; built in the existing style, no Figma design).
+
+- **Day:** every sale on one day, as before.
+- **Week** (Monday to Sunday) and **Month:** total, number of sales,
+  collected, still owed, a bar per day (week) or per week (month) that opens
+  that day or week, the best day, and the top three items. Arrows step back
+  and forward; "This week", "Last week", "This month" are named.
+- Added up in the database by `sales_summary(from, to)` (migration
+  `20260911212020`), SECURITY INVOKER so the sales policy applies unchanged,
+  because the API returns at most 1000 rows and a busy month would have been
+  short. Tested with 1,201 sales in a month.
+- **Lagos days** everywhere (`lib/lagos-date.ts`). The old page used the
+  server's UTC midnight, so sales between midnight and 1am went on the
+  previous day.
+- **Free:** periods that start inside the window (this week, last week,
+  this month) show; older ones say they are on the paid plan. The window is
+  now 31 days in the database (still described as 30) so the whole month is
+  visible on the 31st.
+
+---
+
 ## 7. Database changes
 
 All applied to the live Supabase project (`ktpqywmtgswjmvdyvvlg`) as migrations.

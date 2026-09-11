@@ -46,9 +46,14 @@ export function isOnTrial(shop: PlanFields | null | undefined): boolean {
   );
 }
 
-/* The earliest date a Free shop can see in its sales history. */
+/*
+  How far back a Free shop can actually see. Described as the last 30 days;
+  the database allows 31 (see the sales policy), so that on the 31st of a
+  month the whole month is still there.
+*/
+export const FREE_WINDOW_DAYS = 31;
+
+/* The earliest instant a Free shop can see in its sales history. */
 export function freeHistoryStart(): Date {
-  const d = new Date();
-  d.setDate(d.getDate() - FREE_HISTORY_DAYS);
-  return d;
+  return new Date(Date.now() - FREE_WINDOW_DAYS * 86_400_000);
 }
