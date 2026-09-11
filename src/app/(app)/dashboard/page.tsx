@@ -1,4 +1,4 @@
-import { getCurrentShopContext } from "@/lib/shop-context";
+import { getCurrentShopContext, shopOf } from "@/lib/shop-context";
 import { initials, formatNaira } from "@/lib/format";
 import { getGreetingHeadline, getGreetingPrefix, HEADLINE_EM } from "@/lib/greeting";
 import { AddSaleButton } from "./AddSaleButton";
@@ -11,6 +11,9 @@ import SaleRowList, {
   type DashboardSale,
 } from "@/components/dashboard/SaleRowList";
 import InstallApp from "@/components/InstallApp";
+import TrialNotice from "@/components/dashboard/TrialNotice";
+import { isOnTrial, isPaidShop } from "@/lib/plan";
+import { formatDay } from "@/lib/notices";
 
 /*
   Dashboard — Figma 201:3069 (web) / 201:3077 (tablet) / 201:3085 (mobile)
@@ -154,8 +157,47 @@ export default async function DashboardPage() {
     HEADLINE_EM[headline] ?? 13.25
   })`;
 
+  /*
+    The owner's free-month notice: during the trial, in its last three days,
+    and for a week after it ends while the shop is on Free. See
+    components/dashboard/TrialNotice.tsx.
+  */
+  const shop = shopOf(profile);
+  let trialNotice: React.ReactNode = null;
+  if (profile.role === "owner" && shop?.trial_ends_at) {
+    const endsAt = new Date(shop.trial_ends_at).getTime();
+    const msLeft = endsAt - Date.now();
+    const daysLeft = Math.max(1, Math.ceil(msLeft / 86_400_000));
+    /* Only a trial that ran out without subscribing. A shop that paid and
+       then let it lapse is not told its "free month" ended. */
+    const endedRecently =
+      shop.subscription_status === "trialing" &&
+      !isPaidShop(shop) &&
+      msLeft <= 0 &&
+      msLeft > -7 * 86_400_000;
+    const phase = isOnTrial(shop)
+      ? msLeft <= 3 * 86_400_000
+        ? "final"
+        : "trial"
+      : endedRecently
+        ? "ended"
+        : null;
+    if (phase) {
+      trialNotice = (
+        <TrialNotice
+          phase={phase}
+          endsOn={formatDay(shop.trial_ends_at)}
+          daysLeft={daysLeft}
+          shopName={shop.name}
+          storageKey={`johta:trial-notice:${phase}:${shop.trial_ends_at.slice(0, 10)}`}
+        />
+      );
+    }
+  }
+
   return (
     <div className="flex flex-col gap-6 web:gap-12">
+      {trialNotice}
       {/* Where most installs happen: people install after signing up, not
           while reading the marketing site. Renders nothing once installed
           or dismissed. */}

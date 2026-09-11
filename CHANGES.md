@@ -425,6 +425,30 @@ upgrade if this outgrows a table and an inbox.
 
 ---
 
+## 6h. Telling shops about Free and Paid
+
+Agreed with the owner on 11 September 2026; the Terms promise notice before a
+change like this takes effect.
+
+- **Announcement email**, once, from Monday 14 September, to every shop that
+  existed before then and is still in its free month: "Your JOHTA free month
+  ends on <date>", what stays Free, what Paid adds, and a link to Billing.
+- **Reminder email** three days before each shop's trial ends (a shop that
+  gets the reminder first never gets the announcement after it).
+- **Dashboard notice** for owners during the free month (again in the last
+  three days, highlighted) and for a week after it ends. Closable. Not shown
+  to staff or paying shops. `components/dashboard/TrialNotice.tsx`.
+
+Sent by `/api/cron/notices`, run daily at 07:00 UTC by Vercel Cron
+(`vercel.json`), authorised with `CRON_SECRET` (Vercel, production, and
+`.env.local`). `public.shop_notices` records each email so it goes once;
+a failed send is released and retried the next day. From
+`hello@johta.click`, replies to the support inbox. Wording in
+`lib/notices.ts`. `?dry=1` (optionally `&asOf=`) lists who would get what;
+`?test=1` sends both emails to the support inbox only.
+
+---
+
 ## 7. Database changes
 
 All applied to the live Supabase project (`ktpqywmtgswjmvdyvvlg`) as migrations.
