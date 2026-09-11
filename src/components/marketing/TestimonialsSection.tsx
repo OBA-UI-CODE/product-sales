@@ -24,9 +24,12 @@
   one word), and fixed breaks would misrender at every width between the three
   fixed frames.
 
-  Avatars for the four grid testimonials are grey gradient placeholders in the
-  file — there are no real photos to export. Only the featured card has a real
-  photograph. Flagged; needs real headshots before launch.
+  Copy and avatars updated from the file on 12 September 2026. The quotes
+  follow the web frames (81:1059, 450:6744), the most polished of the three;
+  the name is spelled Tolulope as on mobile (web has "Toulope", tablet
+  "Toluope" and "Costmetics"). Avatars are the file's own renders of each
+  Ellipse at 4x, so Fatima's crop is exactly as drawn, served at 174px (3x
+  the 58px web size) and masked round here.
 */
 
 type Testimonial = {
@@ -34,46 +37,49 @@ type Testimonial = {
   name: string;
   role: string;
   location: string;
+  avatar?: string;
 };
 
 const FEATURED: Testimonial = {
   quote:
-    "“I restock every week and i used to lose track of what’s actually left on the shelf, JOHTA updates my stock the moment a sale happens. i always know what to reorder.”",
-  name: "Mrs Sarah. N",
-  role: "Owner - Hairs and cosmetics",
+    "“I restock every week and used to lose track of what was left on the shelf. JOHTA updates my stock the moment a sale happens, so I always know what to reorder.”",
+  name: "Mrs. Sarah N.",
+  role: "Owner - Hairs and Cosmetics",
   location: "Lagos State",
 };
 
 const TESTIMONIALS: Testimonial[] = [
   {
     quote:
-      "“Before JOHTA, I was flipping through three notebooks just to find one sale from last two weeks. Now i search in ten seconds. My staff even prefers it to writing.”",
-    name: "Mrs Chiamaka. O",
-    role: "Owner - Beauty & Hair Supplies.",
+      "“Before JOHTA, I was flipping through three notebooks just to find one sale from two weeks ago. Now I can search in ten seconds. My staff even prefers it to writing.”",
+    name: "Mrs. Tolulope O.",
+    role: "Owner - Beauty & Cosmetics",
     location: "Lagos State",
+    avatar: "/figma/avatar-tolulope.webp",
   },
   {
     quote:
-      "“I used to close some evenings not knowing if the money on me still matched what i actually sold. with JOHTA, the total sales is just there. No more guessing.”",
-    name: "Tunde. A",
+      "“I used to close some evenings unsure if the money I had matched my actual sales. With JOHTA, the total sales are just there. No more guessing.”",
+    name: "Tunde A.",
     role: "Owner - Provision Store",
     location: "Ibadan City",
+    avatar: "/figma/avatar-tunde.webp",
   },
   {
     quote:
-      "“My two attendants used to argue about who sold what. Now every sale has a name on it. It solved a problem i didn’t even know i could solve.”",
-    name: "Ngozi. E",
+      "“My two attendants used to argue about who sold what. Now every sale has a name attached. It solved a problem I didn’t even know I could solve.”",
+    name: "Blessing H.",
     role: "Owner - Cosmetics Shop",
     location: "Enugu State",
+    avatar: "/figma/avatar-blessing.webp",
   },
   {
-    // NOTE: the stray closing quote mid-sentence and "siting" are both in the
-    // Figma copy. Reproduced as-is; flagged for correction at the source.
     quote:
-      "“Honestly i was scared it would be complicated it took me five minutes to set up and my staff learnt it in one siting.” That’s rare for me.”",
-    name: "Fatima. B",
+      "“Honestly, I was scared it would be complicated. It took me five minutes to set up, and my staff learned it in one sitting. That’s rare for me.”",
+    name: "Fatima B.",
     role: "Owner - Fashion Accessories.",
     location: "Ogun State",
+    avatar: "/figma/avatar-fatima.webp",
   },
 ];
 
@@ -101,11 +107,12 @@ function Profile({ t }: { t: Testimonial }) {
   return (
     <div className="flex items-center gap-4 px-4 web:gap-2">
       <img
-        src="/figma/avatar-placeholder.svg"
+        src={t.avatar ?? "/figma/avatar-placeholder.svg"}
         alt=""
         width={58}
         height={58}
-        className="size-[52px] shrink-0 web:size-[58px]"
+        loading="lazy"
+        className="size-[52px] shrink-0 rounded-full object-cover web:size-[58px]"
       />
       <div className="flex w-[242px] flex-col items-start gap-1">
         <p className="w-full font-body text-[16px] font-medium leading-[24px] text-text-primary web:text-[18px] web:leading-[28px]">
