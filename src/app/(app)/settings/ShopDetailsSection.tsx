@@ -12,8 +12,8 @@ import type { StaffState } from "./actions";
   of owners will not want their number on a piece of paper, and a receipt
   without it still beats none.
 
-  The receipt design in Figma (444:6548) does not print the phone, so for now
-  it is stored but not shown. The copy below only promises the name.
+  The receipt design in Figma (444:6548) has no phone line; it is added under
+  the shop name, and only when one is set.
 
   Owner only. Both fields are among the handful of columns an owner is allowed
   to write directly; everything about billing is refused at the database.
@@ -39,7 +39,8 @@ export default function ShopDetailsSection({
         className="flex flex-col gap-4 rounded-md bg-[var(--color-bg-surface)] p-5 tab:p-6"
       >
         <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">
-          Your shop name appears on the receipts you give customers.
+          Your shop name and phone number appear on the receipts you give
+          customers, so they can reach you.
         </p>
 
         {state.error && (

@@ -22,8 +22,45 @@ const IGNORE = [
 
 const sent = new Set<string>();
 
+/*
+  Errors that mean "this page is older than the site", not "something is
+  broken". After an update, a tab left open still carries the old version's
+  code: submitting a form asks the server for an action that no longer exists
+  ("An unexpected response was received from the server", "Failed to find
+  Server Action"), and moving to another screen asks for script files that
+  have been replaced (ChunkLoadError). Seen on johta.click on 11 September,
+  from a sign-in page opened the day before.
+
+  The cure is simply the current version, so the page reloads itself. Once:
+  a note in sessionStorage stops it looping if a reload does not help, in
+  which case the error is reported like any other.
+*/
+const STALE_VERSION = [
+  /unexpected response was received from the server/i,
+  /Failed to find Server Action/i,
+  /Server Action .* was not found/i,
+  /ChunkLoadError|Loading chunk [\w-]+ failed/i,
+  /Failed to fetch dynamically imported module/i,
+];
+const RELOAD_KEY = "johta:stale-reload-at";
+
+export function recoverFromStaleVersion(message: string): boolean {
+  if (!STALE_VERSION.some((re) => re.test(message))) return false;
+  try {
+    const last = Number(window.sessionStorage.getItem(RELOAD_KEY) ?? 0);
+    if (Date.now() - last < 60_000) return false;
+    window.sessionStorage.setItem(RELOAD_KEY, String(Date.now()));
+  } catch {
+    /* No sessionStorage (private mode): reloading once is still right, and
+       without the note it cannot be repeated from this same page load. */
+  }
+  window.location.reload();
+  return true;
+}
+
 export function reportClientError(message: string, stack?: string | null, digest?: string | null) {
   if (!message || sent.size >= 5 || sent.has(message)) return;
+  if (recoverFromStaleVersion(message)) return;
   if (IGNORE.some((re) => re.test(message) || (stack && re.test(stack)))) return;
   sent.add(message);
 

@@ -137,7 +137,7 @@ export async function GET(
   const [{ data: shop }, { data: seller }, fonts] = await Promise.all([
     supabase
       .from("shops")
-      .select("name")
+      .select("name, phone")
       .eq("id", profile.shop_id)
       .maybeSingle(),
     supabase
@@ -239,7 +239,15 @@ export async function GET(
     image grows by exactly that much, so the space under Status stays the same
     as on the design.
   */
-  const extra = (lines.length - 2) * 53;
+  /*
+    The shop's phone, when the owner has set one in Settings, sits under the
+    shop name so a customer holding the receipt can call back. Not drawn in
+    the Figma frame, which has no phone; it takes a 24px line plus the 12px
+    gap (36), and the image grows by that, as for the debt rows.
+  */
+  const phone = shop?.phone?.trim() || null;
+
+  const extra = (lines.length - 2) * 53 + (phone ? 36 : 0);
 
   return new ImageResponse(
     (
@@ -302,6 +310,21 @@ export async function GET(
               >
                 {shop?.name ?? "Shop"}
               </div>
+              {phone ? (
+                <div
+                  style={{
+                    display: "flex",
+                    fontFamily: "DM Sans",
+                    fontWeight: 400,
+                    fontSize: u(20),
+                    lineHeight: `${u(24)}px`,
+                    letterSpacing: u(-0.5),
+                    color: C.secondary,
+                  }}
+                >
+                  {`Tel: ${phone}`}
+                </div>
+              ) : null}
               <div
                 style={{
                   display: "flex",

@@ -6,6 +6,8 @@ import AccountSection from "./AccountSection";
 import ShopDetailsSection from "./ShopDetailsSection";
 import { GRACE_DAYS } from "@/lib/account";
 import InstallApp from "@/components/InstallApp";
+import { LogoutIcon } from "@/components/dashboard/NavIcons";
+import { signOut } from "../actions";
 import { FREE_STAFF_LIMIT, isPaidShop } from "@/lib/plan";
 
 export default async function SettingsPage() {
@@ -86,6 +88,24 @@ export default async function SettingsPage() {
         <h2 className="font-heading text-xl font-semibold">Install the app</h2>
         <InstallApp variant="settings" />
       </div>
+
+      {/*
+        Logout on phones. Tablet and web have it at the foot of the sidebar,
+        but on a phone the sidebar is replaced by the bottom bar, which has
+        no room for it, so there was no way to sign out at all. Hidden from
+        tablet up so the larger screens do not show it twice. Same action
+        as the sidebar's. Above "Your account", so leaving is not placed
+        beside deleting.
+      */}
+      <form action={signOut} className="tab:hidden">
+        <button
+          type="submit"
+          className="press flex h-12 w-full items-center justify-center gap-2.5 rounded-md border border-border-strong bg-bg-surface font-body text-[16px] font-semibold text-text-primary"
+        >
+          <LogoutIcon className="text-text-primary" />
+          Logout
+        </button>
+      </form>
 
       {/*
         Last on the page, and after billing, on purpose. Nobody arrives at

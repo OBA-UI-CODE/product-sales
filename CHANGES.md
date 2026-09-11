@@ -354,8 +354,8 @@ Additions the frame does not show, because it only draws a paid sale: a debt
 adds a red Balance line and the Customer's name, turns Status red ("Not fully
 paid"), and makes the image taller by those rows rather than squeezing them
 in. Product and shop names wrap to two lines at most; a size, when there is
-one, sits beside the quantity. The shop phone number is no longer printed,
-since the design leaves it out.
+one, sits beside the quantity. The shop's phone number, when set in
+Settings, goes under the shop name (added 11 September; not in the frame).
 
 Fonts are bundled in `assets/receipt-fonts` (all Open Font License) and named
 in `next.config.ts` so Vercel ships them. DM Sans and Inter were cut from the
