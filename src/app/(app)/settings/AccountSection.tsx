@@ -8,6 +8,8 @@ import {
   requestAccountDeletion,
 } from "./account-actions";
 import type { AccountState } from "@/lib/account";
+import { LogoutIcon } from "@/components/dashboard/NavIcons";
+import { signOut } from "../actions";
 
 const initialState: AccountState = {};
 
@@ -68,6 +70,24 @@ export default function AccountSection({
   return (
     <div className="flex flex-col gap-4">
       <h2 className="font-heading text-xl font-semibold">Your account</h2>
+
+      {/*
+        Logout on phones, first in "Your account". Tablet and web have it at
+        the foot of the sidebar; on a phone the sidebar is replaced by the
+        bottom bar, which has no room for it, so there was no way to sign out.
+        Hidden from tablet up so the larger screens do not show it twice.
+        Same action as the sidebar's. Above Pause and Delete, and plainly
+        styled, so it is never mistaken for them.
+      */}
+      <form action={signOut} className="tab:hidden">
+        <button
+          type="submit"
+          className="press flex h-12 w-full items-center justify-center gap-2.5 rounded-md border border-border-strong bg-bg-surface font-body text-[16px] font-semibold text-text-primary"
+        >
+          <LogoutIcon className="text-text-primary" />
+          Logout
+        </button>
+      </form>
 
       <div className="flex flex-col gap-4">
         {isOwner ? (
