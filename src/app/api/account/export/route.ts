@@ -44,8 +44,40 @@ function csvRows(rows: unknown[][]): string {
   return rows.map((row) => row.map(csvField).join(",")).join("\r\n");
 }
 
+/* Sale times in the file are Lagos times, as the owner saw them. */
+const lagosStamp = new Intl.DateTimeFormat("en-CA", {
+  timeZone: "Africa/Lagos",
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+  hour: "2-digit",
+  minute: "2-digit",
+  hourCycle: "h23",
+});
+const formatStamp = (iso: string) => lagosStamp.format(new Date(iso)).replace(",", "");
+
+/*
+  The API returns at most 1000 rows per request. Asked once, as this used to
+  be, a shop with more sales got a file that silently stopped at 1000. So
+  the sales are read in pages until a short page says there are no more.
+  Ordered by time and then id, so no row can fall between two pages.
+*/
+const PAGE = 1000;
+
 export async function GET() {
   const { supabase, profile } = await getCurrentShopContext();
+
+  /*
+    Owner only. The file holds every sale and every customer who owes the
+    shop money; whether that leaves the shop is the owner's call, not every
+    staff member's. The Settings button is only shown to owners too.
+  */
+  if (profile.role !== "owner") {
+    return new NextResponse("Only the shop owner can download the records.", {
+      status: 403,
+      headers: { "Content-Type": "text/plain; charset=utf-8" },
+    });
+  }
 
   /*
     Downloading the records is a paid feature. Checked against the database,
@@ -61,15 +93,27 @@ export async function GET() {
     );
   }
 
-  const [{ data: sales }, { data: staff }, { data: products }] =
-    await Promise.all([
-      supabase
+  const readAllSales = async () => {
+    const all = [];
+    for (let from = 0; ; from += PAGE) {
+      const { data, error } = await supabase
         .from("sales")
         .select(
-          "sold_at, custom_item_name, category, quantity, total_price, amount_paid, debtor_name, seller_id, edited_at, products(name), product_variants(label)"
+          "id, sold_at, custom_item_name, category, quantity, total_price, amount_paid, debtor_name, seller_id, edited_at, products(name), product_variants(label)"
         )
         .eq("shop_id", profile.shop_id)
-        .order("sold_at", { ascending: false }),
+        .order("sold_at", { ascending: false })
+        .order("id", { ascending: true })
+        .range(from, from + PAGE - 1);
+      if (error) throw new Error(`Could not read sales for export: ${error.message}`);
+      all.push(...(data ?? []));
+      if (!data || data.length < PAGE) return all;
+    }
+  };
+
+  const [sales, { data: staff }, { data: products }] =
+    await Promise.all([
+      readAllSales(),
       supabase.from("profiles").select("id, name").eq("shop_id", profile.shop_id),
       supabase
         .from("products")
@@ -94,11 +138,11 @@ export async function GET() {
     "Edited",
   ];
 
-  const saleRows = (sales ?? []).map((s) => {
+  const saleRows = sales.map((s) => {
     const total = Number(s.total_price);
     const paid = Number(s.amount_paid);
     return [
-      new Date(s.sold_at).toISOString().replace("T", " ").slice(0, 16),
+      formatStamp(s.sold_at),
       s.custom_item_name ??
         (s.products as unknown as { name: string } | null)?.name ??
         "Item",

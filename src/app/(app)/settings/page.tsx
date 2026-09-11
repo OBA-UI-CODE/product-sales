@@ -4,6 +4,7 @@ import BillingSection, { type BillingInfo } from "./BillingSection";
 import { isConfigured } from "@/lib/paystack";
 import AccountSection from "./AccountSection";
 import ShopDetailsSection from "./ShopDetailsSection";
+import RecordsSection from "./RecordsSection";
 import { GRACE_DAYS } from "@/lib/account";
 import InstallApp from "@/components/InstallApp";
 import { FREE_STAFF_LIMIT, isPaidShop } from "@/lib/plan";
@@ -79,6 +80,9 @@ export default async function SettingsPage() {
       {profile.role === "owner" && billing && (
         <BillingSection billing={billing} paid={paid} />
       )}
+
+      {/* The owner's copy of everything. Staff are not shown it. */}
+      {profile.role === "owner" && <RecordsSection paid={paid} />}
 
       {/* Always here, even after the banner has been dismissed, so there is
           always a way to install. Renders nothing once installed. */}

@@ -473,6 +473,21 @@ Sales History has **Day / Week / Month** tabs (owner's idea, 11 September
 
 ---
 
+## 6j. Downloading records, properly
+
+"Download your records" is on the pricing page as a paid feature, but the
+only way to it was the delete-my-shop flow. Now:
+
+- **Settings > Your records** (owners only): "Download my records" on Paid,
+  "on the paid plan" with See plans on Free. `settings/RecordsSection.tsx`.
+- **Owner only** at `/api/account/export` too (403 for staff): the file
+  holds every sale and every debtor's name.
+- **Complete:** sales are read in pages of 1000; it used to stop silently
+  at the API's 1000-row cap. Tested with 1,501 sales.
+- **Lagos times** in the file (were UTC).
+
+---
+
 ## 7. Database changes
 
 All applied to the live Supabase project (`ktpqywmtgswjmvdyvvlg`) as migrations.
