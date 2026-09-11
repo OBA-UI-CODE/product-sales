@@ -51,6 +51,16 @@ function isStandalone() {
   );
 }
 
+function deviceOf(sub: PushSubscription) {
+  const json = sub.toJSON() as { endpoint: string; keys?: { p256dh?: string; auth?: string } };
+  return {
+    endpoint: json.endpoint,
+    p256dh: json.keys?.p256dh ?? "",
+    auth: json.keys?.auth ?? "",
+    userAgent: navigator.userAgent,
+  };
+}
+
 const SLOTS: { key: keyof ReminderPrefs; label: string; detail: string }[] = [
   { key: "morning", label: "Morning, 8am", detail: "A good-morning nudge to log the day's sales" },
   { key: "afternoon", label: "Afternoon, 2pm", detail: "Only if nothing has been logged yet today" },
@@ -74,7 +84,18 @@ export default function RemindersSection({ initialPrefs }: { initialPrefs: Remin
       if (Notification.permission === "denied") return setState("denied");
       const reg = await navigator.serviceWorker.getRegistration("/");
       const sub = await reg?.pushManager.getSubscription();
-      setState(sub && Notification.permission === "granted" ? "on" : "off");
+      if (sub && Notification.permission === "granted") {
+        /*
+          The phone says reminders are on, but the server may not know it
+          for THIS login: a shared shop phone last used by someone else, or
+          a device the server dropped. Saving it again on every visit keeps
+          the two in step, so "on" here always means reminders will arrive.
+        */
+        await saveDevice(deviceOf(sub));
+        setState("on");
+      } else {
+        setState("off");
+      }
     })().catch(() => setState("unsupported"));
   }, []);
 
@@ -95,13 +116,7 @@ export default function RemindersSection({ initialPrefs }: { initialPrefs: Remin
             userVisibleOnly: true,
             applicationServerKey: keyBytes(VAPID_PUBLIC_KEY),
           }));
-        const json = sub.toJSON() as { endpoint: string; keys?: { p256dh?: string; auth?: string } };
-        const result = await saveDevice({
-          endpoint: json.endpoint,
-          p256dh: json.keys?.p256dh ?? "",
-          auth: json.keys?.auth ?? "",
-          userAgent: navigator.userAgent,
-        });
+        const result = await saveDevice(deviceOf(sub));
         if (result.error) {
           setMessage({ tone: "error", text: result.error });
           return;
