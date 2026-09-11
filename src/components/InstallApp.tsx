@@ -159,6 +159,17 @@ export default function InstallApp({
 
   return (
     <>
+      {/*
+        The Settings section's heading lives here, not on the page, so it
+        goes when the button goes. It used to sit on the page by itself, and
+        once the app was installed (or on a browser that cannot install) it
+        was left as a heading with nothing under it.
+      */}
+      {variant === "settings" && (
+        <h2 className="-mb-4 font-heading text-xl font-semibold">
+          Install the app
+        </h2>
+      )}
       <div className={shell}>
         <div className="flex flex-col gap-3 rounded-md border border-border-strong bg-bg-surface p-4 shadow-lg">
           {variant !== "settings" && (
