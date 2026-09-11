@@ -138,7 +138,12 @@ function Card({ t, className = "" }: { t: Testimonial; className?: string }) {
         mobile/tablet  24px top pad -> stars -> 24 -> quote -> 48 -> rule
                        -> 40 -> profile -> 24px bottom pad
         web            content vertically centred, 64 to the rule, then 10 to
-                       the profile row (the file's 94px profile strip)
+                       the profile row (the file's 94px profile strip). The
+                       302px content sits in the 330px card with 14px above
+                       and below (77:927); that is now real padding (13px + the 1px border).
+                       Without it, on 1200 to 1366px screens a quote that
+                       wraps one line more filled the card and the stars
+                       touched the top edge.
 
       Mobile/tablet were previously rendering with the web rhythm, which is why
       the stars sat hard against the top edge. Heights are minimums so a longer
@@ -146,7 +151,7 @@ function Card({ t, className = "" }: { t: Testimonial; className?: string }) {
       the file for exactly that reason).
     */
     <div
-      className={`flex min-h-[330px] flex-col overflow-hidden rounded-md border border-border-strong bg-bg-surface py-6 web:justify-center web:py-0 ${className}`}
+      className={`flex min-h-[330px] flex-col overflow-hidden rounded-md border border-border-strong bg-bg-surface py-6 web:justify-center web:py-[13px] ${className}`}
     >
       <div className="flex w-full flex-col items-start gap-6 px-4">
         <Stars />
