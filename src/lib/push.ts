@@ -48,8 +48,15 @@ export async function sendPush(target: PushTarget, message: PushMessage): Promis
     await webpush.sendNotification(
       { endpoint: target.endpoint, keys: { p256dh: target.p256dh, auth: target.auth } },
       JSON.stringify(message),
-      /* A reminder that arrives four hours late is worse than none. */
-      { TTL: 4 * 3600, urgency: "normal" }
+      /*
+        urgency "high": Android holds "normal" pushes while the phone is idle
+        (Doze, battery saver), sometimes for hours, so the 8am and 2pm
+        reminders of 12 September 2026 were accepted by Google's push service
+        but never shown on the owner's idle phone, while tests sent with
+        the phone in hand arrived at once. A reminder is only useful on time.
+        TTL: one that arrives four hours late is worse than none.
+      */
+      { TTL: 4 * 3600, urgency: "high" }
     );
     return "sent";
   } catch (e) {
