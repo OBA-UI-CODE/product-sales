@@ -214,7 +214,7 @@ export default async function SalesHistoryPage({
             className="press flex h-11 items-center gap-2 rounded-md border border-primary-border px-4 text-sm font-semibold text-primary-text"
           >
             <TrendIcon className="size-4" />
-            Insights
+            See insights
           </Link>
           {view === "day" && (
             <DatePicker

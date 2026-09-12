@@ -15,7 +15,8 @@ import { NAV_ITEMS } from "./NavItems";
             with a 26 gap, which at 393 works out the same as justify-between
             across the 347-wide row - and unlike a fixed gap it cannot force a
             sideways scroll once a scrollbar narrows the viewport.
-    label   Inter Regular 13/18 — text/secondary, primary/text when active
+    label   Inter Regular 13/18 — text/secondary, primary/text when active;
+            icons 18px
             (the file has 14/20 with 24px icons; scaled to 12 and 16px
             icons on 12 September 2026 (then 13 on request), once
             Insights made it six items and it looked packed)
@@ -53,7 +54,7 @@ export default function BottomNav() {
                 over a purple word.
               */}
               <item.Icon
-                className={`size-4 ${active ? "text-primary-text" : "text-text-primary"}`}
+                className={`size-[18px] ${active ? "text-primary-text" : "text-text-primary"}`}
               />
               <span
                 className={`whitespace-nowrap text-center font-body text-[13px] font-normal leading-[18px] ${
