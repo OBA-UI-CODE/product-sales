@@ -43,10 +43,10 @@ const GET_STARTED = [
   { label: "Contact Us", href: "/contact" },
 ];
 const SOCIAL: { name: string; href?: string }[] = [
-  { name: "LinkedIn" },
+  { name: "LinkedIn", href: "https://www.linkedin.com/company/johta/" },
   { name: "Facebook", href: "https://www.facebook.com/share/1DimmNNQAn/" },
   { name: "X", href: "https://x.com/JOHTA_NG" },
-  { name: "Instagram" },
+  { name: "Instagram", href: "https://www.instagram.com/johta__/" },
 ];
 
 const HEAD =
