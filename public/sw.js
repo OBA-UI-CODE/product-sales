@@ -20,7 +20,25 @@ self.addEventListener("push", (event) => {
     data = { body: event.data ? event.data.text() : "" };
   }
 
-  event.waitUntil(
+  /*
+    Delivery receipt: tell the server this push reached the phone. Without
+    it the server only knows the push service accepted it, not whether the
+    phone ever got it. Best effort; a failure never stops the notification.
+  */
+  const receipt = self.registration.pushManager
+    .getSubscription()
+    .then((sub) =>
+      sub
+        ? fetch("/api/push/received", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ endpoint: sub.endpoint, tag: data.tag || "" }),
+          })
+        : null
+    )
+    .catch(() => null);
+
+  event.waitUntil(Promise.all([receipt,
     self.registration.showNotification(data.title || "JOHTA", {
       body: data.body || "",
       icon: "/icon-192.png",
@@ -31,7 +49,7 @@ self.addEventListener("push", (event) => {
       renotify: true,
       data: { url: data.url || "/dashboard" },
     })
-  );
+  ]));
 });
 
 self.addEventListener("notificationclick", (event) => {
