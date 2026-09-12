@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { TrendIcon } from "@/components/dashboard/NavIcons";
 import { getCurrentShopContext, shopOf } from "@/lib/shop-context";
 import { FREE_HISTORY_DAYS, freeHistoryStart, isPaidShop } from "@/lib/plan";
 import { formatNaira } from "@/lib/format";
@@ -202,14 +203,28 @@ export default async function SalesHistoryPage({
     <div className="flex flex-col gap-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <h1 className="font-heading text-[32px] font-semibold">Sales History</h1>
-        {view === "day" && (
-          <DatePicker
-            key={anchor}
-            defaultValue={anchor}
-            max={today}
-            min={paid ? undefined : addDays(today, -FREE_HISTORY_DAYS)}
-          />
-        )}
+        <div className="flex flex-wrap items-center gap-3">
+          {/*
+            The way to Insights on phones, where it is not in the bottom bar
+            (kept at five items). Here on tablet and web too, beside the
+            sales it is about.
+          */}
+          <Link
+            href="/insights"
+            className="press flex h-11 items-center gap-2 rounded-md border border-primary-border px-4 text-sm font-semibold text-primary-text"
+          >
+            <TrendIcon className="size-4" />
+            Insights
+          </Link>
+          {view === "day" && (
+            <DatePicker
+              key={anchor}
+              defaultValue={anchor}
+              max={today}
+              min={paid ? undefined : addDays(today, -FREE_HISTORY_DAYS)}
+            />
+          )}
+        </div>
       </div>
 
       <div className="flex flex-col gap-3 tab:flex-row tab:items-center tab:justify-between">

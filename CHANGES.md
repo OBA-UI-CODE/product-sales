@@ -517,8 +517,10 @@ this phone".
 
 ## 6l. Insights
 
-A new **Insights** page (sidebar and bottom bar, after History; the bottom
-bar now has 6 items and fits at 320px) plus a **Top sellers this week**
+A new **Insights** page (in the sidebar on tablet and web; on phones an
+**Insights** button at the top of Sales History, so the bottom bar stays at
+five items, relabelled Home / Sales / Stock / Debts / Account at 13px with
+16px icons) plus a **Top sellers this week**
 card on the dashboard. Built 12 September 2026 in the existing style; the
 owner will redesign it in Figma. Owners and staff both see it.
 

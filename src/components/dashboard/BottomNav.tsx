@@ -34,8 +34,11 @@ export default function BottomNav() {
   return (
     <nav className="fixed inset-x-0 bottom-0 z-40 h-[105px] border-t border-border-strong bg-bg-canvas px-[23px] pt-[19px] tab:hidden">
       <div className="flex w-full items-start justify-between">
-        {NAV_ITEMS.map((item) => {
-          const active = pathname === item.href;
+        {NAV_ITEMS.filter((item) => !("mobile" in item && item.mobile === false)).map((item) => {
+          /* Insights is reached from Sales History, so "Sales" stays lit. */
+          const active =
+            pathname === item.href ||
+            (item.href === "/sales-history" && pathname.startsWith("/insights"));
           return (
             <Link
               key={item.href}
