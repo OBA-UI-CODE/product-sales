@@ -1,8 +1,15 @@
 import { getCurrentShopContext } from "@/lib/shop-context";
 import ProductsClient from "./ProductsClient";
 
-export default async function ProductsPage() {
+export default async function ProductsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ add?: string }>;
+}) {
   const { supabase, profile } = await getCurrentShopContext();
+  /* ?add=Ankara: arrived from "Add to your products?" after a typed-in sale. */
+  const { add } = await searchParams;
+  const prefillName = profile.role === "owner" ? add?.trim().slice(0, 80) || undefined : undefined;
 
   const [{ data: products }, { data: variants }] = await Promise.all([
     supabase
@@ -20,6 +27,6 @@ export default async function ProductsPage() {
   ]);
 
   return (
-    <ProductsClient products={products ?? []} variants={variants ?? []} />
+    <ProductsClient products={products ?? []} variants={variants ?? []} prefillName={prefillName} />
   );
 }

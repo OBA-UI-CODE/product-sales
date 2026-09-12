@@ -71,6 +71,16 @@ export function ChartIcon(props: NavIconProps) {
   );
 }
 
+/* Insights: a rising trend line with its arrowhead. */
+export function TrendIcon(props: NavIconProps) {
+  return (
+    <Svg {...props}>
+      <path d="M3 17L9 11L13 15L21 7" />
+      <path d="M15 7H21V13" />
+    </Svg>
+  );
+}
+
 export function BoxIcon(props: NavIconProps) {
   return (
     <Svg {...props}>

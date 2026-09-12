@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { X, Minus, Plus } from "lucide-react";
@@ -60,6 +61,7 @@ export function AddSaleModal({ onClose }: { onClose: () => void }) {
   const [debtorName, setDebtorName] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [suggest, setSuggest] = useState<{ name: string; times: number } | null>(null);
 
   useEffect(() => {
     const supabase = createClient();
@@ -201,7 +203,50 @@ export function AddSaleModal({ onClose }: { onClose: () => void }) {
     }
 
     router.refresh();
+    /* A typed-in item sold before: offer to make it a product (owners). */
+    if (result.suggestProduct) {
+      setSuggest(result.suggestProduct);
+      return;
+    }
     onClose();
+  }
+
+  if (suggest) {
+    return (
+      <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 md:items-center">
+        <div className="flex w-full max-w-[480px] flex-col gap-5 rounded-t-md bg-[var(--color-bg-surface)] p-8 md:rounded-md">
+          <p className="rounded-md bg-primary-subtle px-4 py-3 text-sm font-semibold text-primary-text">
+            Sale saved.
+          </p>
+          <div className="flex flex-col gap-2">
+            <h2 className="font-heading text-xl font-bold">
+              Add &ldquo;{suggest.name}&rdquo; to your products?
+            </h2>
+            <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">
+              You have typed it in {suggest.times} times. As a product, JOHTA
+              keeps count of its stock, warns you before it runs out, and shows
+              it in Insights. Next time you just pick it from the list.
+            </p>
+          </div>
+          <div className="flex flex-col gap-3">
+            <Link
+              href={`/products?add=${encodeURIComponent(suggest.name)}`}
+              onClick={onClose}
+              className="press flex h-12 items-center justify-center rounded-md bg-[var(--color-primary)] font-semibold text-white"
+            >
+              Add to products
+            </Link>
+            <button
+              type="button"
+              onClick={onClose}
+              className="h-12 rounded-md border border-[var(--color-border)] text-sm font-semibold text-[var(--color-text-secondary)]"
+            >
+              Not now
+            </button>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (

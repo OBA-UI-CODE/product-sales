@@ -4,6 +4,7 @@ import {
   HomeIcon,
   ReceiptIcon,
   ShieldIcon,
+  TrendIcon,
 } from "./NavIcons";
 
 /*
@@ -26,6 +27,8 @@ export const NAV_ITEMS = [
     shortLabel: "History",
     Icon: ChartIcon,
   },
+  /* Not in the Figma nav (added 12 September 2026 with the Insights page). */
+  { href: "/insights", label: "Insights", shortLabel: "Insights", Icon: TrendIcon },
   { href: "/products", label: "Product", shortLabel: "Products", Icon: BoxIcon },
   { href: "/debts", label: "Debts", shortLabel: "Debts", Icon: ReceiptIcon },
   {

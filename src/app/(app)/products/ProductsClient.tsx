@@ -35,11 +35,15 @@ const EMPTY_DRAFT: DraftVariant = { label: "", price: "", stock: "" };
 export default function ProductsClient({
   products,
   variants,
+  prefillName,
 }: {
   products: Product[];
   variants: Variant[];
+  /* From "Add to your products?" after a typed-in sale: open the form
+     with the name already in it. */
+  prefillName?: string;
 }) {
-  const [showForm, setShowForm] = useState(false);
+  const [showForm, setShowForm] = useState(!!prefillName);
   const [query, setQuery] = useState("");
   /*
     Sizes are opt-in. Most shops sell a thing at one price and should not have
@@ -109,6 +113,8 @@ export default function ProductsClient({
             <input
               name="name"
               required
+              defaultValue={prefillName}
+              autoFocus={!!prefillName}
               placeholder="Product name (e.g. Relaxer)"
               className="h-11 w-full min-w-0 shrink-0 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-canvas)] px-4 text-sm tab:flex-1"
             />

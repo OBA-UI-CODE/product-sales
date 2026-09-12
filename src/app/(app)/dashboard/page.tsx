@@ -14,6 +14,7 @@ import InstallApp from "@/components/InstallApp";
 import TrialNotice from "@/components/dashboard/TrialNotice";
 import { isOnTrial, isPaidShop } from "@/lib/plan";
 import { formatDay } from "@/lib/notices";
+import { lagosMidnight, lagosToday, weekStart } from "@/lib/lagos-date";
 
 /*
   Dashboard — Figma 201:3069 (web) / 201:3077 (tablet) / 201:3085 (mobile)
@@ -50,6 +51,13 @@ export default async function DashboardPage() {
     a network round trip to Supabase — awaiting them in sequence was costing
     roughly four times the latency on every dashboard load.
   */
+  /* Started now so it runs alongside the reads below, not after them. */
+  const weekTopPromise = supabase.rpc("insights_top_items", {
+    p_from: lagosMidnight(weekStart(lagosToday())).toISOString(),
+    p_to: new Date().toISOString(),
+    p_limit: 3,
+  });
+
   const [
     { data: todaySales },
     { data: yesterdaySales },
@@ -80,6 +88,15 @@ export default async function DashboardPage() {
       .is("archived_at", null),
     supabase.from("profiles").select("id, name").eq("shop_id", shopId),
   ]);
+
+  /* This week's top sellers (Monday to now, Lagos), for the card under the
+     stats. Added up in the database, see insights_top_items(). */
+  const { data: weekTop } = await weekTopPromise;
+  const topThisWeek = ((weekTop ?? []) as { item: string; quantity: number; revenue: number }[]).map((t) => ({
+    item: t.item,
+    quantity: Number(t.quantity),
+    revenue: Number(t.revenue),
+  }));
 
   const sales = todaySales ?? [];
   const totalToday = sales.reduce((sum, s) => sum + Number(s.total_price), 0);
@@ -290,6 +307,43 @@ export default async function DashboardPage() {
         />
       </div>
       </div>
+
+      {/*
+        Top sellers this week, at a glance. Not in Figma (added with the
+        Insights page, 12 September 2026); styled like the stat cards.
+        Hidden in a week with no sales yet rather than showing an empty box.
+      */}
+      {topThisWeek.length > 0 && (
+        <section className="flex flex-col gap-4 rounded-md border border-border-default bg-bg-surface p-5 tab:p-6">
+          <div className="flex items-center justify-between gap-3">
+            <h2 className="font-heading text-[20px] font-semibold leading-[24px] tracking-[-1px] text-text-primary">
+              Top sellers this week
+            </h2>
+            <a
+              href="/insights"
+              className="whitespace-nowrap font-body text-[14px] leading-[24px] text-primary-text tab:text-[16px]"
+            >
+              See insights
+            </a>
+          </div>
+          <ol className="flex flex-col gap-3">
+            {topThisWeek.map((t, i) => (
+              <li key={t.item} className="flex items-center justify-between gap-3">
+                <span className="flex min-w-0 items-center gap-3">
+                  <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary-subtle font-heading text-sm font-semibold text-primary-text">
+                    {i + 1}
+                  </span>
+                  <span className="min-w-0 truncate font-body text-[16px] text-text-primary">{t.item}</span>
+                </span>
+                <span className="shrink-0 text-right">
+                  <span className="block font-body text-[16px] font-semibold text-text-primary">{formatNaira(t.revenue)}</span>
+                  <span className="block font-body text-[12px] text-text-secondary">{t.quantity} sold</span>
+                </span>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
 
       <div className="flex flex-col gap-6">
         <div className="flex items-center justify-between">

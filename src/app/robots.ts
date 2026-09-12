@@ -23,6 +23,7 @@ export default function robots(): MetadataRoute.Robots {
       disallow: [
         "/dashboard",
         "/sales-history",
+        "/insights",
         "/products",
         "/debts",
         "/settings",

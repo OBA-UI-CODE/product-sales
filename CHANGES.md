@@ -515,6 +515,36 @@ this phone".
 
 ---
 
+## 6l. Insights
+
+A new **Insights** page (sidebar and bottom bar, after History; the bottom
+bar now has 6 items and fits at 320px) plus a **Top sellers this week**
+card on the dashboard. Built 12 September 2026 in the existing style; the
+owner will redesign it in Figma. Owners and staff both see it.
+
+| Section | What it shows | Plan |
+|---|---|---|
+| Sales trend | 7 days (vs the 7 before, %), weeks, 12 months; bars open that period in Sales History | Free: 7 days, 4 weeks. Paid: 8 weeks, 12 months |
+| Top sellers | last 30 days by money, with quantity | Free |
+| Running out soon | sales rate over 14 days (or since added) against stock; items with 7 days or less, and sold-out best sellers | Paid |
+| Not selling | stock with no sale in 30 days, value tied up, last sold; items younger than 30 days are left out | Paid |
+
+- Database functions, all SECURITY INVOKER so RLS applies:
+  `insights_top_items`, `insights_stock_lines`, `insights_running_out`,
+  `insights_not_selling` (migrations `20260912001015`, `20260912002044`).
+  A product with sizes is judged by its sizes, where the stock is.
+- Typed-in sales have no product: top sellers groups them by name (case and
+  spacing ignored); the stock-based two cannot see them. So the Add Sale
+  form now offers **"Add Ankara to your products?"** to owners the second
+  time the same name is typed within 60 days, and `/products?add=Name`
+  opens the form prefilled. Insights also tells owners when 30% or more of
+  the month's sales were typed in.
+- Charts are plain elements (`insights/TrendChart.tsx`), no chart library.
+- Tested with a year of history (20 checks, including the nudge through
+  the real form and the Free locks).
+
+---
+
 ## 7. Database changes
 
 All applied to the live Supabase project (`ktpqywmtgswjmvdyvvlg`) as migrations.
