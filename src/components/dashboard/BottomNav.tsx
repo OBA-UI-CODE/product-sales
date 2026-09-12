@@ -15,7 +15,10 @@ import { NAV_ITEMS } from "./NavItems";
             with a 26 gap, which at 393 works out the same as justify-between
             across the 347-wide row - and unlike a fixed gap it cannot force a
             sideways scroll once a scrollbar narrows the viewport.
-    label   Inter Regular 14/20 — text/secondary, primary/text when active
+    label   Inter Regular 12/16 — text/secondary, primary/text when active
+            (the file has 14/20 with 24px icons; scaled to 12 and 16px
+            icons on 12 September 2026, at the owner's request, once
+            Insights made it six items and it looked packed)
     active  icon AND label both in the shop's accent colour, with NO filled
             pill (unlike the sidebar, which fills the active row and keeps
             its icon white). The design shows this as green because green is
@@ -47,10 +50,10 @@ export default function BottomNav() {
                 over a purple word.
               */}
               <item.Icon
-                className={active ? "text-primary-text" : "text-text-primary"}
+                className={`size-4 ${active ? "text-primary-text" : "text-text-primary"}`}
               />
               <span
-                className={`whitespace-nowrap text-center font-body text-[14px] font-normal leading-[20px] ${
+                className={`whitespace-nowrap text-center font-body text-[12px] font-normal leading-[16px] ${
                   active ? "text-primary-text" : "text-text-secondary"
                 }`}
               >

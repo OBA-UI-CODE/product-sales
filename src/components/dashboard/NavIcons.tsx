@@ -44,7 +44,9 @@ function Svg({
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden
       focusable="false"
-      className={`size-6 shrink-0 ${className ?? ""}`}
+      /* 24px by default; a caller's own size-* class replaces it (the
+         mobile bottom bar uses 16) rather than fighting it in the CSS. */
+      className={`${/(^|\s)size-/.test(className ?? "") ? "" : "size-6"} shrink-0 ${className ?? ""}`}
       stroke="currentColor"
       strokeWidth={strokeWidth}
       strokeLinecap="round"
