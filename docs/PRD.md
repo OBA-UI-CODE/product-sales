@@ -237,6 +237,7 @@ web (1440).
 | Contact | `/contact` | Reach the team | Form (name, email, type of enquiry, message) |
 | Terms | `/terms` | Terms of service | Updated for Free and Paid |
 | Privacy | `/privacy` | Privacy policy (NDPA) | Updated 12 Sep 2026, mentions reminders and suppliers |
+| Page not found | any unknown address | Get people back on track from an old or mistyped link, on the website or in the app | Nav, "Error 404" badge, "This page doesn't exist.", Go to homepage and Go to my dashboard, links to How it works, Pricing, About, Contact, Footer. Real 404 status, kept out of search. Added 13 Sep 2026 in the website's style (no Figma design) |
 
 ### 7.2 Requirements
 
