@@ -73,8 +73,9 @@ export default function ThemeStep({
     <div className="min-h-screen w-full bg-bg-canvas" style={themeVars(themeColor)}>
       <div className="flex flex-col items-center gap-6 pb-14 tab:items-start tab:gap-12 tab:pt-12 tab:pb-6 web:mx-auto web:max-w-[1440px] web:flex-row web:items-start web:gap-[201px] web:py-6 web:pl-[59px]">
         {/* Form — first in the DOM, painted second on mobile */}
-        <div className="order-2 flex w-[345px] shrink-0 flex-col items-start gap-8 tab:order-1 tab:ml-12 tab:w-[515px] tab:gap-12 web:ml-0 web:mt-[53px] web:w-[489px] web:gap-16">
-          <div className="flex w-[316px] flex-col items-start gap-6 tab:w-full tab:gap-16">
+        {/* Mobile: 24px side padding, not a fixed 345 width (see CategoryStep). */}
+        <div className="order-2 flex w-full shrink-0 flex-col items-start gap-8 px-6 tab:order-1 tab:ml-12 tab:w-[515px] tab:gap-12 tab:px-0 web:ml-0 web:mt-[53px] web:w-[489px] web:gap-16">
+          <div className="flex w-full max-w-[316px] flex-col items-start gap-6 tab:max-w-none tab:gap-16">
             <OnboardingBack onBack={onBack} />
             <p className="w-full font-brand text-[40px] leading-[48px] tracking-[-1px] text-primary-text tab:text-[64px] tab:leading-[68px]">
               <HomeLink>JOHTA</HomeLink>
@@ -94,7 +95,10 @@ export default function ThemeStep({
             </div>
           </div>
 
-          <div className="flex items-start gap-4">
+          {/* Five swatches with the file's 16px gaps need 344px. On phones
+              the row spreads across the column instead (16px at 393, tighter
+              on narrower screens) and only wraps on the very smallest. */}
+          <div className="flex w-full flex-wrap items-start justify-between gap-y-4 tab:w-auto tab:justify-start tab:gap-4">
             {THEME_COLORS.map((c) => (
               <ColourSwatch
                 key={c}

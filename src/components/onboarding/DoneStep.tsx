@@ -20,7 +20,7 @@ import OnboardingButton from "./OnboardingButton";
 export default function DoneStep({ onDone }: { onDone?: () => void }) {
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-bg-canvas px-5">
-      <div className="flex w-[353px] flex-col items-center gap-6 tab:w-[553px]">
+      <div className="flex w-full max-w-[353px] flex-col items-center gap-6 tab:w-[553px] tab:max-w-none">
         <img
           src="/figma/icon-tick-circle.svg"
           alt=""

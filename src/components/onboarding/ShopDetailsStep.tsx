@@ -72,8 +72,9 @@ export default function ShopDetailsStep({
     <div className="min-h-screen w-full bg-bg-canvas">
       <div className="flex flex-col items-center gap-6 pb-[37px] tab:items-start tab:gap-[55px] tab:pt-12 tab:pb-6 web:mx-auto web:max-w-[1440px] web:flex-row web:items-center web:gap-[65px] web:py-6 web:pl-[59px]">
         {/* Form — first in the DOM, painted second on mobile */}
-        <div className="order-2 flex w-[345px] shrink-0 flex-col items-start gap-8 tab:order-1 tab:ml-12 tab:w-[633px] tab:gap-12 web:ml-0 web:w-[625px] web:gap-16">
-          <div className="flex w-[316px] flex-col items-start gap-6 tab:w-[515px] tab:gap-16">
+        {/* Mobile: 24px side padding, not a fixed 345 width (see CategoryStep). */}
+        <div className="order-2 flex w-full shrink-0 flex-col items-start gap-8 px-6 tab:order-1 tab:ml-12 tab:w-[633px] tab:gap-12 tab:px-0 web:ml-0 web:w-[625px] web:gap-16">
+          <div className="flex w-full max-w-[316px] flex-col items-start gap-6 tab:w-[515px] tab:max-w-none tab:gap-16">
             <OnboardingBack onBack={onBack} />
             <p className="w-full font-brand text-[40px] leading-[48px] tracking-[-1px] text-primary-text tab:text-[64px] tab:leading-[68px]">
               <HomeLink>JOHTA</HomeLink>
@@ -84,7 +85,7 @@ export default function ShopDetailsStep({
                 <p className="w-full font-heading text-[32px] font-semibold leading-[39px] tracking-[-1px] text-text-primary tab:text-[40px] tab:leading-[48px]">
                   What&apos;s the name of your shop?
                 </p>
-                <p className="w-[316px] font-body text-[16px] font-normal leading-[24px] text-text-secondary tab:w-full tab:text-[18px] tab:leading-[28px]">
+                <p className="w-full font-body text-[16px] font-normal leading-[24px] text-text-secondary tab:text-[18px] tab:leading-[28px]">
                   Let&apos;s set up your shop. This are basic questions you need
                   to answers to get your shop dashboard set.
                 </p>

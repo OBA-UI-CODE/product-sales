@@ -30,7 +30,7 @@ export default function WelcomeStep({
 }) {
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-bg-canvas px-6">
-      <div className="flex w-[341px] flex-col items-center gap-6 text-center tab:w-[553px]">
+      <div className="flex w-full max-w-[341px] flex-col items-center gap-6 text-center tab:w-[553px] tab:max-w-none">
         <p className="w-full font-brand text-[48px] leading-[58px] tracking-[-1px] text-primary-text tab:text-[64px] tab:leading-[68px]">
           <HomeLink>JOHTA</HomeLink>
         </p>

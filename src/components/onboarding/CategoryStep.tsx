@@ -113,7 +113,10 @@ export default function CategoryStep({
     <div className="min-h-screen w-full bg-bg-canvas">
       <div className="flex flex-col items-center gap-6 pb-[79px] tab:items-start tab:gap-12 tab:pt-12 tab:pb-6 web:mx-auto web:max-w-[1440px] web:flex-row web:items-center web:gap-[61px] web:py-6 web:pl-[55px]">
         {/* Form — first in the DOM, painted second on mobile */}
-        <div className="order-2 flex w-[345px] shrink-0 flex-col items-start gap-8 tab:order-1 tab:ml-12 tab:w-[633px] tab:gap-16 web:ml-0">
+        {/* Mobile: the file's 24px side margins (345 inside 393), kept as
+            padding rather than a fixed 345 width so narrower phones keep the
+            margin instead of the text running to the screen edge. */}
+        <div className="order-2 flex w-full shrink-0 flex-col items-start gap-8 px-6 tab:order-1 tab:ml-12 tab:w-[633px] tab:gap-16 tab:px-0 web:ml-0">
           <div className="flex w-full flex-col items-start gap-8 tab:gap-16">
             <div className="flex w-full flex-col items-start gap-6 tab:w-[515px] tab:gap-16">
               <OnboardingBack onBack={onBack} />
@@ -126,7 +129,7 @@ export default function CategoryStep({
                   <p className="w-full font-heading text-[32px] font-semibold leading-[39px] tracking-[-1px] text-text-primary tab:text-[40px] tab:leading-[48px]">
                     Tell us about your shop
                   </p>
-                  <p className="w-[316px] font-body text-[16px] font-normal leading-[24px] text-text-secondary tab:w-full tab:text-[18px] tab:leading-[28px]">
+                  <p className="w-full max-w-[316px] font-body text-[16px] font-normal leading-[24px] text-text-secondary tab:max-w-none tab:text-[18px] tab:leading-[28px]">
                     Let&apos;s set up your shop. This are basic questions you
                     need to answers to get your shop dashboard set.
                   </p>

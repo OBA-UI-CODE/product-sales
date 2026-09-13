@@ -33,7 +33,9 @@ export default function Hero() {
               <span className="leading-[68px] text-green-100 tab:leading-[77px] web:leading-[87px]">
                 Every Sale,
               </span>
-              <span className="leading-[68px] tab:leading-[77px] web:leading-[87px]"> Accounted For.</span>
+              {/* Mobile draws the whole headline in green-100; tablet and
+                  up keep the two-tone split. */}
+              <span className="leading-[68px] text-green-100 tab:leading-[77px] tab:text-primary-text web:leading-[87px]"> Accounted For.</span>
             </h1>
 
             {/*
@@ -49,10 +51,20 @@ export default function Hero() {
               else, instead of breaking at one exact viewport size.
             */}
             <p className="mx-auto w-full max-w-[900px] text-center font-body text-[16px] font-normal leading-[24px] text-text-secondary tab:font-heading tab:text-[18px] tab:font-semibold tab:leading-[22px] tab:tracking-[-1px] web:text-[24px] web:leading-[29px]">
-              <span className="text-primary-text">JOHTA</span> turns your paper
-              notebook into a system your whole team can trust, log sales in
-              seconds, track stock automatically, and know exactly what stock
-              was sold, how much you made and what remains
+              <span className="text-primary-text">JOHTA</span>{" "}
+              {/* The mobile frame (19:365) words this differently from the
+                  web one, so each breakpoint shows its own copy. */}
+              <span className="tab:hidden">
+                transforms your paper notebook into a reliable system for your
+                entire team. Log sales in seconds, track stock automatically,
+                and see exactly what was sold, how much you earned, and
+                what&rsquo;s left.
+              </span>
+              <span className="hidden tab:inline">
+                turns your paper notebook into a system your whole team can
+                trust, log sales in seconds, track stock automatically, and know
+                exactly what stock was sold, how much you made and what remains
+              </span>
             </p>
           </div>
         </div>
