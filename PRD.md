@@ -1,3 +1,7 @@
+> **Superseded.** This is the original plan from 26 August 2026, kept as a
+> record. The product as built and live (JOHTA) is described in
+> [docs/PRD.md](docs/PRD.md), which also compares the two in section 15.
+
 # Product Requirements Document — SaleBook (Commercial / Multi-Tenant SaaS)
 
 **Product name (working title):** SaleBook
