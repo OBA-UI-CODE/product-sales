@@ -27,15 +27,17 @@ export default function Hero() {
             </p>
           </div>
 
-          {/* Headline + subtext */}
+          {/* Headline + subtext. Every breakpoint follows the WEB frame: "Every
+              Sale," light green, "Accounted For." darker green, and the web
+              wording below. The tablet and mobile frames draw the headline
+              all light green with different wording; the owner confirmed
+              those frames are out of date (13 Sept), not the intent. */}
           <div className="flex w-full flex-col items-start gap-6 text-center tab:text-left">
             <h1 className="w-full font-heading text-[56px] font-semibold leading-[68px] tracking-[-1px] text-primary-text tab:text-[64px] tab:leading-[77px] web:text-[72px] web:leading-[87px]">
               <span className="leading-[68px] text-green-100 tab:leading-[77px] web:leading-[87px]">
                 Every Sale,
               </span>
-              {/* Mobile draws the whole headline in green-100; tablet and
-                  up keep the two-tone split. */}
-              <span className="leading-[68px] text-green-100 tab:leading-[77px] tab:text-primary-text web:leading-[87px]"> Accounted For.</span>
+              <span className="leading-[68px] tab:leading-[77px] web:leading-[87px]"> Accounted For.</span>
             </h1>
 
             {/*
@@ -51,20 +53,10 @@ export default function Hero() {
               else, instead of breaking at one exact viewport size.
             */}
             <p className="mx-auto w-full max-w-[900px] text-center font-body text-[16px] font-normal leading-[24px] text-text-secondary tab:font-heading tab:text-[18px] tab:font-semibold tab:leading-[22px] tab:tracking-[-1px] web:text-[24px] web:leading-[29px]">
-              <span className="text-primary-text">JOHTA</span>{" "}
-              {/* The mobile frame (19:365) words this differently from the
-                  web one, so each breakpoint shows its own copy. */}
-              <span className="tab:hidden">
-                transforms your paper notebook into a reliable system for your
-                entire team. Log sales in seconds, track stock automatically,
-                and see exactly what was sold, how much you earned, and
-                what&rsquo;s left.
-              </span>
-              <span className="hidden tab:inline">
-                turns your paper notebook into a system your whole team can
-                trust, log sales in seconds, track stock automatically, and know
-                exactly what stock was sold, how much you made and what remains
-              </span>
+              <span className="text-primary-text">JOHTA</span> turns your paper
+              notebook into a system your whole team can trust, log sales in
+              seconds, track stock automatically, and know exactly what stock
+              was sold, how much you made and what remains
             </p>
           </div>
         </div>
