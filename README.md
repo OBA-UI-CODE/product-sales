@@ -1,4 +1,4 @@
-# SaleBook — Commercial (Multi-Tenant SaaS)
+# JOHTA — Commercial (Multi-Tenant SaaS)
 
 The commercial, multi-tenant version of SaleBook: a sales-logging web app
 that any small shop can sign up for, brand as their own, and pay to use.
