@@ -23,21 +23,43 @@ function parseVariants(raw: FormDataEntryValue | null): VariantInput[] {
       .filter((v) => v && typeof v.label === "string" && v.label.trim())
       .map((v) => ({
         label: v.label.trim(),
-        price: Number(v.price) || 0,
-        stock: Number(v.stock) || 0,
+        price: Number(v.price),
+        stock: Number(v.stock),
       }));
   } catch {
     return [];
   }
 }
 
+function validInventoryNumber(value: number, integer = false): boolean {
+  return Number.isFinite(value) && value >= 0 && (!integer || Number.isSafeInteger(value));
+}
+
+function validateVariant(variant: VariantInput): void {
+  if (!variant.label || variant.label.length > 100) {
+    throw new Error("Each size or pack needs a label of up to 100 characters.");
+  }
+  if (!validInventoryNumber(variant.price) || !validInventoryNumber(variant.stock, true)) {
+    throw new Error("Prices and stock must be valid non-negative numbers.");
+  }
+}
+
 export async function addProduct(formData: FormData) {
   const { supabase, profile } = await getCurrentShopContext();
-  const name = formData.get("name") as string;
-  const category = formData.get("category") as string;
-  const price = Number(formData.get("price")) || 0;
-  const stock = Number(formData.get("stock")) || 0;
+  const name = String(formData.get("name") ?? "").trim();
+  const category = String(formData.get("category") ?? "").trim();
+  const price = Number(formData.get("price"));
+  const stock = Number(formData.get("stock"));
   const variants = parseVariants(formData.get("variants"));
+
+  if (!name || name.length > 200 || category.length > 100) {
+    throw new Error("Enter a valid product name and category.");
+  }
+  if (!validInventoryNumber(price) || !validInventoryNumber(stock, true)) {
+    throw new Error("Price and stock must be valid non-negative numbers.");
+  }
+  if (variants.length > 100) throw new Error("A product can have at most 100 variants.");
+  variants.forEach(validateVariant);
 
   const { data: product, error } = await supabase
     .from("products")
@@ -51,10 +73,10 @@ export async function addProduct(formData: FormData) {
     .select("id")
     .single();
 
-  if (error || !product) return;
+  if (error || !product) throw new Error(error?.message ?? "Could not add the product.");
 
   if (variants.length > 0) {
-    await supabase.from("product_variants").insert(
+    const { error: variantsError } = await supabase.from("product_variants").insert(
       variants.map((v) => ({
         shop_id: profile.shop_id,
         product_id: product.id,
@@ -63,6 +85,11 @@ export async function addProduct(formData: FormData) {
         stock_quantity: v.stock,
       }))
     );
+    if (variantsError) {
+      // The product is brand new and has no sales, so remove the partial row.
+      await supabase.from("products").delete().eq("id", product.id);
+      throw new Error(variantsError.message);
+    }
   }
 
   revalidatePath("/products");
@@ -72,15 +99,17 @@ export async function addProduct(formData: FormData) {
 /* Add a size to a product that already exists. */
 export async function addVariant(productId: string, variant: VariantInput) {
   const { supabase, profile } = await getCurrentShopContext();
-  if (!variant.label.trim()) return;
+  const clean = { ...variant, label: variant.label.trim() };
+  validateVariant(clean);
 
-  await supabase.from("product_variants").insert({
+  const { error } = await supabase.from("product_variants").insert({
     shop_id: profile.shop_id,
     product_id: productId,
-    label: variant.label.trim(),
-    price: Number(variant.price) || 0,
-    stock_quantity: Number(variant.stock) || 0,
+    label: clean.label,
+    price: clean.price,
+    stock_quantity: clean.stock,
   });
+  if (error) throw new Error(error.message);
 
   revalidatePath("/products");
   revalidatePath("/dashboard");

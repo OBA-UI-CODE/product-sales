@@ -21,6 +21,39 @@ export interface OnboardingState {
 export async function completeOnboarding(
   data: OnboardingData
 ): Promise<OnboardingState> {
+  const ownerName = data.ownerName.trim();
+  const shopName = data.shopName.trim();
+  const categories = data.categories.map((category) => category.trim()).filter(Boolean);
+  const firstProductName = data.firstProductName?.trim();
+
+  if (!ownerName || ownerName.length > 200) {
+    return { error: "Enter your name (up to 200 characters)." };
+  }
+  if (!shopName || shopName.length > 200) {
+    return { error: "Enter a shop name (up to 200 characters)." };
+  }
+  if (
+    categories.length === 0 ||
+    categories.length > 20 ||
+    categories.some((category) => category.length > 100)
+  ) {
+    return { error: "Choose at least one valid shop category." };
+  }
+  if (!/^#[0-9a-f]{6}$/i.test(data.themeColor)) {
+    return { error: "Choose a valid theme colour." };
+  }
+  if (firstProductName && firstProductName.length > 200) {
+    return { error: "The product name is too long." };
+  }
+  if (
+    (data.firstProductPrice != null &&
+      (!Number.isFinite(data.firstProductPrice) || data.firstProductPrice < 0)) ||
+    (data.firstProductStock != null &&
+      (!Number.isSafeInteger(data.firstProductStock) || data.firstProductStock < 0))
+  ) {
+    return { error: "Product price and stock cannot be negative." };
+  }
+
   const supabase = await createClient();
 
   const {
@@ -32,11 +65,11 @@ export async function completeOnboarding(
   }
 
   const { error } = await supabase.rpc("complete_onboarding", {
-    p_owner_name: data.ownerName,
-    p_shop_name: data.shopName,
-    p_categories: data.categories,
+    p_owner_name: ownerName,
+    p_shop_name: shopName,
+    p_categories: categories,
     p_theme_color: data.themeColor,
-    p_first_product_name: data.firstProductName || null,
+    p_first_product_name: firstProductName || null,
     p_first_product_price: data.firstProductPrice ?? null,
     p_first_product_stock: data.firstProductStock ?? null,
   });
