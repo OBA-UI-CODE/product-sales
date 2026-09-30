@@ -255,12 +255,53 @@ export async function deleteOwnStaffAccount(): Promise<AccountState> {
     .eq("seller_id", profile.id);
 
   if (!count) {
-    await admin.from("profiles").delete().eq("id", profile.id);
-  }
+    /*
+      With no sales referencing the profile, deleting the Auth user can safely
+      cascade through to the profile row.
+    */
+    const { error } = await admin.auth.admin.deleteUser(profile.id);
+    if (error) {
+      return { error: `Could not delete your account: ${error.message}` };
+    }
+  } else {
+    /*
+      A seller profile referenced by sales cannot be deleted: the foreign key
+      deliberately preserves who logged each sale. Archive that profile and
+      permanently disable the login instead. Changing the address to the
+      reserved .invalid domain also frees the real email for a future account.
+    */
+    const { error: archiveError } = await admin
+      .from("profiles")
+      .update({ removed_at: new Date().toISOString() })
+      .eq("id", profile.id)
+      .eq("shop_id", profile.shop_id)
+      .eq("role", "staff");
 
-  const { error } = await admin.auth.admin.deleteUser(profile.id);
-  if (error) {
-    return { error: `Could not delete your account: ${error.message}` };
+    if (archiveError) {
+      return { error: `Could not close your account: ${archiveError.message}` };
+    }
+
+    const { error: disableError } = await admin.auth.admin.updateUserById(
+      profile.id,
+      {
+        ban_duration: "876000h",
+        email: `removed-${profile.id}@removed.johta.invalid`,
+        email_confirm: true,
+      }
+    );
+
+    if (disableError) {
+      await admin
+        .from("profiles")
+        .update({ removed_at: null })
+        .eq("id", profile.id)
+        .eq("shop_id", profile.shop_id);
+      return {
+        error: `Could not disable your login: ${disableError.message}`,
+      };
+    }
+
+    await admin.rpc("revoke_user_sessions", { target_user: profile.id });
   }
 
   const supabase = await createClient();

@@ -1,6 +1,11 @@
 import crypto from "node:crypto";
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import {
+  fetchSubscription,
+  planCode,
+  PLANS,
+} from "@/lib/paystack";
 
 /*
   Paystack webhook — the only thing that may mark a shop as paid.
@@ -33,6 +38,42 @@ interface PaystackEvent {
   };
 }
 
+type AdminClient = NonNullable<ReturnType<typeof admin>>;
+
+async function verifiedSubscription(event: PaystackEvent) {
+  const code =
+    event.data.subscription_code ?? event.data.subscription?.subscription_code;
+  if (!code) return { ok: false as const, retry: false };
+
+  const result = await fetchSubscription(code);
+  if (!result.ok || !result.data) {
+    return { ok: false as const, retry: true };
+  }
+
+  const subscription = result.data;
+  const plan = (["monthly", "yearly"] as const).find(
+    (candidate) => planCode(candidate) === subscription.plan?.plan_code
+  );
+  if (!plan) return { ok: false as const, retry: false };
+
+  const expectedAmount = PLANS[plan].amount * 100;
+  const amount = subscription.amount ?? subscription.plan?.amount;
+  const currency = subscription.plan?.currency?.toUpperCase();
+  if (
+    amount !== expectedAmount ||
+    currency !== "NGN" ||
+    !["active", "non-renewing"].includes(subscription.status)
+  ) {
+    return { ok: false as const, retry: false };
+  }
+
+  return {
+    ok: true as const,
+    plan,
+    subscription,
+  };
+}
+
 function admin() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -47,7 +88,7 @@ function admin() {
   event type, so there are three routes in, tried in order of reliability.
 */
 async function findShopId(
-  db: NonNullable<ReturnType<typeof admin>>,
+  db: AdminClient,
   event: PaystackEvent
 ): Promise<string | null> {
   const metaShop = event.data.metadata?.shop_id;
@@ -127,25 +168,30 @@ export async function POST(request: Request) {
     */
     case "charge.success":
     case "subscription.create": {
+      const verified = await verifiedSubscription(event);
+      if (!verified.ok) {
+        if (verified.retry) {
+          return NextResponse.json(
+            { error: "subscription verification unavailable" },
+            { status: 503 }
+          );
+        }
+        return NextResponse.json({
+          received: true,
+          ignored: "unverified subscription",
+        });
+      }
+
       patch.subscription_status = "active";
-
-      const subCode =
-        event.data.subscription_code ??
-        event.data.subscription?.subscription_code;
-      if (subCode) patch.paystack_subscription_code = subCode;
-      if (event.data.email_token)
-        patch.paystack_email_token = event.data.email_token;
-      if (event.data.customer?.customer_code)
-        patch.paystack_customer_code = event.data.customer.customer_code;
-
-      const nextPayment =
-        event.data.next_payment_date ??
-        event.data.subscription?.next_payment_date;
-      if (nextPayment) patch.current_period_end = nextPayment;
-
-      const interval = event.data.plan?.interval;
-      if (interval === "monthly" || interval === "annually") {
-        patch.billing_plan = interval === "annually" ? "yearly" : "monthly";
+      patch.billing_plan = verified.plan;
+      patch.paystack_subscription_code =
+        verified.subscription.subscription_code;
+      patch.paystack_email_token = verified.subscription.email_token;
+      patch.paystack_customer_code =
+        verified.subscription.customer.customer_code;
+      if (verified.subscription.next_payment_date) {
+        patch.current_period_end =
+          verified.subscription.next_payment_date;
       }
       break;
     }

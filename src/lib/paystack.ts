@@ -190,9 +190,16 @@ export function disableSubscription(code: string, emailToken: string) {
 export function fetchSubscription(code: string) {
   return paystack<{
     status: string;
+    amount: number;
     next_payment_date: string | null;
     email_token: string;
     subscription_code: string;
+    plan: {
+      plan_code: string;
+      amount: number;
+      currency: string;
+      interval: string;
+    };
     customer: { customer_code: string; email: string };
   }>(`/subscription/${code}`);
 }
