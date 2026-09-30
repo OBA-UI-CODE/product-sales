@@ -1,6 +1,6 @@
 "use server";
 
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@supabase/supabase-js";
 import { SUPPORT_EMAIL } from "@/lib/site";
 
 export interface ContactFormState {
@@ -20,6 +20,13 @@ export interface ContactFormState {
   it, messages are saved but not emailed.
 */
 const MAX_EMAILS_PER_HOUR = 20;
+const INQUIRY_TYPES = new Set([
+  "General inquiry",
+  "Sales",
+  "Support",
+  "Billing",
+  "Feedback",
+]);
 let emailsThisHour = 0;
 let emailHour = new Date().getUTCHours();
 
@@ -81,9 +88,25 @@ export async function submitContactForm(
   if (!name || !email || !message) {
     return { error: "Please fill in every field." };
   }
+  if (name.length > 200 || email.length > 320 || message.length > 5000) {
+    return { error: "That message is too long. Please shorten it and try again." };
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return { error: "Enter a valid email address." };
+  }
+  if (!INQUIRY_TYPES.has(inquiryType)) {
+    return { error: "Choose a valid inquiry type." };
+  }
 
-  const supabase = await createClient();
-  const { error } = await supabase.from("contact_messages").insert({
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) {
+    return { error: "Couldn't send your message. Please try again." };
+  }
+  const admin = createClient(url, key, {
+    auth: { autoRefreshToken: false, persistSession: false },
+  });
+  const { error } = await admin.from("contact_messages").insert({
     name,
     email,
     inquiry_type: inquiryType,

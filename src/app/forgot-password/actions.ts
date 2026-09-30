@@ -1,7 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
-import { headers } from "next/headers";
+import { authSiteOrigin } from "@/lib/google-auth";
 
 export interface ForgotPasswordState {
   error?: string;
@@ -18,7 +18,7 @@ export async function requestPasswordReset(
   }
 
   const supabase = await createClient();
-  const origin = (await headers()).get("origin");
+  const origin = await authSiteOrigin();
 
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
     redirectTo: `${origin}/auth/callback?next=/reset-password`,

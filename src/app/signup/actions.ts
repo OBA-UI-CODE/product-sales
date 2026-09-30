@@ -2,9 +2,7 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { startGoogleSignIn } from "@/lib/google-auth";
-import { SITE_URL } from "@/lib/site";
-import { headers } from "next/headers";
+import { authSiteOrigin, startGoogleSignIn } from "@/lib/google-auth";
 import {
   checkPasswordPwned,
   pwnedPasswordMessage,
@@ -37,9 +35,7 @@ export async function signUpWithEmail(
   }
 
   const supabase = await createClient();
-  /* Falls back to the live address if a browser sends no Origin, rather
-     than producing a confirmation link to "null/auth/callback". */
-  const origin = (await headers()).get("origin") ?? SITE_URL;
+  const origin = await authSiteOrigin();
 
   // NOTE: this only creates the auth.users row and stashes the name in
   // user metadata. The `shops` + `profiles` rows are created at the end

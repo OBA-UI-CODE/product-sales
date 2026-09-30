@@ -45,7 +45,7 @@ async function googleEnabled(): Promise<boolean> {
 */
 const RETURN_ORIGINS = new Set([SITE_URL, "http://localhost:3000"]);
 
-async function siteOrigin(): Promise<string> {
+export async function authSiteOrigin(): Promise<string> {
   const origin = (await headers()).get("origin");
   return origin && RETURN_ORIGINS.has(origin) ? origin : SITE_URL;
 }
@@ -67,7 +67,7 @@ export async function startGoogleSignIn({
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${await siteOrigin()}/auth/callback?next=${encodeURIComponent(next)}`,
+      redirectTo: `${await authSiteOrigin()}/auth/callback?next=${encodeURIComponent(next)}`,
     },
   });
 

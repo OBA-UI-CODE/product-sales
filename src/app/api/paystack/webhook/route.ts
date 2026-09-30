@@ -97,21 +97,23 @@ async function findShopId(
   const subCode =
     event.data.subscription_code ?? event.data.subscription?.subscription_code;
   if (subCode) {
-    const { data } = await db
+    const { data, error } = await db
       .from("shops")
       .select("id")
       .eq("paystack_subscription_code", subCode)
       .maybeSingle();
+    if (error) throw error;
     if (data?.id) return data.id;
   }
 
   const customerCode = event.data.customer?.customer_code;
   if (customerCode) {
-    const { data } = await db
+    const { data, error } = await db
       .from("shops")
       .select("id")
       .eq("paystack_customer_code", customerCode)
       .maybeSingle();
+    if (error) throw error;
     if (data?.id) return data.id;
   }
 
@@ -226,7 +228,18 @@ export async function POST(request: Request) {
   }
 
   if (Object.keys(patch).length > 0) {
-    await db.from("shops").update(patch).eq("id", shopId);
+    const { error } = await db.from("shops").update(patch).eq("id", shopId);
+    if (error) {
+      /*
+        A non-2xx response is deliberate: Paystack retries webhooks that were
+        not acknowledged. Returning 200 here would permanently lose a paid
+        renewal during a transient database failure.
+      */
+      return NextResponse.json(
+        { error: "could not apply billing event" },
+        { status: 503 }
+      );
+    }
   }
 
   return NextResponse.json({ received: true });
