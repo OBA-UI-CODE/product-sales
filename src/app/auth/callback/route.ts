@@ -1,11 +1,13 @@
 import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
-import { safeNextPath } from "@/lib/google-auth";
+import { safeAuthOrigin, safeNextPath } from "@/lib/google-auth";
 
 // Handles both Google OAuth redirects and email confirmation/reset links,
 // which both land here as a `code` param per Supabase's PKCE flow.
 export async function GET(request: Request) {
-  const { searchParams, origin } = new URL(request.url);
+  const requestUrl = new URL(request.url);
+  const { searchParams } = requestUrl;
+  const origin = safeAuthOrigin(requestUrl.origin);
   const code = searchParams.get("code");
   /* Only ever a path on this site; see safeNextPath. */
   const next = safeNextPath(searchParams.get("next"), "/");

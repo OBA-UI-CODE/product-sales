@@ -111,7 +111,7 @@ export async function GET() {
     }
   };
 
-  const [sales, { data: staff }, { data: products }] =
+  const [sales, staffResult, productsResult] =
     await Promise.all([
       readAllSales(),
       supabase.from("profiles").select("id, name").eq("shop_id", profile.shop_id),
@@ -121,6 +121,15 @@ export async function GET() {
         .eq("shop_id", profile.shop_id)
         .is("archived_at", null),
     ]);
+
+  if (staffResult.error) {
+    throw new Error(`Could not read staff for export: ${staffResult.error.message}`);
+  }
+  if (productsResult.error) {
+    throw new Error(`Could not read products for export: ${productsResult.error.message}`);
+  }
+  const staff = staffResult.data;
+  const products = productsResult.data;
 
   const sellerName = new Map((staff ?? []).map((s) => [s.id, s.name]));
 

@@ -51,9 +51,14 @@ export async function GET(request: Request) {
   }
 
   const dry = url.searchParams.get("dry") === "1";
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!supabaseUrl || !serviceKey) {
+    return NextResponse.json({ error: "service unavailable" }, { status: 503 });
+  }
   const admin = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    supabaseUrl,
+    serviceKey,
     { auth: { autoRefreshToken: false, persistSession: false } }
   );
 
@@ -69,9 +74,12 @@ export async function GET(request: Request) {
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
   const ids = (shops ?? []).map((s) => s.id);
-  const { data: already } = ids.length
+  const { data: already, error: alreadyError } = ids.length
     ? await admin.from("shop_notices").select("shop_id, kind").in("shop_id", ids)
-    : { data: [] };
+    : { data: [], error: null };
+  if (alreadyError) {
+    return NextResponse.json({ error: alreadyError.message }, { status: 500 });
+  }
   const sentBefore = new Set((already ?? []).map((n) => `${n.shop_id}:${n.kind}`));
 
   const planned: { shop: string; kind: NoticeKind; trialEnds: string }[] = [];

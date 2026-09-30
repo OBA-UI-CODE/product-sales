@@ -31,18 +31,27 @@ export async function POST(request: Request) {
   const endpoint = typeof body.endpoint === "string" ? body.endpoint : "";
   if (!endpoint.startsWith("https://")) return new NextResponse(null, { status: 400 });
 
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) {
+    return NextResponse.json({ error: "service unavailable" }, { status: 503 });
+  }
   const admin = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    url,
+    key,
     { auth: { autoRefreshToken: false, persistSession: false } }
   );
-  await admin
+  const { error } = await admin
     .from("push_subscriptions")
     .update({
       last_received_at: new Date().toISOString(),
       last_received_tag: typeof body.tag === "string" ? body.tag.slice(0, 60) : null,
     })
     .eq("endpoint", endpoint);
+
+  if (error) {
+    return NextResponse.json({ error: "could not record receipt" }, { status: 503 });
+  }
 
   return new NextResponse(null, { status: 204 });
 }

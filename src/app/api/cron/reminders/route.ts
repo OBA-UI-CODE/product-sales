@@ -31,9 +31,14 @@ export async function GET(request: Request) {
     return new NextResponse(null, { status: 401 });
   }
 
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) {
+    return NextResponse.json({ error: "service unavailable" }, { status: 503 });
+  }
   const admin = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    url,
+    key,
     { auth: { autoRefreshToken: false, persistSession: false } }
   );
 

@@ -45,9 +45,12 @@ async function googleEnabled(): Promise<boolean> {
 */
 const RETURN_ORIGINS = new Set([SITE_URL, "http://localhost:3000"]);
 
+export function safeAuthOrigin(candidate: string | null | undefined): string {
+  return candidate && RETURN_ORIGINS.has(candidate) ? candidate : SITE_URL;
+}
+
 export async function authSiteOrigin(): Promise<string> {
-  const origin = (await headers()).get("origin");
-  return origin && RETURN_ORIGINS.has(origin) ? origin : SITE_URL;
+  return safeAuthOrigin((await headers()).get("origin"));
 }
 
 export async function startGoogleSignIn({
